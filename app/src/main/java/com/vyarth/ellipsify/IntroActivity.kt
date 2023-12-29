@@ -1,5 +1,6 @@
 package com.vyarth.ellipsify
 
+import android.content.Intent
 import android.graphics.Typeface
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
@@ -28,5 +29,12 @@ class IntroActivity : AppCompatActivity() {
         // Apply custom typeface to the button
         btnLoginIntro.typeface = customTypeface
         btnGoogleIntro.typeface = customTypeface
+
+
+        val btnSignUpIntro=findViewById<Button>(R.id.btn_google_intro)
+        btnSignUpIntro.setOnClickListener {
+            // Launch the sign up screen.
+            startActivity(Intent(this@IntroActivity, SignUpActivity::class.java))
+        }
     }
 }
