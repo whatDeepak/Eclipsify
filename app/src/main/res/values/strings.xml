@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Eclipsify</string>
+
+    <string name="intro_login">Login with your account</string>
+</resources>
