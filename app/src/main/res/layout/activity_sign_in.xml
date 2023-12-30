@@ -33,12 +33,12 @@
         android:padding="@dimen/card_view_layout_content_padding">
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/et_name"
+            android:id="@+id/et_signinlayout_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="25dp"
             android:layout_marginEnd="25dp"
-            android:hint="Username"
+            android:hint="Email"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -46,13 +46,14 @@
             app:layout_constraintVertical_bias="0.22">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_signin_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/et_password"
+            android:id="@+id/et_signinlayout_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="25dp"
@@ -61,17 +62,34 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/et_name"
+            app:layout_constraintTop_toBottomOf="@id/et_signinlayout_email"
             app:layout_constraintVertical_bias="0.12">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_signin_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
+        <TextView
+            android:id="@+id/forgot_signin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:text="Forgot Password?"
+            android:textColor="#3B5997"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/btn_login_signin"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.88"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/et_signinlayout_password"
+            app:layout_constraintVertical_bias="0.2" />
+
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btn_login_intro"
+            android:id="@+id/btn_login_signin"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
@@ -89,7 +107,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/et_password"
+            app:layout_constraintTop_toBottomOf="@id/et_signinlayout_password"
             app:layout_constraintVertical_bias="0.25" />
 
         <TextView
@@ -105,7 +123,9 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.59"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btn_login_intro" />
+            app:layout_constraintTop_toBottomOf="@+id/btn_login_signin" />
+
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

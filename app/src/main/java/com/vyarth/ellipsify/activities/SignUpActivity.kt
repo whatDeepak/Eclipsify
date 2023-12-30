@@ -17,8 +17,10 @@ import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.firestore.auth.User
 import com.vyarth.ellipsify.R
+import com.vyarth.ellipsify.firebase.FirestoreClass
+
+import com.vyarth.ellipsify.model.User
 
 class SignUpActivity : BaseActivity() {
 
@@ -37,7 +39,7 @@ class SignUpActivity : BaseActivity() {
         setupActionBar()
 
         // Click event for sign-up button.
-        val btnSignUp=findViewById<Button>(R.id.btn_register_intro)
+        val btnSignUp=findViewById<Button>(R.id.btn_register_signup)
         btnSignUp.setOnClickListener {
             registerUser()
         }
@@ -87,21 +89,14 @@ class SignUpActivity : BaseActivity() {
                             // Registered Email
                             val registeredEmail = firebaseUser.email!!
 
-//                            val user = User(firebaseUser.uid, name, registeredEmail)
-//
-//                            // call the registerUser function of FirestoreClass to make an entry in the database.
-//                            FirestoreClass().registerUser(this@SignUpActivity, user)
-                            Toast.makeText(
-                                this,
-                                "$name you have"+" succesfully registered the email"+" address $registeredEmail",
-                                Toast.LENGTH_LONG
-                            ).show()
-                            FirebaseAuth.getInstance().signOut()
-                            finish()
+                            val user = User(firebaseUser.uid, name, registeredEmail)
+
+                            // call the registerUser function of FirestoreClass to make an entry in the database.
+                            FirestoreClass().registerUser(this@SignUpActivity, user)
                         } else {
                             Toast.makeText(
                                 this@SignUpActivity,
-                                task.exception!!.message,
+                                "Registration failed.",
                                 Toast.LENGTH_SHORT
                             ).show()
                         }
@@ -130,5 +125,28 @@ class SignUpActivity : BaseActivity() {
                 true
             }
         }
+    }
+
+    /**
+     * A function to be called the user is registered successfully and entry is made in the firestore database.
+     */
+    fun userRegisteredSuccess() {
+
+        Toast.makeText(
+            this@SignUpActivity,
+            "You have successfully registered.",
+            Toast.LENGTH_SHORT
+        ).show()
+
+        // Hide the progress dialog
+        hideProgressDialog()
+
+        /**
+         * Here the new user registered is automatically signed-in so we just sign-out the user from firebase
+         * and send him to Intro Screen for Sign-In
+         */
+        FirebaseAuth.getInstance().signOut()
+        // Finish the Sign-Up Screen
+        finish()
     }
 }
