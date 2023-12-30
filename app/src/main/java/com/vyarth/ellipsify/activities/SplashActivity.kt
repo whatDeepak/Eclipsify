@@ -1,4 +1,4 @@
-package com.vyarth.ellipsify
+package com.vyarth.ellipsify.activities
 
 import android.content.Intent
 import android.os.Build
@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.view.View
 import android.view.WindowManager
+import com.vyarth.ellipsify.R
 
 class SplashActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

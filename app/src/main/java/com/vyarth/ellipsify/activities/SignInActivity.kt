@@ -1,21 +1,20 @@
-package com.vyarth.ellipsify
+package com.vyarth.ellipsify.activities
 
+import android.content.Intent
 import android.graphics.Typeface
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.view.WindowManager
-import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
+import com.vyarth.ellipsify.R
 
-class SignUpActivity : AppCompatActivity() {
-
-
+class SignInActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_sign_up)
+        setContentView(R.layout.activity_sign_in)
         window.setFlags(
             WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
             WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
@@ -25,14 +24,21 @@ class SignUpActivity : AppCompatActivity() {
             window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
         }
         setupActionBar()
+
+        val btnSignUpIntro=findViewById<TextView>(R.id.et_signup)
+        btnSignUpIntro.setOnClickListener {
+            // Launch the sign up screen.
+            startActivity(Intent(this@SignInActivity, SignUpActivity::class.java))
+        }
     }
+
     private fun setupActionBar() {
-        val toolbarSignUpActivity = findViewById<Toolbar>(R.id.toolbar_sign_up_activity)
-        val tvTitle: TextView = findViewById(R.id.tv_title)
+
+        val toolbarSignInActivity=findViewById<Toolbar>(R.id.toolbar_sign_in_activity)
+        val tvTitle: TextView = findViewById(R.id.tv_signin_title)
         val customTypeface = Typeface.createFromAsset(assets, "poppins_medium.ttf")
         tvTitle.typeface = customTypeface
-
-        setSupportActionBar(toolbarSignUpActivity)
+        setSupportActionBar(toolbarSignInActivity)
 
         val actionBar = supportActionBar
         if (actionBar != null) {
@@ -40,6 +46,7 @@ class SignUpActivity : AppCompatActivity() {
             actionBar.setHomeAsUpIndicator(R.drawable.ic_black_color_back_24dp)
         }
 
-        toolbarSignUpActivity.setNavigationOnClickListener { onBackPressed() }
+        toolbarSignInActivity.setNavigationOnClickListener { onBackPressed() }
     }
+
 }

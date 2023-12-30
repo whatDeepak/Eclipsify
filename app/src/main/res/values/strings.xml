@@ -2,4 +2,6 @@
     <string name="app_name">Eclipsify</string>
 
     <string name="intro_login">Login with your account</string>
+    <string name="please_click_back_again_to_exit">Please click back again to exit.</string>
+    <string name="please_wait">Please Wait</string>
 </resources>

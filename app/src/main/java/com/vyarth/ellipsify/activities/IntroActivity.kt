@@ -1,4 +1,4 @@
-package com.vyarth.ellipsify
+package com.vyarth.ellipsify.activities
 
 import android.content.Intent
 import android.graphics.Typeface
@@ -8,8 +8,9 @@ import android.os.Bundle
 import android.view.View
 import android.view.WindowManager
 import android.widget.Button
+import com.vyarth.ellipsify.R
 
-class IntroActivity : AppCompatActivity() {
+class IntroActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         window.setFlags(
@@ -35,6 +36,12 @@ class IntroActivity : AppCompatActivity() {
         btnSignUpIntro.setOnClickListener {
             // Launch the sign up screen.
             startActivity(Intent(this@IntroActivity, SignUpActivity::class.java))
+        }
+
+        val btnSignInIntro=findViewById<Button>(R.id.btn_login_intro)
+        btnSignInIntro.setOnClickListener {
+            // Launch the sign in screen.
+            startActivity(Intent(this@IntroActivity, SignInActivity::class.java))
         }
     }
 }

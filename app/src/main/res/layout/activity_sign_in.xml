@@ -4,22 +4,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/ic_signup_background"
+    android:background="@drawable/ic_signin_background"
     android:orientation="vertical"
     tools:context=".activities.SignUpActivity">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar_sign_up_activity"
+        android:id="@+id/toolbar_sign_in_activity"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:layout_marginTop="20dp">
 
         <TextView
-            android:id="@+id/tv_title"
+            android:id="@+id/tv_signin_title"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center_vertical"
-            android:text="Sign Up"
+            android:text="Sign In"
             android:textColor="@color/primary_text_color"
             android:textSize="18sp"
             android:textStyle="bold" />
@@ -33,7 +33,7 @@
         android:padding="@dimen/card_view_layout_content_padding">
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/et_layout_name"
+            android:id="@+id/et_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="25dp"
@@ -46,34 +46,13 @@
             app:layout_constraintVertical_bias="0.22">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/et_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/et_layout_email"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="25dp"
-            android:layout_marginEnd="25dp"
-            android:hint="Email"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/et_layout_name"
-            app:layout_constraintVertical_bias="0.095">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/et_email"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/et_layout_password"
+            android:id="@+id/et_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="25dp"
@@ -82,18 +61,17 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/et_layout_email"
+            app:layout_constraintTop_toBottomOf="@id/et_name"
             app:layout_constraintVertical_bias="0.12">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/et_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btn_register_intro"
+            android:id="@+id/btn_login_intro"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
@@ -103,7 +81,7 @@
             android:gravity="center"
             android:paddingTop="@dimen/btn_paddingTop"
             android:paddingBottom="@dimen/btn_paddingBottom"
-            android:text="Register"
+            android:text="Login"
             android:textAllCaps="false"
             android:textColor="@android:color/black"
             android:textSize="@dimen/btn_text_size"
@@ -111,30 +89,24 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/et_layout_password"
+            app:layout_constraintTop_toBottomOf="@id/et_password"
             app:layout_constraintVertical_bias="0.25" />
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btn_google_intro"
-            android:layout_width="0dp"
+        <TextView
+            android:id="@+id/et_signup"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
-            android:background="@drawable/shape_button_rounded"
-            android:foreground="?attr/selectableItemBackground"
-            android:gravity="center"
-            android:paddingTop="@dimen/btn_paddingTop"
-            android:paddingBottom="@dimen/btn_paddingBottom"
-            android:text="Google"
-            android:textAllCaps="false"
-            android:textColor="@android:color/black"
-            android:textSize="@dimen/btn_text_size"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginTop="31dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:text="Sign Up"
+            android:textColor="#3B5998"
+            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintHorizontal_bias="0.59"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/btn_register_intro"
-            app:layout_constraintVertical_bias="0.80" />
+            app:layout_constraintTop_toBottomOf="@+id/btn_login_intro" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </LinearLayout>
