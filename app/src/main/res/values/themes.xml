@@ -22,4 +22,9 @@
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
+
+    <style name="BoldTextAppearance" parent="@android:style/TextAppearance.Medium">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">30sp</item> <!-- Change the text size here -->
+    </style>
 </resources>

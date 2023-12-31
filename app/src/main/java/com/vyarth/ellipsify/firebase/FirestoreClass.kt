@@ -157,4 +157,22 @@ class FirestoreClass {
 
         return currentUserID
     }
+
+    fun getUserData(onSuccess: (User) -> Unit, onFailure: () -> Unit) {
+        mFireStore.collection(Constants.USERS)
+            .document(getCurrentUserID())
+            .get()
+            .addOnSuccessListener { document ->
+                val loggedInUser = document.toObject(User::class.java)
+                if (loggedInUser != null) {
+                    onSuccess(loggedInUser)
+                } else {
+                    onFailure()
+                }
+            }
+            .addOnFailureListener {
+                onFailure()
+            }
+    }
+
 }
