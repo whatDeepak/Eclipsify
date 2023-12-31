@@ -5,6 +5,7 @@ import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
+import com.vyarth.ellipsify.activities.IntroActivity
 import com.vyarth.ellipsify.activities.MainActivity
 import com.vyarth.ellipsify.activities.SignInActivity
 import com.vyarth.ellipsify.model.User
@@ -19,27 +20,70 @@ class FirestoreClass {
     /**
      * A function to make an entry of the registered user in the firestore database.
      */
-    fun registerUser(activity: SignUpActivity, userInfo: User) {
+    fun registerUser(activity: Activity, userInfo: User) {
 
+        val currentUserID = getCurrentUserID()
+
+        // Check if the user already exists based on email
         mFireStore.collection(Constants.USERS)
-            // Document ID for users fields. Here the document it is the User ID.
-            .document(getCurrentUserID())
-            // Here the userInfo are Field and the SetOption is set to merge. It is for if we wants to merge
-            .set(userInfo, SetOptions.merge())
-            .addOnSuccessListener {
-
-                // Here call a function of base activity for transferring the result to it.
-                activity.userRegisteredSuccess()
+            .whereEqualTo("email", userInfo.email) // Assuming "email" is the field representing the email in your User model
+            .get()
+            .addOnSuccessListener { documents ->
+                if (documents.isEmpty) {
+                    // No user with the same email found, proceed with creating a new document
+                    mFireStore.collection(Constants.USERS)
+                        .document(currentUserID)
+                        .set(userInfo, SetOptions.merge())
+                        .addOnSuccessListener {
+                            if (activity is IntroActivity) {
+                                (activity as IntroActivity).userRegisteredSuccessIntro()
+                            }
+                            if (activity is SignUpActivity) {
+                                (activity as SignUpActivity).userRegisteredSuccessSignUp()
+                            }
+                        }
+                        .addOnFailureListener { e ->
+                            handleRegistrationFailure(activity, e)
+                        }
+                } else {
+                    // User with the same email already exists, update the existing document
+                    val existingUserId = documents.documents[0].id
+                    mFireStore.collection(Constants.USERS)
+                        .document(existingUserId)
+                        .set(userInfo, SetOptions.merge())
+                        .addOnSuccessListener {
+                            if (activity is IntroActivity) {
+                                (activity as IntroActivity).userRegisteredSuccessIntro()
+                            }
+                            if (activity is SignUpActivity) {
+                                (activity as SignUpActivity).userRegisteredSuccessSignUp()
+                            }
+                        }
+                        .addOnFailureListener { e ->
+                            handleRegistrationFailure(activity, e)
+                        }
+                }
             }
             .addOnFailureListener { e ->
-                activity.hideProgressDialog()
-                Log.e(
-                    activity.javaClass.simpleName,
-                    "Error writing document",
-                    e
-                )
+                handleRegistrationFailure(activity, e)
             }
     }
+
+    private fun handleRegistrationFailure(activity: Activity, e: Exception) {
+        if (activity is IntroActivity) {
+            (activity as IntroActivity).hideProgressDialog()
+        }
+        if (activity is SignUpActivity) {
+            (activity as SignUpActivity).hideProgressDialog()
+        }
+
+        Log.e(
+            activity.javaClass.simpleName,
+            "Error writing document",
+            e
+        )
+    }
+
 
     /**
      * A function to SignIn using firebase and get the user details from Firestore Database.

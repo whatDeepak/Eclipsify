@@ -4,4 +4,6 @@
     <string name="intro_login">Login with your account</string>
     <string name="please_click_back_again_to_exit">Please click back again to exit.</string>
     <string name="please_wait">Please Wait</string>
+
+    <string name="default_web_client_id">54694666250-cv46glavihipsih4a49to8hcvngio218.apps.googleusercontent.com</string>
 </resources>

@@ -24,7 +24,6 @@ import com.vyarth.ellipsify.model.User
 
 class SignUpActivity : BaseActivity() {
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_up)
@@ -130,7 +129,7 @@ class SignUpActivity : BaseActivity() {
     /**
      * A function to be called the user is registered successfully and entry is made in the firestore database.
      */
-    fun userRegisteredSuccess() {
+    fun userRegisteredSuccessSignUp() {
 
         Toast.makeText(
             this@SignUpActivity,
