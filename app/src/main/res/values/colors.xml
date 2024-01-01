@@ -16,4 +16,9 @@
     <color name="mediumTextColor">#371B34</color>
     <color name="boldTextColor">#371B34</color>
 
+    <color name="happyBg">#C3F2A6</color>
+    <color name="calmBg">#A0E3E2</color>
+    <color name="manicBg">#EF5DA8</color>
+    <color name="angryBg">#F09E54</color>
+    <color name="sadBg">#AEAFF7</color>
 </resources>

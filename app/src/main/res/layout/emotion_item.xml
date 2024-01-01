@@ -7,12 +7,20 @@
     android:layout_marginStart="-10dp">
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/cardView"
         android:layout_width="70dp"
         android:layout_height="70dp"
         android:layout_marginTop="16dp"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
-        app:cardCornerRadius="8dp">
+        app:cardCornerRadius="16dp">
+
+        <ImageView
+            android:id="@+id/emotionImageView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_launcher_foreground" />
 
         <!-- Your CardView content goes here, e.g., an ImageView or other views -->
 

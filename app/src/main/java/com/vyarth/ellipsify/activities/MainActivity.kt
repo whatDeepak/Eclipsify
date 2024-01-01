@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.vyarth.ellipsify.R
 import com.vyarth.ellipsify.adapters.EmotionsAdapter
 import com.vyarth.ellipsify.firebase.FirestoreClass
+import com.vyarth.ellipsify.model.Emotion
 import de.hdodenhof.circleimageview.CircleImageView
 import java.util.Calendar
 
@@ -46,8 +47,13 @@ class MainActivity : AppCompatActivity() {
             startActivity(Intent(this@MainActivity, ProfileActivity::class.java))
         }
 
-        // Example data
-        val emotions = listOf("Happy", "Calm", "Manic", "Angry","Sad")
+        val emotions = listOf(
+            Emotion("Happy", R.color.happyBg, R.drawable.mood_happy),
+            Emotion("Calm", R.color.calmBg, R.drawable.mood_calm),
+            Emotion("Manic", R.color.manicBg, R.drawable.mood_manic),
+            Emotion("Angry", R.color.angryBg, R.drawable.mood_angry),
+            Emotion("Sad", R.color.sadBg, R.drawable.mood_sad)
+        )
 
         // Get reference to the RecyclerView
         val recyclerView: RecyclerView = findViewById(R.id.recyclerView)
