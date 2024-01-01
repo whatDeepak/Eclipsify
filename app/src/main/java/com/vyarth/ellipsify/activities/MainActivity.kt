@@ -47,7 +47,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         // Example data
-        val emotions = listOf("Happy", "Calm", "Manic", "Angry")
+        val emotions = listOf("Happy", "Calm", "Manic", "Angry","Sad")
 
         // Get reference to the RecyclerView
         val recyclerView: RecyclerView = findViewById(R.id.recyclerView)
@@ -55,7 +55,6 @@ class MainActivity : AppCompatActivity() {
         // Set layout manager and adapter
         recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         recyclerView.adapter = EmotionsAdapter(emotions)
-
 
         val greetingText: TextView = findViewById(R.id.greeting_main)
         // Load custom typeface from the "assets" folder

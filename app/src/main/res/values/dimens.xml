@@ -37,4 +37,5 @@
     <dimen name="progress_bar_size">50dp</dimen>
     <dimen name="progress_text_marginStart">16dp</dimen>
     <dimen name="progress_text_size">16sp</dimen>
+    <dimen name="item_spacing">20dp</dimen>
 </resources>
