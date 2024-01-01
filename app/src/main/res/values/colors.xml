@@ -13,4 +13,7 @@
 
     <color name="snackbar_error_color">#F72400</color>
 
+    <color name="mediumTextColor">#371B34</color>
+    <color name="boldTextColor">#371B34</color>
+
 </resources>

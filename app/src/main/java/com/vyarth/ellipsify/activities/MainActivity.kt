@@ -7,13 +7,19 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Spannable
 import android.text.SpannableString
+import android.text.style.ForegroundColorSpan
 import android.text.style.StyleSpan
 import android.text.style.TextAppearanceSpan
 import android.view.View
 import android.view.WindowManager
 import android.widget.Button
 import android.widget.TextView
+import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.vyarth.ellipsify.R
+import com.vyarth.ellipsify.adapters.EmotionsAdapter
 import com.vyarth.ellipsify.firebase.FirestoreClass
 import de.hdodenhof.circleimageview.CircleImageView
 import java.util.Calendar
@@ -39,6 +45,23 @@ class MainActivity : AppCompatActivity() {
             // Launch the sign in screen.
             startActivity(Intent(this@MainActivity, ProfileActivity::class.java))
         }
+
+        // Example data
+        val emotions = listOf("Happy", "Calm", "Manic", "Angry")
+
+        // Get reference to the RecyclerView
+        val recyclerView: RecyclerView = findViewById(R.id.recyclerView)
+
+        // Set layout manager and adapter
+        recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        recyclerView.adapter = EmotionsAdapter(emotions)
+
+
+        val greetingText: TextView = findViewById(R.id.greeting_main)
+        // Load custom typeface from the "assets" folder
+        val customTypeface = Typeface.createFromAsset(assets, "epilogue_medium.ttf")
+        // Apply custom typeface to the button
+        greetingText.typeface = customTypeface
 
         // Call the function to get user data
         FirestoreClass().getUserData(
@@ -67,10 +90,23 @@ class MainActivity : AppCompatActivity() {
                     commaIndex,     // End index before the comma
                     Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
                 )
+                spannableString.setSpan(
+                    ForegroundColorSpan(resources.getColor(R.color.mediumTextColor)),
+                    0,              // Start index of the string
+                    commaIndex,     // End index before the comma
+                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                )
 
                 // Apply bold style and increased text size to everything after the comma
                 spannableString.setSpan(
                     TextAppearanceSpan(this, R.style.BoldTextAppearance),
+                    commaIndex + 2,  // Start index after the comma and newline
+                    greeting.length, // End index of the string
+                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                )
+
+                spannableString.setSpan(
+                    ForegroundColorSpan(resources.getColor(R.color.boldTextColor)),
                     commaIndex + 2,  // Start index after the comma and newline
                     greeting.length, // End index of the string
                     Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
@@ -84,6 +120,7 @@ class MainActivity : AppCompatActivity() {
                 // Handle failure to retrieve user data
             }
         )
+
     }
     private fun getGreetingMessage(userName: String): String {
         val cal = Calendar.getInstance()
