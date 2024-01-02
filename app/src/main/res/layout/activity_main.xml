@@ -64,7 +64,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:layout_marginStart="16dp"
+            android:layout_marginStart="18dp"
             android:layout_marginTop="20dp"
             android:textColor="#371B34"
             android:textSize="25sp"
@@ -82,7 +82,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginTop="25dp"
-            android:layout_marginStart="16dp"
+            android:layout_marginStart="18dp"
             >
 
             <TextView
@@ -104,54 +104,75 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/linearLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintTop_toBottomOf="@id/daily_checkin"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginStart="18dp"
             android:layout_marginTop="30dp"
-            android:layout_marginStart="16dp">
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/daily_checkin">
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btn_journal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="20dp"
-                android:paddingHorizontal="16dp"
-                android:paddingEnd="50dp"
+                android:background="@drawable/shape_button_rounded_white"
                 android:drawableStart="@drawable/main_journal"
                 android:drawablePadding="16dp"
-                android:background="@drawable/shape_button_rounded_white"
                 android:foreground="?attr/selectableItemBackground"
                 android:gravity="center"
+                android:paddingHorizontal="16dp"
                 android:paddingTop="@dimen/btn_paddingTop"
+                android:paddingEnd="50dp"
                 android:paddingBottom="12dp"
                 android:text="Journal"
                 android:textAllCaps="false"
                 android:textColor="@android:color/black"
-                android:textSize="18sp">
-            </androidx.appcompat.widget.AppCompatButton>
+                android:textSize="18sp"></androidx.appcompat.widget.AppCompatButton>
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btn_articles"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:paddingHorizontal="16dp"
-                android:paddingEnd="50dp"
+                android:background="@drawable/shape_button_rounded_white"
                 android:drawableStart="@drawable/main_articles"
                 android:drawablePadding="16dp"
-                android:background="@drawable/shape_button_rounded_white"
                 android:foreground="?attr/selectableItemBackground"
                 android:gravity="center"
+                android:paddingHorizontal="16dp"
                 android:paddingTop="@dimen/btn_paddingTop"
+                android:paddingEnd="50dp"
                 android:paddingBottom="12dp"
                 android:text="Articles"
                 android:textAllCaps="false"
                 android:textColor="@android:color/black"
-                android:textSize="18sp">
-            </androidx.appcompat.widget.AppCompatButton>
+                android:textSize="18sp"></androidx.appcompat.widget.AppCompatButton>
         </LinearLayout>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_quotes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/shape_button_rounded_quotes"
+            android:drawableEnd="@drawable/main_quotes"
+            android:drawablePadding="16dp"
+            android:foreground="?attr/selectableItemBackground"
+            android:gravity="left"
+            android:paddingHorizontal="18dp"
+            android:paddingVertical="20dp"
+            android:layout_margin="18dp"
+            android:text="“It is better to conquer yourself than to win a thousand battles”"
+            android:textAllCaps="false"
+            android:textColor="#707070"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+
+        </androidx.appcompat.widget.AppCompatButton>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
