@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/nav_home"
+        android:icon="@drawable/nav_home"
+        android:title="Home"
+        app:cnb_iconColor="#2196F3"
+        />
+
+    <item
+        android:id="@+id/nav_explore"
+        android:icon="@drawable/nav_explore"
+        android:title="Explore"
+        app:cnb_iconColor="#F44336"/>
+
+    <item
+        android:id="@+id/nav_journal"
+        android:icon="@drawable/nav_journal"
+        android:title="Journal"
+        app:cnb_iconColor="#4CAF50"/>
+
+    <item
+        android:id="@+id/nav_chat"
+        android:icon="@drawable/nav_chat"
+        android:title="Chat"
+        app:cnb_iconColor="#FF9800"/>
+
+    <item
+        android:id="@+id/nav_you"
+        android:icon="@drawable/nav_you"
+        android:title="You"
+        app:cnb_iconColor="#9C27B0"/>
+
+</menu>

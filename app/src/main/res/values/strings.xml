@@ -7,4 +7,6 @@
 
     <string name="default_web_client_id">54694666250-cv46glavihipsih4a49to8hcvngio218.apps.googleusercontent.com</string>
     <string name="question">How are you feeling today?</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
