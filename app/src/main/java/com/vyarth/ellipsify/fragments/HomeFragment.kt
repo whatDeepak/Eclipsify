@@ -33,14 +33,9 @@ class HomeFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        val view=inflater.inflate(R.layout.fragment_home, container, false)
+
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home, container, false)
-
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
         (activity as? MainActivity)?.applyWindowFlags()
 
         val profileUser: CircleImageView = view.findViewById(R.id.user_avatar)
@@ -133,8 +128,13 @@ class HomeFragment : Fragment() {
                 // Handle failure to retrieve user data
             }
         )
+        return view;
+
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+    }
 
     private fun getGreetingMessage(userName: String): String {
         val cal = Calendar.getInstance()
