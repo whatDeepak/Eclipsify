@@ -25,7 +25,4 @@
         android:fadingEdge="horizontal"
         app:cnb_menuResource="@menu/nav_menu"
         app:layout_constraintBottom_toBottomOf="parent" />
-
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -3,16 +3,17 @@ plugins {
     id 'org.jetbrains.kotlin.android'
     // Add the Google services Gradle plugin
     id("com.google.gms.google-services")
+    id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
 }
 
 android {
     namespace 'com.vyarth.ellipsify'
-    compileSdk 33
+    compileSdk 34
 
     defaultConfig {
         applicationId "com.vyarth.ellipsify"
         minSdk 24
-        targetSdk 33
+        targetSdk 34
         versionCode 1
         versionName "1.0"
 
@@ -80,4 +81,9 @@ dependencies {
     implementation("com.exyte:animated-navigation-bar:1.0.0")
 
     implementation 'com.github.ismaeldivita:chip-navigation-bar:1.4.0'
+
+    implementation("com.google.ai.client.generativeai:generativeai:0.1.1")
+
+    implementation("io.coil-kt:coil-compose:2.5.0")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.7.0-rc02")
 }

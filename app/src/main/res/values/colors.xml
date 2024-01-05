@@ -7,9 +7,13 @@
     <color name="colorPrimaryDark">#C1864E</color>
     <color name="colorAccent">#CCB0AC</color>
 
+    <color name="status_bar_color">#ffffff</color>
+
     <color name="primary_text_color">#371B34</color>
     <color name="secondary_text_color">#1C1B1F</color>
     <color name="accent_text_color">#707070</color>
+
+
 
     <color name="snackbar_error_color">#F72400</color>
 

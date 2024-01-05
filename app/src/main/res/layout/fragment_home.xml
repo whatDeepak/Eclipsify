@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_marginTop="45dp"
+        android:layout_marginTop="12dp"
         android:paddingBottom="60dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -131,7 +131,7 @@
                     android:gravity="center"
                     android:paddingHorizontal="16dp"
                     android:paddingTop="@dimen/btn_paddingTop"
-                    android:paddingEnd="50dp"
+                    android:paddingEnd="40dp"
                     android:paddingBottom="12dp"
                     android:text="Journal"
                     android:textAllCaps="false"
@@ -150,7 +150,7 @@
                     android:gravity="center"
                     android:paddingHorizontal="16dp"
                     android:paddingTop="@dimen/btn_paddingTop"
-                    android:paddingEnd="50dp"
+                    android:paddingEnd="40dp"
                     android:paddingBottom="12dp"
                     android:text="Articles"
                     android:textAllCaps="false"

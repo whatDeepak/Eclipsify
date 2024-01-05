@@ -15,6 +15,7 @@ import android.text.style.ForegroundColorSpan
 import android.text.style.StyleSpan
 import android.text.style.TextAppearanceSpan
 import android.view.View
+import android.view.Window
 import android.view.WindowManager
 import android.widget.Button
 import android.widget.TextView
@@ -29,6 +30,7 @@ import com.vyarth.ellipsify.R
 import com.vyarth.ellipsify.adapters.EmotionsAdapter
 import com.vyarth.ellipsify.databinding.ActivityMainBinding
 import com.vyarth.ellipsify.firebase.FirestoreClass
+import com.vyarth.ellipsify.fragments.ChatFragment
 import com.vyarth.ellipsify.fragments.ExploreFragment
 import com.vyarth.ellipsify.fragments.HomeFragment
 import com.vyarth.ellipsify.model.Emotion
@@ -66,6 +68,9 @@ class MainActivity : AppCompatActivity() {
                         // Start the ExploreActivity (replace ExploreActivity with your actual activity)
                         inflateFragment(ExploreFragment.newInstance())
                     }
+                    R.id.nav_chat ->{
+                        inflateFragment(ChatFragment.newInstance())
+                    }
                     // Add more cases for other navigation items as needed
 
                     // Default case (optional): Handle any unhandled items
@@ -89,12 +94,20 @@ class MainActivity : AppCompatActivity() {
 
     fun applyWindowFlags() {
         window.setFlags(
-            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
-            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
+            WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN,
+            WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN
         )
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            // Set the status bar text color to dark
-            window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            val window: Window = window
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+            window.statusBarColor = resources.getColor(R.color.status_bar_color)
+        }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            // Set the status bar text color to dark for Android M and above
+            val decor: View = window.decorView
+            decor.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
         }
     }
 }
