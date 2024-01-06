@@ -24,12 +24,28 @@ class ChatAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     inner class UserViewHolder(private val binding: AdapterUserBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(message: Pair<String, Int>) {
-            binding.adapterUserTv.text = message.first
-            binding.adapterUserCard.setBackgroundResource(R.drawable.card_radius_user)
-            binding.adapterUserCard.setCardBackgroundColor(ContextCompat.getColor(binding.root.context,R.color.user_background))
+            val userMessage = message.first
+            // Add the initial sentence before the user's message
+            val initialSentence = "Behave as if you are a mental health consultant/therapist " +
+                    "and give advice that is very genuine and helps the user. " +
+                    "Be human-like and give a very short and nice response. User : "
 
+            // Check if the message starts with the initial sentence
+            if (userMessage.startsWith(initialSentence)) {
+                // If it does, set the initial sentence to a different style
+                val actualUserMessage = userMessage.substring(initialSentence.length)
+                binding.adapterUserTv.text = actualUserMessage
+                binding.adapterUserCard.setBackgroundResource(R.drawable.card_radius_user)
+                binding.adapterUserCard.setCardBackgroundColor(ContextCompat.getColor(binding.root.context, R.color.user_background))
+            } else {
+                // If it doesn't, set the entire message to the regular style
+                binding.adapterUserTv.text = userMessage
+                binding.adapterUserCard.setBackgroundResource(R.drawable.card_radius_user)
+                binding.adapterUserCard.setCardBackgroundColor(ContextCompat.getColor(binding.root.context, R.color.user_background))
+            }
         }
     }
+
 
     inner class GeminiViewHolder(private val binding: AdapterGeminiBinding) :
         RecyclerView.ViewHolder(binding.root) {

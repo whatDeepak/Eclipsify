@@ -37,6 +37,8 @@ class ChatFragment : Fragment() {
     private val chatAdapter = ChatAdapter()
     private val messageList = mutableListOf<Pair<String, Int>>()
 
+    private var isInitialGreetingShown = false
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -50,6 +52,15 @@ class ChatFragment : Fragment() {
         setAdapter()
         sendMessage()
         observe()
+
+        val tvTitle: TextView = binding.tvChatTitle
+        val customTypeface = Typeface.createFromAsset(requireContext().assets, "poppins_medium.ttf")
+        tvTitle.typeface = customTypeface
+        // Show initial greeting message from Gemini if not shown yet
+        if (!isInitialGreetingShown) {
+            showInitialGreeting()
+            isInitialGreetingShown = true
+        }
     }
     private fun setAdapter(){
         binding.chatRv.adapter = chatAdapter
@@ -62,9 +73,9 @@ class ChatFragment : Fragment() {
             // Add the initial sentence before the user's message
             val initialSentence = "Behave as if you are a mental health consultant/therapist " +
                     "and give advice that is very genuine and helps the user. " +
-                    "Be human-like and give a short and nice response."
+                    "Be human-like and give a very short and nice response. User : "
 
-            val completeMessage = "$initialSentence\n$userMessage"
+            val completeMessage = "$initialSentence $userMessage"
             viewModel.geminiChat(completeMessage)
             messageList.add(Pair(completeMessage,ChatAdapter.VIEW_TYPE_USER))
             chatAdapter.setMessages(messageList)
@@ -88,6 +99,13 @@ class ChatFragment : Fragment() {
     private fun scrollPosition(){
         binding.chatRv.smoothScrollToPosition(chatAdapter.itemCount - 1)
 
+    }
+
+    private fun showInitialGreeting() {
+        val initialGreeting = "Hello! I'm here to help you. How can I assist you today?"
+        messageList.add(Pair(initialGreeting, ChatAdapter.VIEW_TYPE_GEMINI))
+        chatAdapter.setMessages(messageList)
+        scrollPosition()
     }
 
 }
