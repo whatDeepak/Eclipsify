@@ -9,6 +9,9 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import java.io.FileInputStream
+import java.io.InputStream
+import java.util.Properties
 import javax.inject.Qualifier
 import javax.inject.Singleton
 
@@ -30,6 +33,7 @@ object GeminiModule {
         topP = 0.99f
         maxOutputTokens=500
     }
+
 
     @[Provides Singleton GeminiPro]
     fun provideGemini(): GenerativeModel {

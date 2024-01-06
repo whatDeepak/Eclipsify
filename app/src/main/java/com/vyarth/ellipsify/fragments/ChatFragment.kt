@@ -58,8 +58,15 @@ class ChatFragment : Fragment() {
     private fun sendMessage(){
         binding.chatSend.setOnClickListener {
             val userMessage = binding.chatPromptTextEt.text.toString()
-            viewModel.geminiChat(userMessage)
-            messageList.add(Pair(userMessage,ChatAdapter.VIEW_TYPE_USER))
+
+            // Add the initial sentence before the user's message
+            val initialSentence = "Behave as if you are a mental health consultant/therapist " +
+                    "and give advice that is very genuine and helps the user. " +
+                    "Be human-like and give a short and nice response."
+
+            val completeMessage = "$initialSentence\n$userMessage"
+            viewModel.geminiChat(completeMessage)
+            messageList.add(Pair(completeMessage,ChatAdapter.VIEW_TYPE_USER))
             chatAdapter.setMessages(messageList)
             scrollPosition()
             binding.chatPromptTextEt.setText("")
