@@ -31,7 +31,7 @@ object GeminiModule {
         temperature = 0.99f
         topK = 50
         topP = 0.99f
-        maxOutputTokens=500
+        maxOutputTokens=300
     }
 
 

@@ -1,31 +1,33 @@
 package com.vyarth.ellipsify.fragments
 
+import android.graphics.Typeface
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import com.vyarth.ellipsify.R
+import com.vyarth.ellipsify.databinding.FragmentExploreBinding
 
 class ExploreFragment : Fragment() {
 
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
+    private var _binding: FragmentExploreBinding? = null
+    private val binding: FragmentExploreBinding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_explore, container, false)
+        _binding = FragmentExploreBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
-    companion object {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-        @JvmStatic
-        fun newInstance() = ExploreFragment()
+        val tvTitle: TextView = binding.tvExploreTitle
+        val customTypeface = Typeface.createFromAsset(requireContext().assets, "epilogue_semibold.ttf")
+        tvTitle.typeface = customTypeface
     }
 }

@@ -10,7 +10,7 @@
         android:id="@+id/adapter_user_card"
         android:layout_width="wrap_content"
         android:layout_gravity="end"
-        app:cardBackgroundColor="#015d4b"
+        app:cardBackgroundColor="#4B3425"
         android:layout_height="wrap_content"
         android:layout_marginStart="80dp"
         android:layout_marginTop="4dp"

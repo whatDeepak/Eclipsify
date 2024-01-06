@@ -22,7 +22,7 @@
                 android:gravity="center_vertical"
                 android:text="Chat"
                 android:textColor="@color/primary_text_color"
-                android:textSize="18sp"
+                android:textSize="20sp"
                 android:textStyle="bold" />
 
 
@@ -54,11 +54,11 @@
 
         <ImageButton
             android:id="@+id/chat_send"
-            android:padding="16dp"
+            android:paddingHorizontal="16dp"
             android:background="@android:color/transparent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_send"
+            android:src="@drawable/chat_sent"
             app:layout_constraintBottom_toBottomOf="@+id/chat_prompt_text_til"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/chat_prompt_text_til" />

@@ -3,14 +3,17 @@
     <style name="Base.Theme.Eclipsify" parent="Theme.Material3.Light.NoActionBar">
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="colorPrimary">#CCB0AC</item>
+        <item name="colorPrimaryDark">#C1864E</item>
+        <item name="colorSecondary">#C1864E</item>
+        <item name="colorAccent">#F8DFC9</item>
+        <item name="colorSecondaryContainer">#CCB0AC</item>
+
     </style>
 
     <style name="Theme.Eclipsify" parent="Base.Theme.Eclipsify" />
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">#0591F8</item>
-        <item name="colorAccent">#0C90F1</item>
         <item name="android:statusBarColor">@color/colorPrimary</item>
     </style>
 
