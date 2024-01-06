@@ -23,6 +23,8 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.AppCompatButton
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.navigation.compose.rememberNavController
+import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -33,10 +35,14 @@ import com.vyarth.ellipsify.firebase.FirestoreClass
 import com.vyarth.ellipsify.fragments.ChatFragment
 import com.vyarth.ellipsify.fragments.ExploreFragment
 import com.vyarth.ellipsify.fragments.HomeFragment
+
 import com.vyarth.ellipsify.model.Emotion
 import de.hdodenhof.circleimageview.CircleImageView
 import java.util.Calendar
+import androidx.navigation.ui.setupWithNavController
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
@@ -48,48 +54,15 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
+        val navController = navHostFragment.navController
+        binding.bottomNavBar.setupWithNavController(navController)
+
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-        setUpTabBar()
-
-        // Open HomeFragment by default
-        inflateFragment(HomeFragment.newInstance())
-
-    }
-    private fun setUpTabBar() {
-        // Set up the bottom navigation bar
-        binding.bottomNavBar.apply {
-            setOnItemSelectedListener { itemId ->
-                when (itemId) {
-                    R.id.nav_home -> {
-                        // Do nothing or handle default behavior for the Home item
-                        inflateFragment(HomeFragment.newInstance())
-                    }
-                    R.id.nav_explore -> {
-                        // Start the ExploreActivity (replace ExploreActivity with your actual activity)
-                        inflateFragment(ExploreFragment.newInstance())
-                    }
-                    R.id.nav_chat ->{
-                        inflateFragment(ChatFragment.newInstance())
-                    }
-                    // Add more cases for other navigation items as needed
-
-                    // Default case (optional): Handle any unhandled items
-                    else -> {
-                        // Do nothing or handle default behavior
-                    }
-                }
-            }
-
-            // Set "nav_home" as selected by default
-            setItemSelected(R.id.nav_home)
-        }
-    }
 
 
-    private fun inflateFragment(fragment: Fragment){
-        val transcation=supportFragmentManager.beginTransaction()
-        transcation.replace(com.google.android.material.R.id.container,fragment)
-        transcation.commit()
+
     }
 
     fun applyWindowFlags() {

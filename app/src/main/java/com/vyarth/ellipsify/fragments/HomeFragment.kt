@@ -22,6 +22,7 @@ import com.vyarth.ellipsify.R
 import com.vyarth.ellipsify.activities.MainActivity
 import com.vyarth.ellipsify.activities.ProfileActivity
 import com.vyarth.ellipsify.adapters.EmotionsAdapter
+import com.vyarth.ellipsify.databinding.FragmentHomeBinding
 import com.vyarth.ellipsify.firebase.FirestoreClass
 import com.vyarth.ellipsify.model.Emotion
 import de.hdodenhof.circleimageview.CircleImageView
@@ -29,16 +30,19 @@ import java.util.Calendar
 
 class HomeFragment : Fragment() {
 
+    private var _binding : FragmentHomeBinding? = null
+    private val binding : FragmentHomeBinding get() = _binding!!
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view=inflater.inflate(R.layout.fragment_home, container, false)
+
+        _binding = FragmentHomeBinding.inflate(inflater, container, false)
 
         // Inflate the layout for this fragment
         (activity as? MainActivity)?.applyWindowFlags()
 
-        val profileUser: CircleImageView = view.findViewById(R.id.user_avatar)
+        val profileUser: CircleImageView = binding.userAvatar
         profileUser.setOnClickListener {
             // Launch the sign in screen.
             startActivity(Intent(requireContext(), ProfileActivity::class.java))
@@ -53,14 +57,14 @@ class HomeFragment : Fragment() {
         )
 
         // Get reference to the RecyclerView
-        val recyclerView: RecyclerView = view.findViewById(R.id.recyclerView)
+        val recyclerView: RecyclerView = binding.recyclerView
 
         // Set layout manager and adapter
         recyclerView.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         recyclerView.adapter = EmotionsAdapter(emotions)
 
-        val greetingTextView: TextView = view.findViewById(R.id.greeting_main)
+        val greetingTextView: TextView = binding.greetingMain
         // Load custom typeface from the "assets" folder
         val customTypeface = Typeface.createFromAsset(requireContext().assets, "epilogue_medium.ttf")
         // Apply custom typeface to the button
@@ -128,7 +132,7 @@ class HomeFragment : Fragment() {
                 // Handle failure to retrieve user data
             }
         )
-        return view;
+        return binding.root;
 
     }
 

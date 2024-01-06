@@ -25,4 +25,8 @@
     <color name="manicBg">#EF5DA8</color>
     <color name="angryBg">#F09E54</color>
     <color name="sadBg">#AEAFF7</color>
+
+
+    <color name="user_background">#015d4b</color>
+    <color name="gemini_background">#1f2c33</color>
 </resources>
