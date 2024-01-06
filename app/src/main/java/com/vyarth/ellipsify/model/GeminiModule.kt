@@ -35,7 +35,7 @@ object GeminiModule {
     fun provideGemini(): GenerativeModel {
         return GenerativeModel(
             modelName = "gemini-pro",
-            apiKey = API_KEY,
+            apiKey = com.vyarth.ellipsify.BuildConfig.apiKey,
             safetySettings = listOf(
                 harassment, hateSpeech
             ),
@@ -43,7 +43,6 @@ object GeminiModule {
         )
     }
 
-    private const val API_KEY = "AIzaSyAWZcz4ok3JWFCLgavHbPGCjNc2pvsPB2A"
 }
 
 @Qualifier
