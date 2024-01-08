@@ -1,6 +1,7 @@
 package com.vyarth.ellipsify.adapters
 
 import android.view.LayoutInflater
+import android.graphics.Typeface
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -22,6 +23,7 @@ class JournalAdapter(private val journal: List<Journal>):
         val journalImageView: ImageView = itemView.findViewById(R.id.journalImageView) // Replace with the actual ID of your ImageView
         val journalDesc: TextView = itemView.findViewById(R.id.journalDesc)
         val journalCount: TextView = itemView.findViewById(R.id.journalCount)
+
 
     }
 
@@ -49,6 +51,25 @@ class JournalAdapter(private val journal: List<Journal>):
         holder.journalImageView.setImageResource(jrnl.imageResId)
 
         holder.journalCount.text = jrnl.count
+
+        holder.journalCount.setTextColor(ContextCompat.getColor(holder.itemView.context, jrnl.countColor))
+
+        val fontCount = Typeface.createFromAsset(
+            holder.itemView.context.assets,
+            "epilogue_semibold.ttf"
+        )
+        val fontTitle = Typeface.createFromAsset(
+            holder.itemView.context.assets,
+            "epilogue_bold.ttf"
+        )
+        val fontDesc= Typeface.createFromAsset(
+            holder.itemView.context.assets,
+            "poppins_regular.ttf"
+        )
+        holder.journalCount.typeface = fontCount
+        holder.journalTitle.typeface= fontTitle
+        holder.journalDesc.typeface= fontDesc
+
 
     }
 

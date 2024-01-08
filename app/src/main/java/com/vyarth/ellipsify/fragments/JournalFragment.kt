@@ -34,9 +34,9 @@ class JournalFragment : Fragment() {
 
 
         val journals = listOf(
-            Journal("Daily Journal", "Express your daily thoughts , feelings and experiences.", R.drawable.bg_meditate, R.drawable.explore_meditate,"0 Journals"),
+            Journal("Daily Journal", "Express your daily thoughts , feelings and experiences.", R.drawable.bg_journal, R.drawable.journal_daily,"0 Journals",R.color.jrnlDaily),
 
-            Journal("Mood Journal", "Write your emotions and keep track of mood patterns.", R.drawable.bg_breathe, R.drawable.explore_breathe, "0 Journals")
+            Journal("Mood Journal", "Write your emotions and keep track of mood patterns.", R.drawable.bg_moodjournal, R.drawable.journal_mood, "0 Journals",R.color.jrnlMood)
         )
 
         // Get reference to the RecyclerView
@@ -53,9 +53,5 @@ class JournalFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-
     }
-
-
 }

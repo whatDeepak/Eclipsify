@@ -39,7 +39,7 @@
             app:layout_constraintTop_toBottomOf="@id/tv_you_header">
 
             <ScrollView
-                android:id="@+id/journal_scroll"
+                android:id="@+id/explore_scroll"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 app:layout_constraintTop_toTopOf="parent">
