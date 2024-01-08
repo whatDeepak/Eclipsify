@@ -62,7 +62,7 @@
                         android:layout_marginBottom="18dp"
                         android:paddingHorizontal="25dp"
                         android:paddingVertical="18dp"
-                        android:background="@drawable/shape_button_rounded_main"
+                        android:background="@drawable/bg_meditate"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
@@ -116,7 +116,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="10dp"
                                     android:text="Inner Calm"
-                                    android:textColor="#FE8235"
+                                    android:textColor="#F09A59"
                                     android:textSize="18dp"
                                     android:textStyle="bold" />
 
@@ -126,7 +126,8 @@
                                     android:layout_gravity="bottom"
                                     android:layout_marginHorizontal="8dp"
                                     android:layout_marginBottom="2dp"
-                                    android:background="@drawable/explore_arrow" />
+                                    android:background="@drawable/explore_arrow"
+                                    android:backgroundTint="#F09A59"/>
                             </LinearLayout>
                         </LinearLayout>
                     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -139,7 +140,7 @@
                         android:layout_marginVertical="18dp"
                         android:paddingHorizontal="25dp"
                         android:paddingVertical="18dp"
-                        android:background="@drawable/shape_button_rounded_main"
+                        android:background="@drawable/bg_breathe"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/btn_meditation">
@@ -167,7 +168,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="1 on 1 Sessions"
+                                android:text="Breathing"
                                 android:textColor="#573926"
                                 android:textSize="22sp"
                                 android:textStyle="bold" />
@@ -177,7 +178,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="2dp"
                                 android:lineHeight="18dp"
-                                android:text="Let's open up to the things that matter the most "
+                                android:text="Find exercises to bring peace in your life."
                                 android:textColor="#573926"
                                 android:textSize="15sp"
                                 android:textStyle="normal" />
@@ -191,8 +192,8 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="10dp"
-                                    android:text="Book Now"
-                                    android:textColor="#FE8235"
+                                    android:text="Let’s Start"
+                                    android:textColor="#617D00"
                                     android:textSize="18dp"
                                     android:textStyle="bold" />
 
@@ -202,7 +203,8 @@
                                     android:layout_gravity="bottom"
                                     android:layout_marginHorizontal="8dp"
                                     android:layout_marginBottom="2dp"
-                                    android:background="@drawable/book_now" />
+                                    android:background="@drawable/explore_arrow"
+                                    android:backgroundTint="#617D00"/>
                             </LinearLayout>
                         </LinearLayout>
                     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -215,7 +217,7 @@
                         android:layout_marginVertical="18dp"
                         android:paddingHorizontal="25dp"
                         android:paddingVertical="18dp"
-                        android:background="@drawable/shape_button_rounded_main"
+                        android:background="@drawable/bg_breathe"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/btn_breath">
@@ -436,12 +438,8 @@
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
-
             </ScrollView>
         </androidx.constraintlayout.widget.ConstraintLayout>
-
-
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 </RelativeLayout>
 

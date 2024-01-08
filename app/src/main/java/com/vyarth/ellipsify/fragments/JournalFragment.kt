@@ -7,8 +7,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.vyarth.ellipsify.R
+import com.vyarth.ellipsify.adapters.EmotionsAdapter
+import com.vyarth.ellipsify.adapters.JournalAdapter
 import com.vyarth.ellipsify.databinding.FragmentJournalBinding
+import com.vyarth.ellipsify.model.Journal
 
 
 class JournalFragment : Fragment() {
@@ -22,15 +27,34 @@ class JournalFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentJournalBinding.inflate(inflater, container, false)
+
+        val tvTitle: TextView = binding.tvJournalTitle
+        val customTypeface = Typeface.createFromAsset(requireContext().assets, "epilogue_semibold.ttf")
+        tvTitle.typeface = customTypeface
+
+
+        val journals = listOf(
+            Journal("Daily Journal", "Express your daily thoughts , feelings and experiences.", R.drawable.bg_meditate, R.drawable.explore_meditate,"0 Journals"),
+
+            Journal("Mood Journal", "Write your emotions and keep track of mood patterns.", R.drawable.bg_breathe, R.drawable.explore_breathe, "0 Journals")
+        )
+
+        // Get reference to the RecyclerView
+        val recyclerView: RecyclerView = binding.journalRecyclerView
+
+        // Set layout manager and adapter
+        recyclerView.layoutManager =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+        recyclerView.adapter = JournalAdapter(journals)
+
+
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val tvTitle: TextView = binding.tvJournalTitle
-        val customTypeface = Typeface.createFromAsset(requireContext().assets, "epilogue_semibold.ttf")
-        tvTitle.typeface = customTypeface
+
     }
 
 
