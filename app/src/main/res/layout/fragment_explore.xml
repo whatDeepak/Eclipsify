@@ -71,7 +71,7 @@
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:background="@drawable/main_sessions"
+                            android:background="@drawable/explore_meditate"
                             android:layout_marginVertical="10dp"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -91,7 +91,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="1 on 1 Sessions"
+                                android:text="Meditation"
                                 android:textColor="#573926"
                                 android:textSize="22sp"
                                 android:textStyle="bold" />
@@ -101,7 +101,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="2dp"
                                 android:lineHeight="18dp"
-                                android:text="Let's open up to the things that matter the most "
+                                android:text="Let’s embark on a journey of tranquility and self-discovery."
                                 android:textColor="#573926"
                                 android:textSize="15sp"
                                 android:textStyle="normal" />
@@ -115,7 +115,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="10dp"
-                                    android:text="Book Now"
+                                    android:text="Inner Calm"
                                     android:textColor="#FE8235"
                                     android:textSize="18dp"
                                     android:textStyle="bold" />
@@ -126,7 +126,7 @@
                                     android:layout_gravity="bottom"
                                     android:layout_marginHorizontal="8dp"
                                     android:layout_marginBottom="2dp"
-                                    android:background="@drawable/book_now" />
+                                    android:background="@drawable/explore_arrow" />
                             </LinearLayout>
                         </LinearLayout>
                     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -147,7 +147,7 @@
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:background="@drawable/main_sessions"
+                            android:background="@drawable/explore_breathe"
                             android:layout_marginVertical="10dp"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -223,7 +223,7 @@
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:background="@drawable/main_sessions"
+                            android:background="@drawable/explore_affirm"
                             android:layout_marginVertical="10dp"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -299,7 +299,7 @@
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:background="@drawable/main_sessions"
+                            android:background="@drawable/explore_music"
                             android:layout_marginVertical="10dp"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
