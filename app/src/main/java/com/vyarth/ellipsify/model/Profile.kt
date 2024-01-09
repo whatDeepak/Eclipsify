@@ -6,4 +6,5 @@ data class Profile (
     val descCount:String,
     val backgroundColor: Int,
     val count: String,
+    val loginStatus: Map<String, Boolean>
 )

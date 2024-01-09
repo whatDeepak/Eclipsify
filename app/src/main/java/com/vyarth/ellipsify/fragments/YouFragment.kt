@@ -32,10 +32,19 @@ class YouFragment : Fragment() {
         val customTypeface = Typeface.createFromAsset(requireContext().assets, "epilogue_semibold.ttf")
         tvTitle.typeface = customTypeface
 
-        val profiles = listOf(
-            Profile("Streak", "day\n" + "current streak", "1", R.drawable.bg_streak,"Best streak X days"),
+        val weekLogin = LinkedHashMap<String, Boolean>()
+        weekLogin["Monday"] = false
+        weekLogin["Tuesday"] = false
+        weekLogin["Wednesday"] = false
+        weekLogin["Thursday"] = false
+        weekLogin["Friday"] = false
+        weekLogin["Saturday"] = false
+        weekLogin["Sunday"] = true
 
-            Profile("Weekly status", "day\n" + "this week.", "1", R.drawable.bg_weekstatus, "M T W T F S S")
+        val profiles = listOf(
+            Profile("Streak", "day\n" + "current streak", "1", R.drawable.bg_streak,"Best streak X days",emptyMap()),
+
+            Profile("Weekly status", "day\n" + "this week.", "1", R.drawable.bg_weekstatus, "M   T   W   T   F   S   S",weekLogin)
         )
 
         // Get reference to the RecyclerView
@@ -53,8 +62,5 @@ class YouFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val tvTitle: TextView = binding.tvYouTitle
-        val customTypeface = Typeface.createFromAsset(requireContext().assets, "epilogue_semibold.ttf")
-        tvTitle.typeface = customTypeface
     }
 }

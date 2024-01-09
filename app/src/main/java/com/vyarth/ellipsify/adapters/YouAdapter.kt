@@ -23,8 +23,6 @@ class YouAdapter(private val profiles: List<Profile>):
         val youDesc: TextView = itemView.findViewById(R.id.youDesc)
         val youDescCount: TextView = itemView.findViewById(R.id.youDescCount)
         val youCount: TextView = itemView.findViewById(R.id.youCount)
-
-
     }
 
     // Create new ViewHolders (invoked by the layout manager)
@@ -51,6 +49,8 @@ class YouAdapter(private val profiles: List<Profile>):
         // Set image
 
         holder.youCount.text = profile.count
+        setStreakCounter(holder, profile.loginStatus, position == itemCount - 1)
+
 
 
         val fontCount = Typeface.createFromAsset(
@@ -69,8 +69,26 @@ class YouAdapter(private val profiles: List<Profile>):
         holder.youTitle.typeface= fontTitle
         holder.youDesc.typeface= fontDesc
         holder.youDescCount.typeface= fontCount
+    }
 
+    private fun setStreakCounter(holder: YouViewHolder, loginStatus: Map<String, Boolean>, isLastCard: Boolean) {
+        val daysOfWeek = listOf("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday")
 
+        for (day in daysOfWeek) {
+            val loginDayImageView = holder.itemView.findViewWithTag<ImageView>(day.lowercase())
+            val isLogged = loginStatus[day] ?: false
+
+            if (isLastCard) {
+                // For the last card, show filled or hollow circles based on login status
+                if (isLogged) {
+                    loginDayImageView.setBackgroundResource(R.drawable.circle_filled)
+                } else {
+                    loginDayImageView.setBackgroundResource(R.drawable.circle_hollow)
+                }
+            } else {
+
+            }
+        }
     }
 
     // Return the size of your dataset (invoked by the layout manager)
