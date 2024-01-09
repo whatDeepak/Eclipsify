@@ -15,6 +15,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.TextView
+import androidx.appcompat.widget.AppCompatButton
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -22,9 +23,13 @@ import com.vyarth.ellipsify.R
 import com.vyarth.ellipsify.activities.MainActivity
 import com.vyarth.ellipsify.activities.ProfileActivity
 import com.vyarth.ellipsify.adapters.EmotionsAdapter
+import com.vyarth.ellipsify.adapters.HomeAdapter
+import com.vyarth.ellipsify.adapters.JournalAdapter
 import com.vyarth.ellipsify.databinding.FragmentHomeBinding
 import com.vyarth.ellipsify.firebase.FirestoreClass
 import com.vyarth.ellipsify.model.Emotion
+import com.vyarth.ellipsify.model.Home
+import com.vyarth.ellipsify.model.Journal
 import de.hdodenhof.circleimageview.CircleImageView
 import java.util.Calendar
 
@@ -57,18 +62,41 @@ class HomeFragment : Fragment() {
         )
 
         // Get reference to the RecyclerView
-        val recyclerView: RecyclerView = binding.recyclerView
+        val emotionRecyclerView: RecyclerView = binding.recyclerView
 
         // Set layout manager and adapter
-        recyclerView.layoutManager =
+        emotionRecyclerView.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-        recyclerView.adapter = EmotionsAdapter(emotions)
+        emotionRecyclerView.adapter = EmotionsAdapter(emotions)
+
+
+        val list = listOf(
+            Home("1 on 1 Sessions", "Let’s open up to the things that matter the most ", R.drawable.bg_sessions, R.drawable.main_sessions,"Book Now",R.color.homeSessions,R.drawable.book_now),
+
+            Home("Sleep Serenity", "Say goodbye to restless nights and awaken refreshed.", R.drawable.bg_sleep, R.drawable.home_sleep, "Relax Now",R.color.homeSleep,R.drawable.btn_sleep)
+        )
+
+        // Get reference to the RecyclerView
+        val homeRecyclerView: RecyclerView = binding.homeRecyclerView
+
+        // Set layout manager and adapter
+        homeRecyclerView.layoutManager =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+        homeRecyclerView.adapter = HomeAdapter(list)
 
         val greetingTextView: TextView = binding.greetingMain
         // Load custom typeface from the "assets" folder
         val customTypeface = Typeface.createFromAsset(requireContext().assets, "epilogue_medium.ttf")
         // Apply custom typeface to the button
         greetingTextView.typeface = customTypeface
+
+
+        val quotesTextView: AppCompatButton= binding.btnQuotes
+        // Load custom typeface from the "assets" folder
+        val quotesTypeface = Typeface.createFromAsset(requireContext().assets, "epilogue_regular.ttf")
+        // Apply custom typeface to the button
+        quotesTextView.typeface = quotesTypeface
+
 
         // Call the function to get user data
         FirestoreClass().getUserData(
@@ -150,12 +178,6 @@ class HomeFragment : Fragment() {
             in 16..20 -> "Good Evening,$userName!"
             else -> "Good Night,$userName!"
         }
-    }
-
-
-    companion object {
-        @JvmStatic
-        fun newInstance() = HomeFragment()
     }
 
 
