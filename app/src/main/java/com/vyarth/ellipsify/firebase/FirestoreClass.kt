@@ -1,15 +1,21 @@
 package com.vyarth.ellipsify.firebase
 
 import android.app.Activity
+import android.content.Context
 import android.util.Log
+import androidx.fragment.app.FragmentActivity
+import androidx.navigation.fragment.NavHostFragment
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
+import com.vyarth.ellipsify.R
 import com.vyarth.ellipsify.activities.IntroActivity
 import com.vyarth.ellipsify.activities.MainActivity
+import com.vyarth.ellipsify.activities.ProfileActivity
 import com.vyarth.ellipsify.activities.SignInActivity
 import com.vyarth.ellipsify.model.User
 import com.vyarth.ellipsify.activities.SignUpActivity
+import com.vyarth.ellipsify.fragments.HomeFragment
 import com.vyarth.ellipsify.utils.Constants
 
 class FirestoreClass {
@@ -88,59 +94,60 @@ class FirestoreClass {
     /**
      * A function to SignIn using firebase and get the user details from Firestore Database.
      */
-    fun signInUser(activity: SignInActivity) {
-        // Here we pass the collection name from which we wants the data.
+    fun loadUserData(context: Context) {
+        // Here we pass the collection name from which we want the data.
         mFireStore.collection(Constants.USERS)
             // The document id to get the Fields of user.
             .document(getCurrentUserID())
             .get()
             .addOnSuccessListener { document ->
-                Log.e(activity.javaClass.simpleName, document.toString())
+                Log.e(context.javaClass.simpleName, document.toString())
 
                 // Here we have received the document snapshot which is converted into the User Data model object.
                 val loggedInUser = document.toObject(User::class.java)
-                if (loggedInUser != null)
-                    activity.signInSuccess(loggedInUser)
 
-//                // Here call a function of base activity for transferring the result to it.
-//                if (loggedInUser != null) {
-//                    // Use loggedInUser safely here
-//                    when (activity) {
-//                        is SignInActivity -> {
-//                            activity.signInSuccess(loggedInUser)
-//                        }
-//                        is MainActivity -> {
-//                            activity.updateNavigationUserDetails(loggedInUser, readBoardsList)
-//                        }
-//                        is MyProfileActivity -> {
-//                            activity.setUserDataInUI(loggedInUser)
-//                        }
-//                    }
-//                } else {
-//                    // Handle the case where the conversion to User failed or the document was null
-//                }
-
+                // Here call a function of base activity or fragment for transferring the result to it.
+                if (loggedInUser != null) {
+                    // Use loggedInUser safely here
+                    when (context) {
+                        is MainActivity -> {
+                            val navHostFragment = (context as MainActivity).supportFragmentManager.findFragmentById(R.id.fragmentContainerView)
+                            if (navHostFragment is NavHostFragment) {
+                                val currentFragment = navHostFragment.childFragmentManager.fragments.firstOrNull()
+                                if (currentFragment is HomeFragment) {
+                                    currentFragment.updateUserDetails(loggedInUser)
+                                }
+                            }
+                        }
+                        is ProfileActivity -> {
+                            (context as ProfileActivity).updateUserDetails(loggedInUser)
+                        }
+                    }
+                } else {
+                    // Handle the case where the conversion to User failed or the document was null
+                }
             }
             .addOnFailureListener { e ->
-                // Here call a function of base activity for transferring the result to it.
-//                when (activity) {
-//                    is SignInActivity -> {
-//                        activity.hideProgressDialog()
-//                    }
-//                    is MainActivity -> {
-//                        activity.hideProgressDialog()
-//                    }
-//                    is MyProfileActivity -> {
-//                        activity.hideProgressDialog()
-//                    }
-//                }
+                //Here call a function of base activity or fragment for transferring the result to it.
+                when (context) {
+                    is SignInActivity -> {
+                        (context as SignInActivity).hideProgressDialog()
+                    }
+                    is ProfileActivity -> {
+
+                    }
+                    is FragmentActivity -> {
+                        Log.e("UserData", "Bhaakkkkkkkkkkkkkkkkkkkkkkk")
+                    }
+                }
                 Log.e(
-                    activity.javaClass.simpleName,
+                    context.javaClass.simpleName,
                     "Error while getting loggedIn user details",
                     e
                 )
             }
     }
+
 
     /**
      * A function for getting the user id of current logged user.

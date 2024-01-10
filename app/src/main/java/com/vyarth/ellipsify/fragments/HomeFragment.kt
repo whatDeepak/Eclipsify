@@ -1,39 +1,45 @@
 package com.vyarth.ellipsify.fragments
 
+import android.content.Context
 import android.content.Intent
 import android.graphics.Typeface
-import android.os.Build
 import android.os.Bundle
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
 import android.text.style.StyleSpan
 import android.text.style.TextAppearanceSpan
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.WindowManager
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatButton
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.vyarth.ellipsify.R
 import com.vyarth.ellipsify.activities.MainActivity
 import com.vyarth.ellipsify.activities.ProfileActivity
 import com.vyarth.ellipsify.adapters.EmotionsAdapter
 import com.vyarth.ellipsify.adapters.HomeAdapter
-import com.vyarth.ellipsify.adapters.JournalAdapter
 import com.vyarth.ellipsify.databinding.FragmentHomeBinding
 import com.vyarth.ellipsify.firebase.FirestoreClass
 import com.vyarth.ellipsify.model.Emotion
 import com.vyarth.ellipsify.model.Home
-import com.vyarth.ellipsify.model.Journal
+import com.vyarth.ellipsify.model.User
 import de.hdodenhof.circleimageview.CircleImageView
 import java.util.Calendar
 
 class HomeFragment : Fragment() {
+
+    // A global variable for User Name
+    private lateinit var mUserName: String
+
+    private val firestoreClass = FirestoreClass()
+
 
     private var _binding : FragmentHomeBinding? = null
     private val binding : FragmentHomeBinding get() = _binding!!
@@ -43,6 +49,8 @@ class HomeFragment : Fragment() {
     ): View? {
 
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
+
+        firestoreClass.loadUserData(requireContext())
 
         // Inflate the layout for this fragment
         (activity as? MainActivity)?.applyWindowFlags()
@@ -180,5 +188,23 @@ class HomeFragment : Fragment() {
         }
     }
 
+    /**
+     * A function to get the current user details from firebase.
+     */
+    fun updateUserDetails(user: User) {
+        mUserName = user.name
 
+        // The instance of the user image of the navigation view.
+        val navUserImage = binding.userAvatar
+
+        Log.e("UserData", "User Image URL: ${user.image}")
+
+            Glide
+                .with(requireContext())
+                .load(user.image)
+                .centerCrop()
+                .placeholder(R.drawable.ic_user_place_holder)
+                .into(navUserImage)
+
+    }
 }
