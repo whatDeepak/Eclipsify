@@ -1,6 +1,5 @@
 package com.vyarth.ellipsify.activities
 
-import android.content.Intent
 import android.graphics.Typeface
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
@@ -8,33 +7,26 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.view.WindowManager
-import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
-import androidx.constraintlayout.widget.ConstraintLayout
 import com.bumptech.glide.Glide
 import com.vyarth.ellipsify.R
 import com.vyarth.ellipsify.firebase.FirestoreClass
 import com.vyarth.ellipsify.model.User
 import de.hdodenhof.circleimageview.CircleImageView
 
-class ProfileActivity : BaseActivity() {
+class AccountActivity : BaseActivity() {
 
     // A global variable for User Name
     private lateinit var mUserName: String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_profile)
+        setContentView(R.layout.activity_account)
+
 
         FirestoreClass().loadUserData(this)
 
         setupActionBar()
-
-
-        val btnAccount=findViewById<ConstraintLayout>(R.id.account_div)
-        btnAccount.setOnClickListener {
-            startActivity(Intent(this, AccountActivity::class.java))
-        }
     }
 
     private fun setupActionBar() {
@@ -61,22 +53,15 @@ class ProfileActivity : BaseActivity() {
         mUserName = user.name
 
         // The instance of the user image of the navigation view.
-        val navUserImage = findViewById<CircleImageView>(R.id.user_avatar)
+        val navUserImage = findViewById<CircleImageView>(R.id.account_user_image)
 
-        Log.d("UserData", "User Image URL: ${user.image}")
+        // Use requireContext() safely here
+        Glide
+            .with(this)
+            .load(user.image)
+            .centerCrop()
+            .placeholder(R.drawable.ic_user_place_holder)
+            .into(navUserImage)
 
-
-            // Use requireContext() safely here
-            Glide
-                .with(this)
-                .load(user.image)
-                .centerCrop()
-                .placeholder(R.drawable.ic_user_place_holder)
-                .into(navUserImage)
-
-        // The instance of the user name TextView of the navigation view.
-        val username = findViewById<TextView>(R.id.user_name)
-        // Set the user name
-        username.text = user.name
     }
 }

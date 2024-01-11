@@ -9,6 +9,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
 import com.vyarth.ellipsify.R
+import com.vyarth.ellipsify.activities.AccountActivity
 import com.vyarth.ellipsify.activities.IntroActivity
 import com.vyarth.ellipsify.activities.MainActivity
 import com.vyarth.ellipsify.activities.ProfileActivity
@@ -122,6 +123,9 @@ class FirestoreClass {
                         is ProfileActivity -> {
                             (context as ProfileActivity).updateUserDetails(loggedInUser)
                         }
+                        is AccountActivity -> {
+                            (context as AccountActivity).updateUserDetails(loggedInUser)
+                        }
                     }
                 } else {
                     // Handle the case where the conversion to User failed or the document was null
@@ -138,6 +142,9 @@ class FirestoreClass {
                     }
                     is FragmentActivity -> {
                         Log.e("UserData", "Bhaakkkkkkkkkkkkkkkkkkkkkkk")
+                    }
+                    is AccountActivity -> {
+
                     }
                 }
                 Log.e(
