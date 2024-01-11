@@ -44,6 +44,14 @@ class ProfileActivity : BaseActivity() {
                 MY_PROFILE_REQUEST_CODE
             )
         }
+
+        // Inside your HomeFragment or any other relevant class
+        val logoutButton: Button = findViewById<Button>(R.id.btn_logout)
+        logoutButton.setOnClickListener {
+            // Call the logout function
+            FirestoreClass().logoutUser(this)
+        }
+
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

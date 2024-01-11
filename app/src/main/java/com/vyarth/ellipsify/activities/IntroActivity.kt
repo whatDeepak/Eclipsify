@@ -17,12 +17,16 @@ import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.FirebaseFirestore
 import com.vyarth.ellipsify.R
 import com.vyarth.ellipsify.firebase.FirestoreClass
 import com.vyarth.ellipsify.model.User
+import com.vyarth.ellipsify.utils.Constants
 
 class IntroActivity : BaseActivity() {
     private lateinit var auth: FirebaseAuth
+
+    private val mFireStore = FirebaseFirestore.getInstance()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         auth = FirebaseAuth.getInstance()
@@ -98,17 +102,37 @@ class IntroActivity : BaseActivity() {
                     // Set the username based on the email (you can customize this logic)
                     val username = email?.substringBefore("@") ?: ""
 
-                    // Create a User object with the obtained details
-                    val userInfo = User(getCurrentUserID(), name ?: "", email ?: "", username)
-
-                    // Call the registerUser function to store data in Firestore
-                    registerUserInFirestore(this@IntroActivity, userInfo)
+                    // Check if the user already exists in the database
+                    checkIfUserExistsInDatabase(email, name, username)
                 } else {
                     // If sign in fails, display a message to the user.
                     Log.w(TAG, "signInWithCredential:failure", task.exception)
                 }
             }
     }
+
+    private fun checkIfUserExistsInDatabase(email: String?, name: String?, username: String?) {
+        // Check if the user already exists based on email
+        mFireStore.collection(Constants.USERS)
+            .whereEqualTo("email", email)
+            .get()
+            .addOnSuccessListener { documents ->
+                if (documents.isEmpty) {
+                    // User doesn't exist, proceed with registration
+                    val userInfo = User(getCurrentUserID(), name ?: "", email ?: "", username?:"")
+                    registerUserInFirestore(this@IntroActivity, userInfo)
+                } else {
+                    // User with the same email already exists, start MainActivity
+                    startActivity(Intent(this@IntroActivity, MainActivity::class.java))
+                    finish()
+                }
+            }
+            .addOnFailureListener { e ->
+                // Handle the failure to check user existence
+                Log.e(TAG, "Error checking user existence", e)
+            }
+    }
+
 
 
     private fun registerUserInFirestore(activity: Activity, userInfo: User) {

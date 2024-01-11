@@ -2,6 +2,7 @@ package com.vyarth.ellipsify.firebase
 
 import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.util.Log
 import androidx.fragment.app.FragmentActivity
 import androidx.navigation.fragment.NavHostFragment
@@ -16,6 +17,7 @@ import com.vyarth.ellipsify.activities.ProfileActivity
 import com.vyarth.ellipsify.activities.SignInActivity
 import com.vyarth.ellipsify.model.User
 import com.vyarth.ellipsify.activities.SignUpActivity
+import com.vyarth.ellipsify.activities.SplashActivity
 import com.vyarth.ellipsify.fragments.HomeFragment
 import com.vyarth.ellipsify.utils.Constants
 
@@ -28,7 +30,6 @@ class FirestoreClass {
      * A function to make an entry of the registered user in the firestore database.
      */
     fun registerUser(activity: Activity, userInfo: User) {
-
         val currentUserID = getCurrentUserID()
 
         // Check if the user already exists based on email
@@ -75,6 +76,7 @@ class FirestoreClass {
                 handleRegistrationFailure(activity, e)
             }
     }
+
 
     private fun handleRegistrationFailure(activity: Activity, e: Exception) {
         if (activity is IntroActivity) {
@@ -222,6 +224,14 @@ class FirestoreClass {
                     "Error while creating a board.", e
                 )
             }
+    }
+    fun logoutUser(context: Context) {
+        FirebaseAuth.getInstance().signOut()
+
+        // After logout, navigate to the SplashActivity
+        val intent = Intent(context, SplashActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        context.startActivity(intent)
     }
 
 }
