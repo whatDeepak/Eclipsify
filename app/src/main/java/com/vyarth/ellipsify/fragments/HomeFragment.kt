@@ -1,5 +1,6 @@
 package com.vyarth.ellipsify.fragments
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.graphics.Typeface
@@ -40,6 +41,10 @@ class HomeFragment : Fragment() {
 
     private val firestoreClass = FirestoreClass()
 
+    companion object{
+        const val MY_PROFILE_REQUEST_CODE: Int = 11
+    }
+
 
     private var _binding : FragmentHomeBinding? = null
     private val binding : FragmentHomeBinding get() = _binding!!
@@ -58,7 +63,8 @@ class HomeFragment : Fragment() {
         val profileUser: CircleImageView = binding.userAvatar
         profileUser.setOnClickListener {
             // Launch the sign in screen.
-            startActivity(Intent(requireContext(), ProfileActivity::class.java))
+            startActivityForResult((Intent(requireContext(), ProfileActivity::class.java)),
+                MY_PROFILE_REQUEST_CODE)
         }
 
         val emotions = listOf(
@@ -105,7 +111,19 @@ class HomeFragment : Fragment() {
         // Apply custom typeface to the button
         quotesTextView.typeface = quotesTypeface
 
+        greetingMessage()
 
+        return binding.root;
+
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+    }
+
+    private fun greetingMessage(){
+        val greetingTextView: TextView = binding.greetingMain
         // Call the function to get user data
         FirestoreClass().getUserData(
             onSuccess = { user ->
@@ -168,12 +186,6 @@ class HomeFragment : Fragment() {
                 // Handle failure to retrieve user data
             }
         )
-        return binding.root;
-
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
     }
 
     private fun getGreetingMessage(userName: String): String {
@@ -206,5 +218,19 @@ class HomeFragment : Fragment() {
                 .placeholder(R.drawable.ic_user_place_holder)
                 .into(navUserImage)
 
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (resultCode == Activity.RESULT_OK
+            && requestCode == ProfileActivity.MY_PROFILE_REQUEST_CODE
+        ) {
+            // Get the user updated details.
+            greetingMessage()
+            FirestoreClass().loadUserData(requireContext())
+        }else {
+            Log.e("Cancelled", "Cancelled")
+        }
     }
 }

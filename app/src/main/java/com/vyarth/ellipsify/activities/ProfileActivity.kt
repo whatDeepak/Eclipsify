@@ -57,6 +57,7 @@ class ProfileActivity : BaseActivity() {
         }else {
             Log.e("Cancelled", "Cancelled")
         }
+        setResult(Activity.RESULT_OK)
     }
 
     private fun setupActionBar() {
