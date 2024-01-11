@@ -1,5 +1,6 @@
 package com.vyarth.ellipsify.activities
 
+import android.app.Dialog
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.Typeface
@@ -46,6 +47,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
+    private lateinit var mProgressDialog: Dialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -82,5 +84,22 @@ class MainActivity : AppCompatActivity() {
             val decor: View = window.decorView
             decor.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
         }
+    }
+
+    fun showProgressDialog(text: String) {
+        mProgressDialog = Dialog(this)
+
+        /*Set the screen content from a layout resource.
+        The resource will be inflated, adding all top-level views to the screen.*/
+        mProgressDialog.setContentView(R.layout.dialog_progress)
+
+        val tvProgressText=mProgressDialog.findViewById<TextView>(R.id.tv_progress_text)
+        tvProgressText.text = text
+
+        //Start the dialog and display it on screen.
+        mProgressDialog.show()
+    }
+    fun hideProgressDialog() {
+        mProgressDialog.dismiss()
     }
 }

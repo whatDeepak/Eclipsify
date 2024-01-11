@@ -7,6 +7,7 @@ data class User (
     val id: String = "",
     val name: String = "",
     val email: String = "",
+    val username: String = "",
     val image: String = "",
     val mobile: Long = 0,
     val fcmToken: String = "",
@@ -16,6 +17,7 @@ data class User (
         source.readString()!!,
         source.readString()!!,
         source.readString()!!,
+            source.readString()!!,
         source.readString()!!,
         source.readLong(),
         source.readString()!!
@@ -27,6 +29,7 @@ data class User (
             writeString(id)
             writeString(name)
             writeString(email)
+            writeString(username)
             writeString(image)
             writeLong(mobile)
             writeString(fcmToken)

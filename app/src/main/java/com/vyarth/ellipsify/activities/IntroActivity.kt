@@ -95,8 +95,11 @@ class IntroActivity : BaseActivity() {
                     val name = user?.displayName
                     val email = user?.email
 
+                    // Set the username based on the email (you can customize this logic)
+                    val username = email?.substringBefore("@") ?: ""
+
                     // Create a User object with the obtained details
-                    val userInfo = User(getCurrentUserID(), name ?: "", email ?: "")
+                    val userInfo = User(getCurrentUserID(), name ?: "", email ?: "", username)
 
                     // Call the registerUser function to store data in Firestore
                     registerUserInFirestore(this@IntroActivity, userInfo)
@@ -106,6 +109,7 @@ class IntroActivity : BaseActivity() {
                 }
             }
     }
+
 
     private fun registerUserInFirestore(activity: Activity, userInfo: User) {
         // Use the FirestoreClass to register the user

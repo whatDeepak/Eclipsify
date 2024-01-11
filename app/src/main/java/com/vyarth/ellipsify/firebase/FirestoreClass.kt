@@ -124,7 +124,7 @@ class FirestoreClass {
                             (context as ProfileActivity).updateUserDetails(loggedInUser)
                         }
                         is AccountActivity -> {
-                            (context as AccountActivity).updateUserDetails(loggedInUser)
+                            (context as AccountActivity).setUserDataInUI(loggedInUser)
                         }
                     }
                 } else {
@@ -138,13 +138,13 @@ class FirestoreClass {
                         (context as SignInActivity).hideProgressDialog()
                     }
                     is ProfileActivity -> {
-
+                        (context as ProfileActivity).hideProgressDialog()
                     }
                     is FragmentActivity -> {
                         Log.e("UserData", "Bhaakkkkkkkkkkkkkkkkkkkkkkk")
                     }
                     is AccountActivity -> {
-
+                        (context as AccountActivity).hideProgressDialog()
                     }
                 }
                 Log.e(
@@ -186,6 +186,41 @@ class FirestoreClass {
             }
             .addOnFailureListener {
                 onFailure()
+            }
+    }
+
+    /**
+     * A function to update the user profile data into the database.
+     */
+    fun updateUserProfileData(activity: Activity, userHashMap: HashMap<String, Any>) {
+        mFireStore.collection(Constants.USERS) // Collection Name
+            .document(getCurrentUserID()) // Document ID
+            .update(userHashMap) // A hashmap of fields which are to be updated.
+            .addOnSuccessListener {
+                Log.e(activity.javaClass.simpleName, "Data updated successfully!")
+
+                // Notify the success result.
+
+                when (activity) {
+                    is AccountActivity -> {
+                        activity.profileUpdateSuccess()
+                    }
+                }
+            }
+            .addOnFailureListener { e ->
+                when (activity) {
+                    is MainActivity -> {
+                        activity.hideProgressDialog()
+                    }
+                    is AccountActivity -> {
+                        activity.hideProgressDialog()
+                    }
+                }
+
+                Log.e(
+                    activity.javaClass.simpleName,
+                    "Error while creating a board.", e
+                )
             }
     }
 
