@@ -38,4 +38,6 @@
     <dimen name="progress_text_marginStart">16dp</dimen>
     <dimen name="progress_text_size">16sp</dimen>
     <dimen name="item_spacing">20dp</dimen>
+    <dimen name="selected_emoji_border_width">5dp</dimen>
+    <dimen name="unselected_emoji_border_width">0.1dp</dimen>
 </resources>

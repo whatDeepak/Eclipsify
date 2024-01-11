@@ -41,4 +41,7 @@
     <color name="homeSessions">#FE8235</color>
     <color name="homeSleep">#3079FF</color>
 
+    <color name="selected_emoji_border_color">#4B3425</color>
+    <color name="unselected_emoji_border_color">#ffffff</color>
+
 </resources>

@@ -1,0 +1,112 @@
+<!-- dialog_feedback.xml -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="32dp"
+    android:background="@drawable/feedbackdialog_background"
+    >
+
+    <TextView
+        android:id="@+id/feedback_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Rate your Experience"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:gravity="center"/>
+
+    <!-- Rating Stars -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="20dp"
+        android:gravity="center">
+
+        <!-- ImageView for Rating 1 -->
+        <!-- Include clickable attribute for each ImageView -->
+        <ImageView
+            android:id="@+id/rating_1"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:padding="3dp"
+            android:src="@drawable/rating1"
+            android:clickable="true"
+            android:layout_marginRight="10dp"
+            android:onClick="onStarClick"
+            android:tag="1"/>
+
+        <ImageView
+            android:id="@+id/rating_2"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:padding="3dp"
+            android:src="@drawable/rating2"
+            android:clickable="true"
+            android:layout_marginRight="10dp"
+            android:onClick="onStarClick"
+            android:tag="2"/>
+
+        <ImageView
+            android:id="@+id/rating_3"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:padding="3dp"
+            android:src="@drawable/rating3"
+            android:clickable="true"
+            android:layout_marginRight="10dp"
+            android:onClick="onStarClick"
+            android:tag="3"/>
+        <ImageView
+            android:id="@+id/rating_4"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:padding="3dp"
+            android:src="@drawable/rating4"
+            android:clickable="true"
+            android:layout_marginRight="10dp"
+            android:onClick="onStarClick"
+            android:tag="4"/>
+        <ImageView
+            android:id="@+id/rating_5"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:padding="3dp"
+            android:src="@drawable/rating5"
+            android:clickable="true"
+            android:onClick="onStarClick"
+            android:tag="5"/>
+
+    </LinearLayout>
+
+    <!-- Comment Box -->
+    <EditText
+        android:id="@+id/feedback_comment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter your comments"
+        android:inputType="textMultiLine"
+        android:gravity="start"
+        android:layout_marginTop="16dp"/>
+
+    <!-- Submit Button -->
+
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/feedback_submit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shape_button_rounded"
+        android:foreground="?attr/selectableItemBackground"
+        android:gravity="center"
+        android:paddingTop="@dimen/btn_paddingTop"
+        android:paddingBottom="@dimen/btn_paddingBottom"
+        android:layout_marginTop="25dp"
+        android:text="Submit"
+        android:textAllCaps="false"
+        android:textColor="@android:color/black"
+        android:textSize="@dimen/btn_text_size"
+        android:onClick="onSubmitClick"
+         />
+</LinearLayout>
