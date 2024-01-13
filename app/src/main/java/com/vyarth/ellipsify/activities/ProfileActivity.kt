@@ -5,6 +5,7 @@ import android.app.Dialog
 import android.content.Intent
 import android.graphics.Typeface
 import android.graphics.drawable.GradientDrawable
+import android.net.Uri
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -69,6 +70,11 @@ class ProfileActivity : BaseActivity() {
         val feedbackButton: ConstraintLayout = findViewById(R.id.feedback)
         feedbackButton.setOnClickListener {
             showFeedbackDialog()
+        }
+
+        val contactUsButton: ConstraintLayout = findViewById(R.id.contact)
+        contactUsButton.setOnClickListener {
+            openEmailClient()
         }
 
         // Inside your HomeFragment or any other relevant class
@@ -248,6 +254,13 @@ class ProfileActivity : BaseActivity() {
         feedbackDialog.dismiss()
 
         Toast.makeText(this, "Thank You for your valuable Feedback <3", Toast.LENGTH_SHORT).show()
+    }
+
+    private fun openEmailClient() {
+        val intent = Intent(Intent.ACTION_SENDTO).apply {
+            data = Uri.parse("mailto: help.eclipsify@gmail.com")
+        }
+        startActivity(intent)
     }
 
 }
