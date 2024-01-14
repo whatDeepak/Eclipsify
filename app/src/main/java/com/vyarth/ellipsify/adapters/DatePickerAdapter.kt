@@ -1,9 +1,11 @@
 package com.vyarth.ellipsify.adapters
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
@@ -12,13 +14,16 @@ import com.vyarth.ellipsify.R
 import com.vyarth.ellipsify.model.DatePicker
 import com.vyarth.ellipsify.model.Emotion
 
-class DatePickerAdapter(private val data: List<DatePicker>) :
+class DatePickerAdapter(private val data: List<DatePicker>, private val defaultSelectedPosition: Int) :
     RecyclerView.Adapter<DatePickerAdapter.DatePickerViewHolder>() {
+
+    private var selectedPosition = defaultSelectedPosition
 
     // ViewHolder class
     class DatePickerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val DateTextView: TextView = itemView.findViewById(R.id.dateTV)
         val FrequencyTextView: TextView = itemView.findViewById(R.id.numberJournalTV)
+        val DateDiv:LinearLayout=itemView.findViewById(R.id.date_div)
 
     }
 
@@ -36,6 +41,24 @@ class DatePickerAdapter(private val data: List<DatePicker>) :
 
         holder.DateTextView.text= dp.date.toString()
         holder.FrequencyTextView.text=dp.frequency.toString()
+
+        // Manually set the background color based on the selected state
+        if (selectedPosition == position) {
+            holder.itemView.setBackgroundResource(R.drawable.dp_card_selected)
+            holder.DateDiv.setBackgroundResource(R.drawable.date_div_selected)
+        } else {
+            holder.itemView.setBackgroundResource(R.drawable.dp_card)
+            holder.DateDiv.setBackgroundResource(R.drawable.date_div)
+        }
+
+        // Handle item click
+        holder.itemView.setOnClickListener {
+            notifyItemChanged(selectedPosition)
+            selectedPosition = holder.adapterPosition
+            notifyItemChanged(selectedPosition)
+            // Handle item click action (e.g., open a new activity)
+            // ...
+        }
 
     }
 

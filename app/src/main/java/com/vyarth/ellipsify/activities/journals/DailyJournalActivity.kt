@@ -4,10 +4,14 @@ import android.graphics.Typeface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.datepicker.MaterialDatePicker
 import com.vyarth.ellipsify.R
 import com.vyarth.ellipsify.activities.BaseActivity
 import com.vyarth.ellipsify.adapters.DatePickerAdapter
@@ -16,6 +20,7 @@ import com.vyarth.ellipsify.model.DatePicker
 import com.vyarth.ellipsify.model.Emotion
 import java.text.SimpleDateFormat
 import java.util.Calendar
+import java.util.Date
 import java.util.Locale
 
 class DailyJournalActivity : BaseActivity() {
@@ -40,13 +45,49 @@ class DailyJournalActivity : BaseActivity() {
             daysOfWeek.add(DatePicker(dayOfMonth, 0))
         }
 
+        // Find today's date in the list and set selectedPosition
+        val today = currentDate.get(Calendar.DAY_OF_MONTH)
+        val todayIndex = daysOfWeek.indexOfFirst { it.date == today }
+        val defaultSelectedPosition = if (todayIndex != -1) todayIndex else -1  // If today is not found, default to the first item
+
 
         val dPRecyclerView: RecyclerView = findViewById(R.id.datePickerRV)
 
         // Set layout manager and adapter
         dPRecyclerView.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-        dPRecyclerView.adapter = DatePickerAdapter(daysOfWeek)
+        dPRecyclerView.adapter = DatePickerAdapter(daysOfWeek,defaultSelectedPosition)
+
+        val dpDiv: LinearLayout=findViewById(R.id.dp_div)
+        dpDiv.setOnClickListener{openDatePicker()}
+    }
+
+    private fun openDatePicker() {
+        val datePicker =
+            MaterialDatePicker.Builder.datePicker()
+                .setTitleText("Select date")
+                .setSelection(MaterialDatePicker.todayInUtcMilliseconds())
+                .build()
+
+        datePicker.show(supportFragmentManager, "DatePicker")
+
+        // Setting up the event for when ok is clicked
+        datePicker.addOnPositiveButtonClickListener {
+            // formatting date in dd-mm-yyyy format.
+            val dateFormatter = SimpleDateFormat("dd-MM-yyyy")
+            val date = dateFormatter.format(Date(it))
+            Toast.makeText(this, "$date is selected", Toast.LENGTH_LONG).show()
+        }
+
+        // Setting up the event for when cancelled is clicked
+        datePicker.addOnNegativeButtonClickListener {
+            Toast.makeText(this, "${datePicker.headerText} is cancelled", Toast.LENGTH_LONG).show()
+        }
+
+        // Setting up the event for when back button is pressed
+        datePicker.addOnCancelListener {
+            Toast.makeText(this, "Date Picker Cancelled", Toast.LENGTH_LONG).show()
+        }
     }
 
     private fun setupActionBar() {
