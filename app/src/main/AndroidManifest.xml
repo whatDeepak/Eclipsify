@@ -18,13 +18,16 @@
         android:theme="@style/Theme.Eclipsify"
         tools:targetApi="31">
         <activity
+            android:name=".activities.journals.DailyJournalActivity"
+            android:exported="false" />
+        <activity
             android:name=".activities.AccountActivity"
             android:exported="false"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activities.ProfileActivity"
             android:exported="false"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activities.BaseActivity"
             android:exported="false" />

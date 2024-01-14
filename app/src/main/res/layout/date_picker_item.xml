@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cardView"
+    android:layout_width="30dp"
+    android:layout_height="60dp"
+    android:layout_marginRight="15dp"
+    app:cardCornerRadius="16dp">
+
+    <LinearLayout
+        android:id="@+id/date_div"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_gravity="center|top"
+        android:layout_marginVertical="10dp"
+        android:background="@drawable/shape_button_rounded_quotes"
+        >
+
+        <TextView
+            android:id="@+id/dateTV"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textAlignment="center"
+            android:padding="5dp"
+            android:textColor="#000000"
+            android:textSize="8sp" />
+
+    </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/numberJournalTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center|bottom"
+        android:textAlignment="center"
+        android:padding="5dp"
+        android:textColor="#000000"
+        android:textSize="11sp" />
+
+    <!-- Your CardView content goes here, e.g., an ImageView or other views -->
+
+</androidx.cardview.widget.CardView>
