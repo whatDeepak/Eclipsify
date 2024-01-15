@@ -24,6 +24,8 @@ import java.util.Date
 import java.util.Locale
 
 class DailyJournalActivity : BaseActivity() {
+
+    private lateinit var datePickerAdapter: DatePickerAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_daily_journal)
@@ -56,10 +58,21 @@ class DailyJournalActivity : BaseActivity() {
         // Set layout manager and adapter
         dPRecyclerView.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-        dPRecyclerView.adapter = DatePickerAdapter(daysOfWeek,defaultSelectedPosition)
+        datePickerAdapter = DatePickerAdapter(daysOfWeek, defaultSelectedPosition)
+        dPRecyclerView.adapter = datePickerAdapter
 
         val dpDiv: LinearLayout=findViewById(R.id.dp_div)
         dpDiv.setOnClickListener{openDatePicker()}
+
+        val curDate = Calendar.getInstance().time
+        // Define the desired date format
+        val dateFormat = SimpleDateFormat("EEEE, dd MMM, yyyy", Locale.getDefault())
+        // Format the current date
+        val formattedDate = dateFormat.format(curDate)
+        // Find your TextView in the layout
+        val textViewDate: TextView = findViewById(R.id.journal_date)
+        // Set the formatted date to the TextView
+        textViewDate.text = formattedDate
     }
 
     private fun openDatePicker() {
@@ -77,6 +90,11 @@ class DailyJournalActivity : BaseActivity() {
             val dateFormatter = SimpleDateFormat("dd-MM-yyyy")
             val date = dateFormatter.format(Date(it))
             Toast.makeText(this, "$date is selected", Toast.LENGTH_LONG).show()
+
+            updateDataForSelectedWeek(it)
+
+            // Update the TextView with the selected date
+            updateSelectedDateText(it)
         }
 
         // Setting up the event for when cancelled is clicked
@@ -88,6 +106,54 @@ class DailyJournalActivity : BaseActivity() {
         datePicker.addOnCancelListener {
             Toast.makeText(this, "Date Picker Cancelled", Toast.LENGTH_LONG).show()
         }
+    }
+
+    private fun updateDataForSelectedWeek(selectedDate: Long) {
+        val selectedCalendar = Calendar.getInstance()
+        selectedCalendar.timeInMillis = selectedDate
+
+        val daysOfWeek = mutableListOf<DatePicker>()
+
+        // Set the selected date as the first day of the week
+        selectedCalendar.firstDayOfWeek = Calendar.SUNDAY
+        selectedCalendar.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY)
+
+        for (i in Calendar.SUNDAY..Calendar.SATURDAY) {
+            val dayOfMonth = selectedCalendar.get(Calendar.DAY_OF_MONTH)
+            daysOfWeek.add(DatePicker(dayOfMonth, 0))
+            selectedCalendar.add(Calendar.DAY_OF_WEEK, 1)
+        }
+
+        // Update the adapter with the new data
+        datePickerAdapter.updateData(daysOfWeek)
+
+
+        val calendar = Calendar.getInstance().apply { timeInMillis = selectedDate }
+        val dayOfMonth = calendar[Calendar.DAY_OF_MONTH]
+
+        // Find the index of the selected date in the new data
+        val selectedDateIndex = daysOfWeek.indexOfFirst { it.date == dayOfMonth }
+
+        // Update the selected position
+        if (selectedDateIndex != -1) {
+            datePickerAdapter.setSelectedPosition(selectedDateIndex)
+        }
+
+        updateSelectedDateText(selectedDate)
+    }
+
+
+    private fun updateSelectedDateText(selectedDate: Long) {
+        val curDate = Date(selectedDate)
+        val dateFormat = SimpleDateFormat("EEEE, dd MMM, yyyy", Locale.getDefault())
+        val formattedDate = dateFormat.format(curDate)
+
+        // Find your TextView in the layout
+        val textViewDate: TextView = findViewById(R.id.journal_date)
+        textViewDate.text = formattedDate
+
+        val monthYearText = SimpleDateFormat("MMMM, yyyy", Locale.getDefault()).format(curDate.time)
+        findViewById<TextView>(R.id.date_picker_text).text = monthYearText
     }
 
     private fun setupActionBar() {

@@ -14,7 +14,7 @@ import com.vyarth.ellipsify.R
 import com.vyarth.ellipsify.model.DatePicker
 import com.vyarth.ellipsify.model.Emotion
 
-class DatePickerAdapter(private val data: List<DatePicker>, private val defaultSelectedPosition: Int) :
+class DatePickerAdapter(private val data: MutableList<DatePicker>, private val defaultSelectedPosition: Int) :
     RecyclerView.Adapter<DatePickerAdapter.DatePickerViewHolder>() {
 
     private var selectedPosition = defaultSelectedPosition
@@ -60,6 +60,17 @@ class DatePickerAdapter(private val data: List<DatePicker>, private val defaultS
             // ...
         }
 
+    }
+
+    fun updateData(newData: List<DatePicker>) {
+        data.clear()
+        data.addAll(newData)
+        notifyDataSetChanged()
+    }
+
+    fun setSelectedPosition(position: Int) {
+        selectedPosition = position
+        notifyItemChanged(position)
     }
 
     // Return the size of your dataset (invoked by the layout manager)
