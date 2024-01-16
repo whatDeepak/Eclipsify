@@ -18,6 +18,9 @@
         android:theme="@style/Theme.Eclipsify"
         tools:targetApi="31">
         <activity
+            android:name=".activities.journals.DailyJournalEntryActivity"
+            android:exported="false" />
+        <activity
             android:name=".activities.journals.DailyJournalActivity"
             android:exported="false" />
         <activity

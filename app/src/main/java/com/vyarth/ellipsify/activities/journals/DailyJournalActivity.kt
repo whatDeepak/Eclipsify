@@ -1,5 +1,6 @@
 package com.vyarth.ellipsify.activities.journals
 
+import android.content.Intent
 import android.graphics.Typeface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -12,8 +13,10 @@ import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.datepicker.MaterialDatePicker
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.vyarth.ellipsify.R
 import com.vyarth.ellipsify.activities.BaseActivity
+import com.vyarth.ellipsify.activities.SignInActivity
 import com.vyarth.ellipsify.adapters.DatePickerAdapter
 import com.vyarth.ellipsify.adapters.EmotionsAdapter
 import com.vyarth.ellipsify.model.DatePicker
@@ -73,6 +76,12 @@ class DailyJournalActivity : BaseActivity(), DatePickerAdapter.DatePickerClickLi
         val textViewDate: TextView = findViewById(R.id.journal_date)
         // Set the formatted date to the TextView
         textViewDate.text = formattedDate
+
+        //FAB CREATE
+        val fabCreate:FloatingActionButton=findViewById(R.id.fab_create)
+        fabCreate.setOnClickListener{
+            startActivity(Intent(this, DailyJournalEntryActivity::class.java))
+        }
     }
 
     private fun openDatePicker() {
