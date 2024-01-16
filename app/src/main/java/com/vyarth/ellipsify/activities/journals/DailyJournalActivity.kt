@@ -23,7 +23,7 @@ import java.util.Calendar
 import java.util.Date
 import java.util.Locale
 
-class DailyJournalActivity : BaseActivity() {
+class DailyJournalActivity : BaseActivity(), DatePickerAdapter.DatePickerClickListener {
 
     private lateinit var datePickerAdapter: DatePickerAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -58,7 +58,7 @@ class DailyJournalActivity : BaseActivity() {
         // Set layout manager and adapter
         dPRecyclerView.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-        datePickerAdapter = DatePickerAdapter(daysOfWeek, defaultSelectedPosition)
+        datePickerAdapter = DatePickerAdapter(daysOfWeek, defaultSelectedPosition, this)
         dPRecyclerView.adapter = datePickerAdapter
 
         val dpDiv: LinearLayout=findViewById(R.id.dp_div)
@@ -156,6 +156,36 @@ class DailyJournalActivity : BaseActivity() {
         findViewById<TextView>(R.id.date_picker_text).text = monthYearText
     }
 
+    private fun updateJournalDateText(selectedDay: Int) {
+        val currentCalendar = Calendar.getInstance()
+        val currentDayOfMonth = currentCalendar.get(Calendar.DAY_OF_MONTH)
+
+        // Clone the current calendar to avoid modifying it
+        val tempCalendar = currentCalendar.clone() as Calendar
+
+        // Adjust the temporary calendar to the selected day of the month
+        tempCalendar.add(Calendar.DAY_OF_MONTH, selectedDay - currentDayOfMonth)
+
+        // Check if the month has changed
+        val isMonthChanged = (selectedDay < currentDayOfMonth) || (selectedDay == 1 && currentDayOfMonth == tempCalendar.getActualMaximum(Calendar.DAY_OF_MONTH))
+
+        // If the month has changed, move to the next month
+        if (isMonthChanged) {
+            tempCalendar.add(Calendar.MONTH, 1)
+        }
+
+        val dateFormat = SimpleDateFormat("EEEE, dd MMM, yyyy", Locale.getDefault())
+        val formattedDate = dateFormat.format(tempCalendar.time)
+
+        // Find your TextView in the layout
+        val textViewDate: TextView = findViewById(R.id.journal_date)
+        textViewDate.text = formattedDate
+
+        val monthYearText = SimpleDateFormat("MMMM, yyyy", Locale.getDefault()).format(tempCalendar.time)
+        findViewById<TextView>(R.id.date_picker_text).text = monthYearText
+    }
+
+
     private fun setupActionBar() {
 
         val toolbarSignInActivity=findViewById<Toolbar>(R.id.toolbar_profile)
@@ -171,5 +201,10 @@ class DailyJournalActivity : BaseActivity() {
         }
 
         toolbarSignInActivity.setNavigationOnClickListener { onBackPressed() }
+    }
+
+    override fun onDatePickerItemClick(selectedDate: Int) {
+        updateJournalDateText(selectedDate)
+        Log.e("dateeee",selectedDate.toString())
     }
 }

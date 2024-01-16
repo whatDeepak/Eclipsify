@@ -14,7 +14,8 @@ import com.vyarth.ellipsify.R
 import com.vyarth.ellipsify.model.DatePicker
 import com.vyarth.ellipsify.model.Emotion
 
-class DatePickerAdapter(private val data: MutableList<DatePicker>, private val defaultSelectedPosition: Int) :
+
+class DatePickerAdapter(private val data: MutableList<DatePicker>, private val defaultSelectedPosition: Int,  private val clickListener: DatePickerClickListener) :
     RecyclerView.Adapter<DatePickerAdapter.DatePickerViewHolder>() {
 
     private var selectedPosition = defaultSelectedPosition
@@ -58,8 +59,9 @@ class DatePickerAdapter(private val data: MutableList<DatePicker>, private val d
             notifyItemChanged(selectedPosition)
             // Handle item click action (e.g., open a new activity)
             // ...
+            clickListener.onDatePickerItemClick(data[selectedPosition].date)
+            Log.e("data", data[selectedPosition].date.toLong().toString())
         }
-
     }
 
     fun updateData(newData: List<DatePicker>) {
@@ -77,4 +79,9 @@ class DatePickerAdapter(private val data: MutableList<DatePicker>, private val d
     override fun getItemCount(): Int {
         return data.size
     }
+
+    interface DatePickerClickListener {
+        fun onDatePickerItemClick(selectedDate: Int)
+    }
 }
+
