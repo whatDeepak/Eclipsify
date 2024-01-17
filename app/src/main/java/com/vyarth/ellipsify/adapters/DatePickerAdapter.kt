@@ -13,6 +13,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.vyarth.ellipsify.R
 import com.vyarth.ellipsify.model.DatePicker
 import com.vyarth.ellipsify.model.Emotion
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 
 class DatePickerAdapter(private val data: MutableList<DatePicker>, private val defaultSelectedPosition: Int,  private val clickListener: DatePickerClickListener) :
@@ -40,7 +42,7 @@ class DatePickerAdapter(private val data: MutableList<DatePicker>, private val d
     override fun onBindViewHolder(holder: DatePickerViewHolder, position: Int) {
         val dp = data[position]
 
-        holder.DateTextView.text= dp.date.toString()
+        holder.DateTextView.text= SimpleDateFormat("dd", Locale.getDefault()).format(dp.date).toString()
         holder.FrequencyTextView.text=dp.frequency.toString()
 
         // Manually set the background color based on the selected state
@@ -60,7 +62,7 @@ class DatePickerAdapter(private val data: MutableList<DatePicker>, private val d
             // Handle item click action (e.g., open a new activity)
             // ...
             clickListener.onDatePickerItemClick(data[selectedPosition].date)
-            Log.e("data", data[selectedPosition].date.toLong().toString())
+            Log.e("data", data[selectedPosition].date.toString())
         }
     }
 
@@ -81,7 +83,7 @@ class DatePickerAdapter(private val data: MutableList<DatePicker>, private val d
     }
 
     interface DatePickerClickListener {
-        fun onDatePickerItemClick(selectedDate: Int)
+        fun onDatePickerItemClick(selectedDate: Long)
     }
 }
 

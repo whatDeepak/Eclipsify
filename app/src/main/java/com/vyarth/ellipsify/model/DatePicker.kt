@@ -1,7 +1,7 @@
 package com.vyarth.ellipsify.model
 
 data class DatePicker (
-    val date: Int,
+    val date: Long,
     val frequency: Int,
 )
 

@@ -45,14 +45,17 @@ class DailyJournalActivity : BaseActivity(), DatePickerAdapter.DatePickerClickLi
 
         for (i in Calendar.SUNDAY..Calendar.SATURDAY) {
             currentCalendar.set(Calendar.DAY_OF_WEEK, i)
-            val dayOfMonth = currentCalendar.get(Calendar.DAY_OF_MONTH)
+            val dayOfMonth = currentCalendar.timeInMillis
             val month = currentCalendar.get(Calendar.MONTH) + 1 // Months are 0-based
             daysOfWeek.add(DatePicker(dayOfMonth, 0))
         }
 
         // Find today's date in the list and set selectedPosition
         val today = currentDate.get(Calendar.DAY_OF_MONTH)
-        val todayIndex = daysOfWeek.indexOfFirst { it.date == today }
+        Log.e("yoo",today.toString())
+        Log.e("yoo",daysOfWeek[4].date.toString())
+
+        val todayIndex = daysOfWeek.indexOfFirst { SimpleDateFormat("dd", Locale.getDefault()).format(it.date).toInt() == today }
         val defaultSelectedPosition = if (todayIndex != -1) todayIndex else -1  // If today is not found, default to the first item
 
 
@@ -128,7 +131,7 @@ class DailyJournalActivity : BaseActivity(), DatePickerAdapter.DatePickerClickLi
         selectedCalendar.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY)
 
         for (i in Calendar.SUNDAY..Calendar.SATURDAY) {
-            val dayOfMonth = selectedCalendar.get(Calendar.DAY_OF_MONTH)
+            val dayOfMonth = selectedCalendar.timeInMillis
             daysOfWeek.add(DatePicker(dayOfMonth, 0))
             selectedCalendar.add(Calendar.DAY_OF_WEEK, 1)
         }
@@ -137,11 +140,8 @@ class DailyJournalActivity : BaseActivity(), DatePickerAdapter.DatePickerClickLi
         datePickerAdapter.updateData(daysOfWeek)
 
 
-        val calendar = Calendar.getInstance().apply { timeInMillis = selectedDate }
-        val dayOfMonth = calendar[Calendar.DAY_OF_MONTH]
-
         // Find the index of the selected date in the new data
-        val selectedDateIndex = daysOfWeek.indexOfFirst { it.date == dayOfMonth }
+        val selectedDateIndex = daysOfWeek.indexOfFirst { it.date == selectedDate }
 
         // Update the selected position
         if (selectedDateIndex != -1) {
@@ -165,34 +165,25 @@ class DailyJournalActivity : BaseActivity(), DatePickerAdapter.DatePickerClickLi
         findViewById<TextView>(R.id.date_picker_text).text = monthYearText
     }
 
-    private fun updateJournalDateText(selectedDay: Int) {
+    private fun updateJournalDateText(selectedDay: Long) {
         val currentCalendar = Calendar.getInstance()
         val currentDayOfMonth = currentCalendar.get(Calendar.DAY_OF_MONTH)
 
-        // Clone the current calendar to avoid modifying it
-        val tempCalendar = currentCalendar.clone() as Calendar
-
-        // Adjust the temporary calendar to the selected day of the month
-        tempCalendar.add(Calendar.DAY_OF_MONTH, selectedDay - currentDayOfMonth)
-
-        // Check if the month has changed
-        val isMonthChanged = (selectedDay < currentDayOfMonth) || (selectedDay == 1 && currentDayOfMonth == tempCalendar.getActualMaximum(Calendar.DAY_OF_MONTH))
-
-        // If the month has changed, move to the next month
-        if (isMonthChanged) {
-            tempCalendar.add(Calendar.MONTH, 1)
-        }
+        // Adjust the current calendar to the selected day of the month
+        currentCalendar.timeInMillis = selectedDay
 
         val dateFormat = SimpleDateFormat("EEEE, dd MMM, yyyy", Locale.getDefault())
-        val formattedDate = dateFormat.format(tempCalendar.time)
+        val formattedDate = dateFormat.format(currentCalendar.time)
 
         // Find your TextView in the layout
         val textViewDate: TextView = findViewById(R.id.journal_date)
         textViewDate.text = formattedDate
 
-        val monthYearText = SimpleDateFormat("MMMM, yyyy", Locale.getDefault()).format(tempCalendar.time)
+        val monthYearText = SimpleDateFormat("MMMM, yyyy", Locale.getDefault()).format(currentCalendar.time)
         findViewById<TextView>(R.id.date_picker_text).text = monthYearText
     }
+
+
 
 
     private fun setupActionBar() {
@@ -212,7 +203,7 @@ class DailyJournalActivity : BaseActivity(), DatePickerAdapter.DatePickerClickLi
         toolbarSignInActivity.setNavigationOnClickListener { onBackPressed() }
     }
 
-    override fun onDatePickerItemClick(selectedDate: Int) {
+    override fun onDatePickerItemClick(selectedDate: Long) {
         updateJournalDateText(selectedDate)
         Log.e("dateeee",selectedDate.toString())
     }
