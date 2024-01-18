@@ -19,6 +19,7 @@ import com.vyarth.ellipsify.model.User
 import com.vyarth.ellipsify.activities.SignUpActivity
 import com.vyarth.ellipsify.activities.SplashActivity
 import com.vyarth.ellipsify.fragments.HomeFragment
+import com.vyarth.ellipsify.model.JournalList
 import com.vyarth.ellipsify.utils.Constants
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -259,7 +260,7 @@ class FirestoreClass {
             "userId" to userId,
             "title" to title,
             "text" to text,
-            "date" to formattedDate
+            "timestamp" to formattedDate
         )
 
         // Save the data to Firestore
@@ -271,6 +272,25 @@ class FirestoreClass {
             }
             .addOnFailureListener { e ->
                 // Handle failure
+                onFailure.invoke(e)
+            }
+    }
+
+    fun getJournalEntriesForDate(date: String, onSuccess: (List<JournalList>) -> Unit, onFailure: (Exception) -> Unit) {
+        mFireStore.collection("journal_entries")
+            .whereEqualTo("timestamp", date)
+            .get()
+            .addOnSuccessListener { documents ->
+                val journalEntries = mutableListOf<JournalList>()
+
+                for (document in documents) {
+                    val entry = document.toObject(JournalList::class.java)
+                    journalEntries.add(entry)
+                }
+
+                onSuccess.invoke(journalEntries)
+            }
+            .addOnFailureListener { e ->
                 onFailure.invoke(e)
             }
     }

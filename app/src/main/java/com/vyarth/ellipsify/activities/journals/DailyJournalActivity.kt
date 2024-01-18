@@ -2,10 +2,8 @@ package com.vyarth.ellipsify.activities.journals
 
 import android.content.Intent
 import android.graphics.Typeface
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
@@ -16,11 +14,11 @@ import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.vyarth.ellipsify.R
 import com.vyarth.ellipsify.activities.BaseActivity
-import com.vyarth.ellipsify.activities.SignInActivity
 import com.vyarth.ellipsify.adapters.DatePickerAdapter
-import com.vyarth.ellipsify.adapters.EmotionsAdapter
+import com.vyarth.ellipsify.adapters.JournalListAdapter
+import com.vyarth.ellipsify.firebase.FirestoreClass
 import com.vyarth.ellipsify.model.DatePicker
-import com.vyarth.ellipsify.model.Emotion
+import com.vyarth.ellipsify.model.JournalList
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
@@ -29,6 +27,8 @@ import java.util.Locale
 class DailyJournalActivity : BaseActivity(), DatePickerAdapter.DatePickerClickListener {
 
     private lateinit var datePickerAdapter: DatePickerAdapter
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var journalListAdapter: JournalListAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_daily_journal)
@@ -85,6 +85,35 @@ class DailyJournalActivity : BaseActivity(), DatePickerAdapter.DatePickerClickLi
         fabCreate.setOnClickListener{
             startActivity(Intent(this, DailyJournalEntryActivity::class.java))
         }
+
+
+        // Initialize RecyclerView
+        recyclerView = findViewById(R.id.journalListRV)
+        recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        journalListAdapter = JournalListAdapter(mutableListOf(), emptyList())
+        recyclerView.adapter = journalListAdapter
+
+        // Set up your date picker or use the current date
+        val currDate = Calendar.getInstance()
+        val selectedDate = SimpleDateFormat("EEEE, dd MMM, yyyy", Locale.getDefault()).format(currDate.time)
+
+        // Load journal entries for the selected date
+        loadJournalEntries(selectedDate)
+
+    }
+
+    private fun loadJournalEntries(selectedDate: String) {
+        // Call the FirestoreClass function to get journal entries for the selected date
+        FirestoreClass().getJournalEntriesForDate(selectedDate,
+            onSuccess = { journalEntries ->
+                // Update the RecyclerView with the retrieved data
+                journalListAdapter.updateData(journalEntries)
+            },
+            onFailure = { e ->
+                // Handle failure
+                Log.e("Firestore", "Error getting journal entries", e)
+            }
+        )
     }
 
     private fun openDatePicker() {
@@ -181,10 +210,10 @@ class DailyJournalActivity : BaseActivity(), DatePickerAdapter.DatePickerClickLi
 
         val monthYearText = SimpleDateFormat("MMMM, yyyy", Locale.getDefault()).format(currentCalendar.time)
         findViewById<TextView>(R.id.date_picker_text).text = monthYearText
+
+        // Load journal entries for the selected date
+        loadJournalEntries(formattedDate)
     }
-
-
-
 
     private fun setupActionBar() {
 
