@@ -20,6 +20,9 @@ import com.vyarth.ellipsify.activities.SignUpActivity
 import com.vyarth.ellipsify.activities.SplashActivity
 import com.vyarth.ellipsify.fragments.HomeFragment
 import com.vyarth.ellipsify.utils.Constants
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
 
 class FirestoreClass {
 
@@ -233,5 +236,44 @@ class FirestoreClass {
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         context.startActivity(intent)
     }
+
+
+
+    //Journal
+    // Inside FirestoreClass
+    fun saveJournalEntry(title: String, text: String, onSuccess: () -> Unit, onFailure: (Exception) -> Unit) {
+        // Get the current user ID
+        val userId = getCurrentUserID()
+
+        // Get the current date
+        val currentDate = Calendar.getInstance().time
+
+        // Define the desired date format
+        val dateFormat = SimpleDateFormat("EEEE, dd MMM, yyyy", Locale.getDefault())
+
+        // Format the current date
+        val formattedDate = dateFormat.format(currentDate)
+
+        // Create a HashMap to store journal entry data
+        val journalData = hashMapOf(
+            "userId" to userId,
+            "title" to title,
+            "text" to text,
+            "date" to formattedDate
+        )
+
+        // Save the data to Firestore
+        mFireStore.collection("journal_entries")
+            .add(journalData)
+            .addOnSuccessListener {
+                // Entry saved successfully
+                onSuccess.invoke()
+            }
+            .addOnFailureListener { e ->
+                // Handle failure
+                onFailure.invoke(e)
+            }
+    }
+
 
 }
