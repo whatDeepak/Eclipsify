@@ -295,10 +295,17 @@ class FirestoreClass {
             }
     }
 
-
-
-
-
+    // Inside FirestoreClass
+    fun getTotalJournalsCount(onSuccess: (Int) -> Unit, onFailure: (Exception) -> Unit) {
+        mFireStore.collection("journal_entries") // Replace with your actual collection name
+            .get()
+            .addOnSuccessListener { documents ->
+                onSuccess.invoke(documents.size())
+            }
+            .addOnFailureListener { e ->
+                onFailure.invoke(e)
+            }
+    }
 
 
 }

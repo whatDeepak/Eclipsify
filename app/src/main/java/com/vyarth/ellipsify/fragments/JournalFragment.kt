@@ -3,6 +3,7 @@ package com.vyarth.ellipsify.fragments
 import android.content.Intent
 import android.graphics.Typeface
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -15,6 +16,7 @@ import com.vyarth.ellipsify.activities.journals.DailyJournalActivity
 import com.vyarth.ellipsify.adapters.EmotionsAdapter
 import com.vyarth.ellipsify.adapters.JournalAdapter
 import com.vyarth.ellipsify.databinding.FragmentJournalBinding
+import com.vyarth.ellipsify.firebase.FirestoreClass
 import com.vyarth.ellipsify.model.Journal
 
 
@@ -34,11 +36,36 @@ class JournalFragment : Fragment() {
         val customTypeface = Typeface.createFromAsset(requireContext().assets, "epilogue_semibold.ttf")
         tvTitle.typeface = customTypeface
 
+        var dailyJournalCount=""
+        // Fetch the total number of journals from Firestore
+        FirestoreClass().getTotalJournalsCount(
+            onSuccess = { totalJournals ->
+                dailyJournalCount = "$totalJournals Journals"
+                Log.e("Firestore", dailyJournalCount)
+                // Update UI with the correct data after fetching the count
+                updateUIWithJournals(dailyJournalCount)
+
+            },
+            onFailure = { e ->
+                // Handle failure
+                Log.e("Firestore", "Error getting total journals count", e)
+            }
+        )
+
 
         val journals = listOf(
-            Journal("Daily Journal", "Express your daily thoughts , feelings and experiences.", R.drawable.bg_journal, R.drawable.journal_daily,"0 Journals",R.color.jrnlDaily),
+            Journal("Daily Journal", "Express your daily thoughts , feelings and experiences.", R.drawable.bg_journal, R.drawable.journal_daily, dailyJournalCount,R.color.jrnlDaily),
 
-            Journal("Mood Journal", "Write your emotions and keep track of mood patterns.", R.drawable.bg_moodjournal, R.drawable.journal_mood, "0 Journals",R.color.jrnlMood)
+            Journal("Mood Journal", "Write your emotions and keep track of mood patterns.", R.drawable.bg_moodjournal, R.drawable.journal_mood, "0 Journal",R.color.jrnlMood)
+        )
+
+        return binding.root
+    }
+
+    private fun updateUIWithJournals(dailyJournalCount: String) {
+        val journals = listOf(
+            Journal("Daily Journal", "Express your daily thoughts , feelings and experiences.", R.drawable.bg_journal, R.drawable.journal_daily, dailyJournalCount, R.color.jrnlDaily),
+            Journal("Mood Journal", "Write your emotions and keep track of mood patterns.", R.drawable.bg_moodjournal, R.drawable.journal_mood, "0 Journal", R.color.jrnlMood)
         )
 
         val activityClasses = listOf(
@@ -54,9 +81,6 @@ class JournalFragment : Fragment() {
         recyclerView.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         recyclerView.adapter = JournalAdapter(journals, activityClasses)
-
-
-        return binding.root
     }
 
     private fun onJournalItemClicked(journal: Journal) {
