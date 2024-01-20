@@ -17,7 +17,7 @@ import java.text.SimpleDateFormat
 import java.util.Locale
 
 
-class DatePickerAdapter(private val data: MutableList<DatePicker>, private val defaultSelectedPosition: Int,  private val clickListener: DatePickerClickListener) :
+class DatePickerAdapter(val data: MutableList<DatePicker>, private val defaultSelectedPosition: Int, private val clickListener: DatePickerClickListener) :
     RecyclerView.Adapter<DatePickerAdapter.DatePickerViewHolder>() {
 
     private var selectedPosition = defaultSelectedPosition
@@ -43,7 +43,12 @@ class DatePickerAdapter(private val data: MutableList<DatePicker>, private val d
         val dp = data[position]
 
         holder.DateTextView.text= SimpleDateFormat("dd", Locale.getDefault()).format(dp.date).toString()
-        holder.FrequencyTextView.text=dp.frequency.toString()
+        if (dp.frequency==0){
+            holder.FrequencyTextView.text=""
+        }else{
+            holder.FrequencyTextView.text=dp.frequency.toString()
+        }
+
 
         // Manually set the background color based on the selected state
         if (selectedPosition == position) {

@@ -108,12 +108,28 @@ class DailyJournalActivity : BaseActivity(), DatePickerAdapter.DatePickerClickLi
             onSuccess = { journalEntries ->
                 // Update the RecyclerView with the retrieved data
                 journalListAdapter.updateData(journalEntries)
+                // Update the frequency count in the DatePickerAdapter
+                updateFrequencyCount(journalEntries)
             },
             onFailure = { e ->
                 // Handle failure
                 Log.e("Firestore", "Error getting journal entries", e)
             }
         )
+    }
+
+    private fun updateFrequencyCount(journalEntries: List<JournalList>) {
+        // Group journal entries by date and count the frequency
+        val frequencyMap: Map<String, Int> = journalEntries.groupBy { it.timestamp ?: "" }
+            .mapValues { it.value.size }
+
+        // Update the frequency count in the DatePickerAdapter
+        val dateListWithCount = datePickerAdapter.data.map { datePicker ->
+            // Convert the date from Long to String with the same format as stored in Firestore
+            val formattedDate = SimpleDateFormat("EEEE, dd MMM, yyyy", Locale.getDefault()).format(Date(datePicker.date))
+            datePicker.copy(frequency = frequencyMap[formattedDate] ?: 0)
+        }
+        datePickerAdapter.updateData(dateListWithCount)
     }
 
     private fun openDatePicker() {
