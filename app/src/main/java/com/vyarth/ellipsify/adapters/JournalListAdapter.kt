@@ -14,7 +14,8 @@ import com.vyarth.ellipsify.R
 import com.vyarth.ellipsify.model.JournalList
 
 class JournalListAdapter(private val journalList: MutableList<JournalList>,
-                         private val activityClasses: List<Class<out AppCompatActivity>>):
+                         private val activityClasses: List<Class<out AppCompatActivity>>,
+                         private val onItemClick: (JournalList) -> Unit):
     RecyclerView.Adapter<JournalListAdapter.JournalListViewHolder>(){
 
     // ViewHolder class
@@ -77,15 +78,8 @@ class JournalListAdapter(private val journalList: MutableList<JournalList>,
         holder.journalDesc.typeface= fontDesc
 
         holder.itemView.setOnClickListener {
-            // Get the corresponding activity class
-            val activityClass = activityClasses.getOrNull(position)
-
-            // Launch the activity if the class is not null
-            activityClass?.let { clazz ->
-                val intent = Intent(holder.itemView.context, clazz)
-                // Pass any necessary data to the activity
-                holder.itemView.context.startActivity(intent)
-            }
+            // Call the onItemClick listener to handle item click
+            onItemClick.invoke(jrnl)
         }
 
     }

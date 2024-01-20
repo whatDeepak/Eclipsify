@@ -1,5 +1,6 @@
 package com.vyarth.ellipsify.activities.journals
 
+import android.app.Activity
 import android.content.Intent
 import android.graphics.Typeface
 import android.os.Bundle
@@ -83,14 +84,19 @@ class DailyJournalActivity : BaseActivity(), DatePickerAdapter.DatePickerClickLi
         //FAB CREATE
         val fabCreate:FloatingActionButton=findViewById(R.id.fab_create)
         fabCreate.setOnClickListener{
-            startActivity(Intent(this, DailyJournalEntryActivity::class.java))
+            val intent = Intent(this, DailyJournalEntryActivity::class.java)
+            startActivityForResult(intent, REQUEST_CODE_ENTRY_ACTIVITY)
+
         }
 
 
         // Initialize RecyclerView
         recyclerView = findViewById(R.id.journalListRV)
         recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        journalListAdapter = JournalListAdapter(mutableListOf(), emptyList())
+        journalListAdapter = JournalListAdapter(mutableListOf(), emptyList()) { journalEntry ->
+            // Handle item click
+            openDailyJournalEntryActivity(journalEntry)
+        }
         recyclerView.adapter = journalListAdapter
 
         // Set up your date picker or use the current date
@@ -100,6 +106,36 @@ class DailyJournalActivity : BaseActivity(), DatePickerAdapter.DatePickerClickLi
         // Load journal entries for the selected date
         loadJournalEntries(selectedDate)
 
+    }
+
+    // Inside DailyJournalActivity
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == REQUEST_CODE_ENTRY_ACTIVITY && resultCode == Activity.RESULT_OK) {
+            // Check if data has changed
+            val dataChanged = data?.getBooleanExtra("dataChanged", false) ?: false
+            if (dataChanged) {
+
+                val currDate = Calendar.getInstance()
+                val selectedDate = SimpleDateFormat("EEEE, dd MMM, yyyy", Locale.getDefault()).format(currDate.time)
+                loadJournalEntries(selectedDate)
+            }
+        }
+    }
+
+
+    private fun openDailyJournalEntryActivity(journalEntry: JournalList) {
+        val intent = Intent(this, DailyJournalEntryActivity::class.java)
+
+        // Pass selected date, title, and text to the DailyJournalEntryActivity
+        intent.putExtra("selectedDate", journalEntry.timestamp)
+        intent.putExtra("title", journalEntry.title)
+        intent.putExtra("text", journalEntry.text)
+
+        Log.e("taggggg",journalEntry.timestamp.toString())
+
+        startActivity(intent)
     }
 
     private fun loadJournalEntries(selectedDate: String) {
@@ -152,6 +188,9 @@ class DailyJournalActivity : BaseActivity(), DatePickerAdapter.DatePickerClickLi
 
             // Update the TextView with the selected date
             updateSelectedDateText(it)
+
+            val selectedDate = SimpleDateFormat("EEEE, dd MMM, yyyy", Locale.getDefault()).format(Date(it))
+            loadJournalEntries(selectedDate)
         }
 
         // Setting up the event for when cancelled is clicked
@@ -251,5 +290,9 @@ class DailyJournalActivity : BaseActivity(), DatePickerAdapter.DatePickerClickLi
     override fun onDatePickerItemClick(selectedDate: Long) {
         updateJournalDateText(selectedDate)
         Log.e("dateeee",selectedDate.toString())
+    }
+
+    companion object {
+        private const val REQUEST_CODE_ENTRY_ACTIVITY = 1001 // You can use any unique value
     }
 }

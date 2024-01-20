@@ -1,5 +1,6 @@
 package com.vyarth.ellipsify.activities.journals
 
+import android.app.Activity
 import android.content.Intent
 import android.graphics.Typeface
 import androidx.appcompat.app.AppCompatActivity
@@ -24,14 +25,35 @@ class DailyJournalEntryActivity : BaseActivity() {
 
         setupActionBar()
 
-        val currentDate = Calendar.getInstance()
-        val monthYearText = SimpleDateFormat("EEEE, dd MMM, yyyy", Locale.getDefault()).format(currentDate.time)
-        findViewById<TextView>(R.id.create_date).text = monthYearText
+//        val currentDate = Calendar.getInstance()
+//        val monthYearText = SimpleDateFormat("EEEE, dd MMM, yyyy", Locale.getDefault()).format(currentDate.time)
+//        findViewById<TextView>(R.id.create_date).text = monthYearText
 
         val fabCreate: FloatingActionButton =findViewById(R.id.fab_create)
         fabCreate.setOnClickListener{
             saveToFirebase()
         }
+
+        // Inside the onCreate method of DailyJournalEntryActivity
+        val selectedDate = intent.getStringExtra("selectedDate") ?: ""
+        val title = intent.getStringExtra("title") ?: ""
+        val text = intent.getStringExtra("text") ?: ""
+
+        // Use selectedDate, title, and text as needed
+
+//        // Format the selected date
+//        val formattedDate = SimpleDateFormat("EEEE, dd MMM, yyyy", Locale.getDefault()).format(selectedDate)
+
+        // Set the formatted date to the TextView
+        findViewById<TextView>(R.id.create_date).text = selectedDate
+
+        // Set the title and text to the EditText fields
+        val titleEditText = findViewById<AppCompatEditText>(R.id.create_title)
+        val textEditText = findViewById<AppCompatEditText>(R.id.create_text)
+
+        titleEditText.setText(title)
+        textEditText.setText(text)
+
     }
 
     private fun saveToFirebase() {
@@ -45,7 +67,11 @@ class DailyJournalEntryActivity : BaseActivity() {
                 onSuccess = {
                     // Entry saved successfully
                     // Add any additional logic or UI updates here
-                    Toast.makeText(this, "Journal Saved", Toast.LENGTH_SHORT).show()        
+                    Toast.makeText(this, "Journal Saved", Toast.LENGTH_SHORT).show()
+                    val resultIntent = Intent()
+                    resultIntent.putExtra("dataChanged", true)
+                    setResult(Activity.RESULT_OK, resultIntent)
+                    finish()
                 },
                 onFailure = { e ->
                     // Handle failure
