@@ -307,5 +307,68 @@ class FirestoreClass {
             }
     }
 
+    fun saveMoodJournalEntry(title: String, text: String, onSuccess: () -> Unit, onFailure: (Exception) -> Unit) {
+        // Get the current user ID
+        val userId = getCurrentUserID()
 
+        // Get the current date
+        val currentDate = Calendar.getInstance().time
+
+        // Define the desired date format
+        val dateFormat = SimpleDateFormat("EEEE, dd MMM, yyyy", Locale.getDefault())
+
+        // Format the current date
+        val formattedDate = dateFormat.format(currentDate)
+
+        // Create a HashMap to store journal entry data
+        val journalData = hashMapOf(
+            "userId" to userId,
+            "title" to title,
+            "text" to text,
+            "timestamp" to formattedDate
+        )
+
+        // Save the data to Firestore
+        mFireStore.collection("mood_journal_entries")
+            .add(journalData)
+            .addOnSuccessListener {
+                // Entry saved successfully
+                onSuccess.invoke()
+            }
+            .addOnFailureListener { e ->
+                // Handle failure
+                onFailure.invoke(e)
+            }
+    }
+
+    fun getMoodJournalEntriesForDate(date: String, onSuccess: (List<JournalList>) -> Unit, onFailure: (Exception) -> Unit) {
+        mFireStore.collection("mood_journal_entries")
+            .whereEqualTo("timestamp", date)
+            .get()
+            .addOnSuccessListener { documents ->
+                val journalEntries = mutableListOf<JournalList>()
+
+                for (document in documents) {
+                    val entry = document.toObject(JournalList::class.java)
+                    journalEntries.add(entry)
+                }
+
+                onSuccess.invoke(journalEntries)
+            }
+            .addOnFailureListener { e ->
+                onFailure.invoke(e)
+            }
+    }
+
+    // Inside FirestoreClass
+    fun getMoodTotalJournalsCount(onSuccess: (Int) -> Unit, onFailure: (Exception) -> Unit) {
+        mFireStore.collection("mood_journal_entries") // Replace with your actual collection name
+            .get()
+            .addOnSuccessListener { documents ->
+                onSuccess.invoke(documents.size())
+            }
+            .addOnFailureListener { e ->
+                onFailure.invoke(e)
+            }
+    }
 }

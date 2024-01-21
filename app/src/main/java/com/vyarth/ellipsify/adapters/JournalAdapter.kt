@@ -16,7 +16,9 @@ import com.vyarth.ellipsify.model.Emotion
 import com.vyarth.ellipsify.model.Journal
 
 class JournalAdapter(private val journal: List<Journal>,
-                     private val activityClasses: List<Class<out AppCompatActivity>>):
+                     private val activityClasses: List<Class<out AppCompatActivity>>,
+                     private val dailyJournalCount: String,
+                     private val moodJournalCount: String):
     RecyclerView.Adapter<JournalAdapter.JournalViewHolder>(){
 
     // ViewHolder class
@@ -41,14 +43,19 @@ class JournalAdapter(private val journal: List<Journal>,
     // Replace the contents of a ViewHolder (invoked by the layout manager)
     override fun onBindViewHolder(holder: JournalViewHolder, position: Int) {
         val jrnl = journal[position]
+        val activityClass = activityClasses[position]
 
+        when (jrnl.title) {
+            "Daily Journal" -> holder.journalCount.text = dailyJournalCount
+            "Mood Journal" -> holder.journalCount.text = moodJournalCount
+            // Add more cases as needed
+        }
 
         holder.journalTitle.text = jrnl.title
         holder.journalDesc.text=jrnl.desc
 
         // Set background color
         holder.cardView.setBackgroundResource(jrnl.backgroundColor);
-
 
         // Set image
         holder.journalImageView.setImageResource(jrnl.imageResId)
@@ -74,15 +81,9 @@ class JournalAdapter(private val journal: List<Journal>,
         holder.journalDesc.typeface= fontDesc
 
         holder.itemView.setOnClickListener {
-            // Get the corresponding activity class
-            val activityClass = activityClasses.getOrNull(position)
-
-            // Launch the activity if the class is not null
-            activityClass?.let { clazz ->
-                val intent = Intent(holder.itemView.context, clazz)
-                // Pass any necessary data to the activity
-                holder.itemView.context.startActivity(intent)
-            }
+            val intent = Intent(holder.itemView.context, activityClass)
+            intent.putExtra("journal_title", jrnl.title)
+            holder.itemView.context.startActivity(intent)
         }
 
     }

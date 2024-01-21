@@ -1,0 +1,28 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/mood_happy"
+        android:title="Happy"
+        android:icon="@drawable/mood_happy"
+        android:iconTint="@color/happyBg"
+        />
+    <item
+        android:id="@+id/mood_calm"
+        android:title="Calm"
+        android:icon="@drawable/mood_calm"
+        android:iconTint="@color/calmBg" />
+    <item
+        android:id="@+id/mood_manic"
+        android:title="Manic"
+        android:icon="@drawable/mood_manic"
+        android:iconTint="@color/manicBg"/>
+    <item
+        android:id="@+id/mood_angry"
+        android:title="Angry"
+        android:icon="@drawable/mood_angry"
+        android:iconTint="@color/angryBg"/>
+    <item
+        android:id="@+id/mood_sad"
+        android:title="Sad"
+        android:icon="@drawable/mood_sad"
+        android:iconTint="@color/sadBg"/>
+</menu>

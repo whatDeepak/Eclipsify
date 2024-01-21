@@ -3,12 +3,15 @@ package com.vyarth.ellipsify.adapters
 import android.content.Intent
 import android.view.LayoutInflater
 import android.graphics.Typeface
+import android.media.Image
 import android.util.Log
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.vyarth.ellipsify.R
 import com.vyarth.ellipsify.model.JournalList
@@ -24,8 +27,7 @@ class JournalListAdapter(private val journalList: MutableList<JournalList>,
         val cardView: CardView = itemView.findViewById(R.id.cardView) // Replace with the actual ID of your CardView
         val journalDesc: TextView = itemView.findViewById(R.id.journalListDesc)
         val journalDate: TextView = itemView.findViewById(R.id.journalListDate)
-
-
+        val journalIV : ImageView = itemView.findViewById(R.id.journalsImageView)
     }
 
     // Create new ViewHolders (invoked by the layout manager)
@@ -40,9 +42,7 @@ class JournalListAdapter(private val journalList: MutableList<JournalList>,
     override fun onBindViewHolder(holder: JournalListViewHolder, position: Int) {
         val jrnl = journalList[position]
 
-
         holder.journalTitle.text = jrnl.title
-
 
         val maxCharsToShow = 50 // You can adjust this number based on your preference
         val truncatedText = if (jrnl.text?.length ?: 0 > maxCharsToShow) {
@@ -55,6 +55,9 @@ class JournalListAdapter(private val journalList: MutableList<JournalList>,
 
         // Set background color
         holder.cardView.setBackgroundResource(R.drawable.bg_journal_list);
+
+        // Set image and background tint based on the title
+        setImageAndTint(holder.journalIV, jrnl.title)
 
 
 //        holder.journalDate.text = jrnl.timestamp.toString()
@@ -82,6 +85,35 @@ class JournalListAdapter(private val journalList: MutableList<JournalList>,
             onItemClick.invoke(jrnl)
         }
 
+    }
+
+    private fun setImageAndTint(imageView: ImageView, title: String?) {
+        when (title) {
+            "Happy" -> {
+                imageView.setImageResource(R.drawable.mood_happy)
+                imageView.setColorFilter(ContextCompat.getColor(imageView.context, R.color.happyBg))
+            }
+            "Calm" -> {
+                imageView.setImageResource(R.drawable.mood_calm)
+                imageView.setColorFilter(ContextCompat.getColor(imageView.context, R.color.calmBg))
+            }
+            "Manic" -> {
+                imageView.setImageResource(R.drawable.mood_manic)
+                imageView.setColorFilter(ContextCompat.getColor(imageView.context, R.color.manicBg))
+            }
+            "Angry" -> {
+                imageView.setImageResource(R.drawable.mood_angry)
+                imageView.setColorFilter(ContextCompat.getColor(imageView.context, R.color.angryBg))
+            }
+            "Sad" -> {
+                imageView.setImageResource(R.drawable.mood_sad)
+                imageView.setColorFilter(ContextCompat.getColor(imageView.context, R.color.sadBg))
+            }
+            // Add cases for other titles
+            else -> {
+                // Default image and background tint for other titles
+            }
+        }
     }
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view)
