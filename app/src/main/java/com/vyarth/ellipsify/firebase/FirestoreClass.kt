@@ -277,8 +277,10 @@ class FirestoreClass {
     }
 
     fun getJournalEntriesForDate(date: String, onSuccess: (List<JournalList>) -> Unit, onFailure: (Exception) -> Unit) {
+        val userID = getCurrentUserID()
         mFireStore.collection("journal_entries")
             .whereEqualTo("timestamp", date)
+            .whereEqualTo("userId", userID)
             .get()
             .addOnSuccessListener { documents ->
                 val journalEntries = mutableListOf<JournalList>()
@@ -297,7 +299,9 @@ class FirestoreClass {
 
     // Inside FirestoreClass
     fun getTotalJournalsCount(onSuccess: (Int) -> Unit, onFailure: (Exception) -> Unit) {
+        val userID = getCurrentUserID()
         mFireStore.collection("journal_entries") // Replace with your actual collection name
+            .whereEqualTo("userId", userID)
             .get()
             .addOnSuccessListener { documents ->
                 onSuccess.invoke(documents.size())
@@ -342,8 +346,10 @@ class FirestoreClass {
     }
 
     fun getMoodJournalEntriesForDate(date: String, onSuccess: (List<JournalList>) -> Unit, onFailure: (Exception) -> Unit) {
+        val userID = getCurrentUserID()
         mFireStore.collection("mood_journal_entries")
             .whereEqualTo("timestamp", date)
+            .whereEqualTo("userId", userID)
             .get()
             .addOnSuccessListener { documents ->
                 val journalEntries = mutableListOf<JournalList>()
@@ -362,7 +368,9 @@ class FirestoreClass {
 
     // Inside FirestoreClass
     fun getMoodTotalJournalsCount(onSuccess: (Int) -> Unit, onFailure: (Exception) -> Unit) {
+        val userID = getCurrentUserID()
         mFireStore.collection("mood_journal_entries") // Replace with your actual collection name
+            .whereEqualTo("userId", userID)
             .get()
             .addOnSuccessListener { documents ->
                 onSuccess.invoke(documents.size())
