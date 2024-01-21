@@ -173,7 +173,7 @@
                 android:paddingHorizontal="18dp"
                 android:paddingVertical="20dp"
                 android:layout_margin="18dp"
-                android:text="“It is better to conquer yourself than to win a thousand battles.”"
+                android:text=""
                 android:textAllCaps="false"
                 android:textColor="#707070"
                 android:textSize="17sp"

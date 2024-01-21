@@ -3,6 +3,7 @@ package com.vyarth.ellipsify.firebase
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.os.AsyncTask
 import android.util.Log
 import androidx.fragment.app.FragmentActivity
 import androidx.navigation.fragment.NavHostFragment
@@ -21,6 +22,12 @@ import com.vyarth.ellipsify.activities.SplashActivity
 import com.vyarth.ellipsify.fragments.HomeFragment
 import com.vyarth.ellipsify.model.JournalList
 import com.vyarth.ellipsify.utils.Constants
+import org.json.JSONException
+import org.json.JSONObject
+import java.io.BufferedReader
+import java.io.InputStreamReader
+import java.net.HttpURLConnection
+import java.net.URL
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -379,4 +386,62 @@ class FirestoreClass {
                 onFailure.invoke(e)
             }
     }
+
+    //Quotes
+
+    fun getDailyQuote(onSuccess: (String) -> Unit, onFailure: (Exception) -> Unit) {
+        val apiUrl = "https://quotesapi-3eo5.onrender.com/api/v1/${getCurrentDay()}"
+
+        // You can use a networking library like Retrofit or any other method to fetch data from the API
+        // I'll provide a simple example using AsyncTask for demonstration purposes
+        FetchQuoteAsyncTask(onSuccess, onFailure).execute(apiUrl)
+    }
+
+    fun getCurrentDay(): Int {
+        val cal = Calendar.getInstance()
+        return cal.get(Calendar.DAY_OF_MONTH)
+    }
+
+    private class FetchQuoteAsyncTask(
+        private val onSuccess: (String) -> Unit,
+        private val onFailure: (Exception) -> Unit
+    ) : AsyncTask<String, Void, String>() {
+
+        override fun doInBackground(vararg params: String?): String {
+            try {
+                val url = URL(params[0])
+                val connection = url.openConnection() as HttpURLConnection
+                val reader = BufferedReader(InputStreamReader(connection.inputStream))
+
+                val response = StringBuilder()
+                var line: String?
+                while (reader.readLine().also { line = it } != null) {
+                    response.append(line)
+                }
+                reader.close()
+                connection.disconnect()
+
+                return response.toString()
+            } catch (e: Exception) {
+                e.printStackTrace()
+                return ""
+            }
+        }
+
+        override fun onPostExecute(result: String) {
+            super.onPostExecute(result)
+            if (result.isNotEmpty()) {
+                try {
+                    val jsonObject = JSONObject(result)
+                    val quote = jsonObject.getString("quote")
+                    onSuccess.invoke(quote)
+                } catch (e: JSONException) {
+                    onFailure.invoke(e)
+                }
+            } else {
+                onFailure.invoke(Exception("Empty response"))
+            }
+        }
+    }
+
 }

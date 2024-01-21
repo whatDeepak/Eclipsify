@@ -112,6 +112,7 @@ class HomeFragment : Fragment() {
         quotesTextView.typeface = quotesTypeface
 
         greetingMessage()
+        getDailyQuote()
 
         return binding.root;
 
@@ -119,7 +120,6 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
     }
 
     private fun greetingMessage(){
@@ -218,6 +218,18 @@ class HomeFragment : Fragment() {
                 .placeholder(R.drawable.ic_user_place_holder)
                 .into(navUserImage)
 
+    }
+
+    private fun getDailyQuote() {
+        firestoreClass.getDailyQuote(
+            onSuccess = { quote ->
+                binding.btnQuotes.text = quote
+
+            },
+            onFailure = { e ->
+                Log.e("HomeFragment", "Error getting daily quote", e)
+            }
+        )
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
