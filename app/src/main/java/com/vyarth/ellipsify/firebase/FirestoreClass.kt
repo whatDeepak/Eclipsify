@@ -474,29 +474,51 @@ class FirestoreClass {
             }
     }
 
-    fun storeDailyMood(
-        userId: String,
-        currentDate: String,
-        emotion: String,
-        onSuccess: () -> Unit,
-        onFailure: (Exception) -> Unit
-    ) {
+    fun storeDailyMood(userId: String, currentDate: String, emotion: String, onSuccess: () -> Unit, onFailure: (Exception) -> Unit) {
+        // Check if an entry for the current date and user already exists
         val db = FirebaseFirestore.getInstance()
-        val moodCollection = db.collection("daily_mood_check")
+        db.collection("daily_mood_check")
+            .whereEqualTo("userId", userId)
+            .whereEqualTo("date", currentDate)
+            .get()
+            .addOnSuccessListener { querySnapshot ->
+                if (querySnapshot.isEmpty) {
+                    // No entry exists, create a new one
+                    val moodEntry = hashMapOf(
+                        "userId" to userId,
+                        "date" to currentDate,
+                        "emotion" to emotion
+                    )
 
-        val moodEntry = hashMapOf(
-            "userId" to userId,
-            "date" to currentDate,
-            "emotion" to emotion
-        )
+                    db.collection("daily_mood_check")
+                        .add(moodEntry)
+                        .addOnSuccessListener {
+                            onSuccess()
+                        }
+                        .addOnFailureListener { e ->
+                            onFailure(e)
+                        }
+                } else {
+                    // Entry exists, update the existing one
+                    val documentId = querySnapshot.documents[0].id
+                    val moodEntry = hashMapOf(
+                        "emotion" to emotion
+                    )
 
-        moodCollection.add(moodEntry)
-            .addOnSuccessListener {
-                // Successfully stored the daily mood
-                onSuccess.invoke()
+                    db.collection("daily_mood_check")
+                        .document(documentId)
+                        .update(moodEntry as Map<String, Any>)
+                        .addOnSuccessListener {
+                            onSuccess()
+                        }
+                        .addOnFailureListener { e ->
+                            onFailure(e)
+                        }
+                }
             }
             .addOnFailureListener { e ->
-                onFailure.invoke(e)
+                onFailure(e)
             }
     }
+
 }

@@ -15,6 +15,7 @@ class EmotionsAdapter(private val emotions: List<Emotion>) :
     RecyclerView.Adapter<EmotionsAdapter.EmotionViewHolder>() {
 
     private var itemClickListener: ((Emotion) -> Unit)? = null
+    private var selectedEmotion: Emotion? = null
 
     // ViewHolder class
     class EmotionViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -53,6 +54,11 @@ class EmotionsAdapter(private val emotions: List<Emotion>) :
 
     fun setOnItemClickListener(listener: (Emotion) -> Unit) {
         itemClickListener = listener
+    }
+
+    fun setSelectedEmotion(emotion: Emotion) {
+        selectedEmotion = emotion
+        notifyDataSetChanged()
     }
 
     // Return the size of your dataset (invoked by the layout manager)

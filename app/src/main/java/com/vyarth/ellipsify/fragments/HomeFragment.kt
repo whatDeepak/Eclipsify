@@ -1,10 +1,13 @@
 package com.vyarth.ellipsify.fragments
 
 import android.app.Activity
+import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.graphics.Typeface
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
@@ -40,6 +43,9 @@ class HomeFragment : Fragment() {
     private lateinit var mUserName: String
 
     private val firestoreClass = FirestoreClass()
+    private var selectedEmotion: Emotion? = null
+//    private var progressDialog: Dialog? = null
+//    private var isFragmentAttached: Boolean = false
 
     companion object{
         const val MY_PROFILE_REQUEST_CODE: Int = 11
@@ -55,6 +61,14 @@ class HomeFragment : Fragment() {
 
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
 
+//        showSplashScreen()
+//
+//        Handler(Looper.getMainLooper()).postDelayed({
+//            if (isFragmentAttached) {
+//                progressDialog?.dismiss()
+//            }
+//        }, 1000)
+
         firestoreClass.loadUserData(requireContext())
 
         // Inflate the layout for this fragment
@@ -69,9 +83,6 @@ class HomeFragment : Fragment() {
 
         checkDailyMoodEntry()
         setEmotionClickListener()
-
-
-
 
         val list = listOf(
             Home("1 on 1 Sessions", "Let’s open up to the things that matter the most ", R.drawable.bg_sessions, R.drawable.main_sessions,"Book Now",R.color.homeSessions,R.drawable.book_now),
@@ -229,7 +240,7 @@ class HomeFragment : Fragment() {
             onSuccess = { moodEntryExists ->
                 if (moodEntryExists) {
                     // Hide the daily_checkin LinearLayout
-                    binding.dailyCheckin.visibility = View.GONE
+                    //binding.dailyCheckin.visibility = View.GONE
                 }
             },
             onFailure = { e ->
@@ -245,12 +256,22 @@ class HomeFragment : Fragment() {
         firestoreClass.storeDailyMood(userId, currentDate, emotion,
             onSuccess = {
                 // Hide the daily_checkin LinearLayout
-                binding.dailyCheckin.visibility = View.GONE
+                //binding.dailyCheckin.visibility = View.GONE
             },
             onFailure = { e ->
                 Log.e("HomeFragment", "Error storing daily mood", e)
             }
         )
+    }
+
+    private fun updateSelectedMoodInDatabase(emotion: Emotion) {
+        if (selectedEmotion != null) {
+            // If a mood was previously selected, update the database
+            storeDailyMood(emotion.mood)
+        } else {
+            // If no mood was selected, store the new mood in the database
+            storeDailyMood(emotion.mood)
+        }
     }
 
     private fun setEmotionClickListener() {
@@ -268,13 +289,18 @@ class HomeFragment : Fragment() {
         // Set layout manager and adapter
         emotionRecyclerView.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-        emotionRecyclerView.adapter = EmotionsAdapter(emotions)
 
         val emotionsAdapter = EmotionsAdapter(emotions)
+        emotionRecyclerView.adapter = emotionsAdapter
+
         emotionsAdapter.setOnItemClickListener { emotion ->
-            storeDailyMood(emotion.mood)
+            // Update the selected emotion
+            selectedEmotion = emotion
+            // Highlight the selected emotion in the adapter
+            emotionsAdapter.setSelectedEmotion(emotion)
+            // Update the selected mood in the database
+            updateSelectedMoodInDatabase(emotion)
         }
-        binding.recyclerView.adapter = emotionsAdapter
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -290,5 +316,25 @@ class HomeFragment : Fragment() {
             Log.e("Cancelled", "Cancelled")
         }
     }
+
+//    override fun onAttach(context: Context) {
+//        super.onAttach(context)
+//        isFragmentAttached = true
+//    }
+//
+//    override fun onDetach() {
+//        super.onDetach()
+//        isFragmentAttached = false
+//    }
+//    private fun showSplashScreen() {
+//        if (isFragmentAttached) {
+//            val splashView = layoutInflater.inflate(R.layout.dialog_progress,null)
+//            progressDialog = Dialog(requireContext())
+//            progressDialog?.setContentView(splashView)
+//            progressDialog?.setCancelable(false)
+//            progressDialog?.show()
+//
+//        }
+//    }
 
 }

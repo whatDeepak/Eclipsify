@@ -40,4 +40,8 @@
     <dimen name="item_spacing">20dp</dimen>
     <dimen name="selected_emoji_border_width">5dp</dimen>
     <dimen name="unselected_emoji_border_width">0.1dp</dimen>
+
+
+    <dimen name="selectedElevation">8dp</dimen>
+    <dimen name="defaultElevation">2dp</dimen>
 </resources>

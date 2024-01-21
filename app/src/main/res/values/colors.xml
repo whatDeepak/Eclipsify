@@ -46,4 +46,6 @@
 
     <color name="dateDivColor">#FFB701</color>
 
+    <color name="selectedBorderColor">#4B3425</color>
+
 </resources>
