@@ -14,6 +14,8 @@ import com.vyarth.ellipsify.model.Emotion
 class EmotionsAdapter(private val emotions: List<Emotion>) :
     RecyclerView.Adapter<EmotionsAdapter.EmotionViewHolder>() {
 
+    private var itemClickListener: ((Emotion) -> Unit)? = null
+
     // ViewHolder class
     class EmotionViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val emotionTextView: TextView = itemView.findViewById(R.id.emotionTextView)
@@ -41,6 +43,16 @@ class EmotionsAdapter(private val emotions: List<Emotion>) :
 
         // Set image
         holder.emotionImageView.setImageResource(emotion.imageResId)
+
+
+        // Set click listener for the item view
+        holder.itemView.setOnClickListener {
+            itemClickListener?.invoke(emotion)
+        }
+    }
+
+    fun setOnItemClickListener(listener: (Emotion) -> Unit) {
+        itemClickListener = listener
     }
 
     // Return the size of your dataset (invoked by the layout manager)

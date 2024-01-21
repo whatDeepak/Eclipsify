@@ -444,4 +444,59 @@ class FirestoreClass {
         }
     }
 
+    //daily-checkin
+
+    fun getCurrentFormattedDate(): String {
+        val currentDate = Calendar.getInstance().time
+        // Define the desired date format
+        val dateFormat = SimpleDateFormat("EEEE, dd MMM, yyyy", Locale.getDefault())
+        // Format the current date
+        val formattedDate = dateFormat.format(currentDate)
+        return formattedDate
+    }
+    fun checkDailyMoodEntry(
+        userId: String,
+        currentDate: String,
+        onSuccess: (Boolean) -> Unit,
+        onFailure: (Exception) -> Unit
+    ) {
+        val db = FirebaseFirestore.getInstance()
+        val moodCollection = db.collection("daily_mood_check")
+        val query = moodCollection.whereEqualTo("userId", userId).whereEqualTo("date", currentDate)
+
+        query.get()
+            .addOnSuccessListener { querySnapshot ->
+                // Check if there's any document for the current user and date
+                onSuccess.invoke(!querySnapshot.isEmpty)
+            }
+            .addOnFailureListener { e ->
+                onFailure.invoke(e)
+            }
+    }
+
+    fun storeDailyMood(
+        userId: String,
+        currentDate: String,
+        emotion: String,
+        onSuccess: () -> Unit,
+        onFailure: (Exception) -> Unit
+    ) {
+        val db = FirebaseFirestore.getInstance()
+        val moodCollection = db.collection("daily_mood_check")
+
+        val moodEntry = hashMapOf(
+            "userId" to userId,
+            "date" to currentDate,
+            "emotion" to emotion
+        )
+
+        moodCollection.add(moodEntry)
+            .addOnSuccessListener {
+                // Successfully stored the daily mood
+                onSuccess.invoke()
+            }
+            .addOnFailureListener { e ->
+                onFailure.invoke(e)
+            }
+    }
 }

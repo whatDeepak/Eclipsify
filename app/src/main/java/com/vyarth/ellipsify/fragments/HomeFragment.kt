@@ -67,21 +67,10 @@ class HomeFragment : Fragment() {
                 MY_PROFILE_REQUEST_CODE)
         }
 
-        val emotions = listOf(
-            Emotion("Happy", R.color.happyBg, R.drawable.mood_happy),
-            Emotion("Calm", R.color.calmBg, R.drawable.mood_calm),
-            Emotion("Manic", R.color.manicBg, R.drawable.mood_manic),
-            Emotion("Angry", R.color.angryBg, R.drawable.mood_angry),
-            Emotion("Sad", R.color.sadBg, R.drawable.mood_sad)
-        )
+        checkDailyMoodEntry()
+        setEmotionClickListener()
 
-        // Get reference to the RecyclerView
-        val emotionRecyclerView: RecyclerView = binding.recyclerView
 
-        // Set layout manager and adapter
-        emotionRecyclerView.layoutManager =
-            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-        emotionRecyclerView.adapter = EmotionsAdapter(emotions)
 
 
         val list = listOf(
@@ -232,6 +221,62 @@ class HomeFragment : Fragment() {
         )
     }
 
+    private fun checkDailyMoodEntry() {
+        val userId = firestoreClass.getCurrentUserID()
+        val currentDate = firestoreClass.getCurrentFormattedDate()
+
+        firestoreClass.checkDailyMoodEntry(userId, currentDate,
+            onSuccess = { moodEntryExists ->
+                if (moodEntryExists) {
+                    // Hide the daily_checkin LinearLayout
+                    binding.dailyCheckin.visibility = View.GONE
+                }
+            },
+            onFailure = { e ->
+                Log.e("HomeFragment", "Error checking daily mood entry", e)
+            }
+        )
+    }
+
+    private fun storeDailyMood(emotion: String) {
+        val userId = firestoreClass.getCurrentUserID()
+        val currentDate = firestoreClass.getCurrentFormattedDate()
+
+        firestoreClass.storeDailyMood(userId, currentDate, emotion,
+            onSuccess = {
+                // Hide the daily_checkin LinearLayout
+                binding.dailyCheckin.visibility = View.GONE
+            },
+            onFailure = { e ->
+                Log.e("HomeFragment", "Error storing daily mood", e)
+            }
+        )
+    }
+
+    private fun setEmotionClickListener() {
+        val emotions = listOf(
+            Emotion("Happy", R.color.happyBg, R.drawable.mood_happy),
+            Emotion("Calm", R.color.calmBg, R.drawable.mood_calm),
+            Emotion("Manic", R.color.manicBg, R.drawable.mood_manic),
+            Emotion("Angry", R.color.angryBg, R.drawable.mood_angry),
+            Emotion("Sad", R.color.sadBg, R.drawable.mood_sad)
+        )
+
+        // Get reference to the RecyclerView
+        val emotionRecyclerView: RecyclerView = binding.recyclerView
+
+        // Set layout manager and adapter
+        emotionRecyclerView.layoutManager =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        emotionRecyclerView.adapter = EmotionsAdapter(emotions)
+
+        val emotionsAdapter = EmotionsAdapter(emotions)
+        emotionsAdapter.setOnItemClickListener { emotion ->
+            storeDailyMood(emotion.mood)
+        }
+        binding.recyclerView.adapter = emotionsAdapter
+    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
@@ -245,4 +290,5 @@ class HomeFragment : Fragment() {
             Log.e("Cancelled", "Cancelled")
         }
     }
+
 }
