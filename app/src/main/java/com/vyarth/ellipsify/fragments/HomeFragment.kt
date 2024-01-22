@@ -27,6 +27,9 @@ import com.bumptech.glide.Glide
 import com.vyarth.ellipsify.R
 import com.vyarth.ellipsify.activities.MainActivity
 import com.vyarth.ellipsify.activities.ProfileActivity
+import com.vyarth.ellipsify.activities.journals.DailyJournalActivity
+import com.vyarth.ellipsify.activities.journals.MoodJournalActivity
+import com.vyarth.ellipsify.activities.sleep.SleepActivity
 import com.vyarth.ellipsify.adapters.EmotionsAdapter
 import com.vyarth.ellipsify.adapters.HomeAdapter
 import com.vyarth.ellipsify.databinding.FragmentHomeBinding
@@ -90,13 +93,19 @@ class HomeFragment : Fragment() {
             Home("Sleep Serenity", "Say goodbye to restless nights and awaken refreshed.", R.drawable.bg_sleep, R.drawable.home_sleep, "Relax Now",R.color.homeSleep,R.drawable.btn_sleep)
         )
 
+        val activityClasses = listOf(
+            DailyJournalActivity::class.java,
+            SleepActivity::class.java
+            // Add more activity classes as needed
+        )
+
         // Get reference to the RecyclerView
         val homeRecyclerView: RecyclerView = binding.homeRecyclerView
 
         // Set layout manager and adapter
         homeRecyclerView.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-        homeRecyclerView.adapter = HomeAdapter(list)
+        homeRecyclerView.adapter = HomeAdapter(list,activityClasses)
 
         val greetingTextView: TextView = binding.greetingMain
         // Load custom typeface from the "assets" folder

@@ -18,6 +18,9 @@
         android:theme="@style/Theme.Eclipsify"
         tools:targetApi="31">
         <activity
+            android:name=".activities.sleep.SleepActivity"
+            android:exported="false" />
+        <activity
             android:name=".activities.journals.MoodJournalEntryActivity"
             android:exported="false" />
         <activity

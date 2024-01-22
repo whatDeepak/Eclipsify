@@ -12,55 +12,46 @@ import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.vyarth.ellipsify.R
-import com.vyarth.ellipsify.model.Home
+import com.vyarth.ellipsify.model.BedtimeStory
 import com.vyarth.ellipsify.model.Journal
 
-
-class HomeAdapter(private val list: List<Home>,
-                  private val activityClasses: List<Class<out AppCompatActivity>>):
-    RecyclerView.Adapter<HomeAdapter.HomeViewHolder>(){
+class BedtimeStoryAdapter(private val story: List<BedtimeStory>,
+                     private val activityClasses: List<Class<out AppCompatActivity>>):
+    RecyclerView.Adapter<BedtimeStoryAdapter.BedtimeStoryHolder>(){
 
     // ViewHolder class
-    class HomeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val homeTitle: TextView = itemView.findViewById(R.id.homeTitle)
+    class BedtimeStoryHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val journalTitle: TextView = itemView.findViewById(R.id.cardTitle)
         val cardView: CardView = itemView.findViewById(R.id.cardView) // Replace with the actual ID of your CardView
-        val homeImageView: ImageView = itemView.findViewById(R.id.homeImageView) // Replace with the actual ID of your ImageView
-        val homeDesc: TextView = itemView.findViewById(R.id.homeDesc)
-        val homeCount: TextView = itemView.findViewById(R.id.homeBtn)
-        val btnImage: ImageView =itemView.findViewById(R.id.homeBtnImage)
-
-
+        val journalDesc: TextView = itemView.findViewById(R.id.cardDesc)
+        val journalCount: TextView = itemView.findViewById(R.id.cardTime)
     }
 
     // Create new ViewHolders (invoked by the layout manager)
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BedtimeStoryHolder {
         val itemView = LayoutInflater.from(parent.context)
-            .inflate(R.layout.home_item, parent, false)
-        return HomeViewHolder(itemView)
+            .inflate(R.layout.bedtime_item, parent, false)
+        return BedtimeStoryHolder(itemView)
     }
 
 
     // Replace the contents of a ViewHolder (invoked by the layout manager)
-    override fun onBindViewHolder(holder: HomeViewHolder, position: Int) {
-        val item = list[position]
+    override fun onBindViewHolder(holder: BedtimeStoryHolder, position: Int) {
+        val data = story[position]
         val activityClass = activityClasses[position]
 
 
-        holder.homeTitle.text = item.title
-        holder.homeDesc.text=item.desc
+        holder.journalTitle.text = data.title
+        holder.journalDesc.text=data.desc
 
         // Set background color
-        holder.cardView.setBackgroundResource(item.backgroundColor);
-
+        holder.cardView.setBackgroundResource(data.backgroundColor);
 
         // Set image
-        holder.homeImageView.setImageResource(item.imageResId)
 
-        holder.btnImage.setImageResource(item.btnImage)
+        holder.journalCount.text = data.time
 
-        holder.homeCount.text = item.btn
-
-        holder.homeCount.setTextColor(ContextCompat.getColor(holder.itemView.context, item.btnColor))
+        holder.journalCount.setTextColor(ContextCompat.getColor(holder.itemView.context, data.timeColor))
 
         val fontCount = Typeface.createFromAsset(
             holder.itemView.context.assets,
@@ -74,21 +65,21 @@ class HomeAdapter(private val list: List<Home>,
             holder.itemView.context.assets,
             "poppins_regular.ttf"
         )
-        holder.homeCount.typeface = fontCount
-        holder.homeTitle.typeface= fontTitle
-        holder.homeDesc.typeface= fontDesc
+        holder.journalCount.typeface = fontCount
+        holder.journalTitle.typeface= fontTitle
+        holder.journalDesc.typeface= fontDesc
 
         holder.itemView.setOnClickListener {
             val intent = Intent(holder.itemView.context, activityClass)
-            intent.putExtra("journal_title", item.title)
+            intent.putExtra("journal_title", data.title)
             holder.itemView.context.startActivity(intent)
         }
-
-
     }
+
+    class ViewHolder(view: View) : RecyclerView.ViewHolder(view)
 
     // Return the size of your dataset (invoked by the layout manager)
     override fun getItemCount(): Int {
-        return list.size
+        return story.size
     }
 }
