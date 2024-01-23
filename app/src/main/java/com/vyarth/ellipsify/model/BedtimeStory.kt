@@ -5,5 +5,6 @@ data class BedtimeStory (
     val desc:String,
     val backgroundColor: Int,
     val time: String,
-    val timeColor: Int
+    val timeColor: Int,
+    val refer: String
 )

@@ -11,6 +11,7 @@ import com.vyarth.ellipsify.R
 import com.vyarth.ellipsify.activities.BaseActivity
 import com.vyarth.ellipsify.activities.journals.DailyJournalActivity
 import com.vyarth.ellipsify.activities.journals.MoodJournalActivity
+import com.vyarth.ellipsify.activities.music.MusicActivity
 import com.vyarth.ellipsify.adapters.BedtimeStoryAdapter
 import com.vyarth.ellipsify.adapters.JournalAdapter
 import com.vyarth.ellipsify.model.BedtimeStory
@@ -25,13 +26,13 @@ class SleepActivity : BaseActivity() {
 
 
         val story = listOf(
-            BedtimeStory("The Dream Weaver's Lullaby", "Enchanting journey with the Dream Weaver in a magical dreamscape.", R.drawable.bg_affirm, "00:00", R.color.xplrAffirm),
-            BedtimeStory("The Starlight Symphony", " Luna dances through galaxies in a celestial orchestra of stardust.", R.drawable.bg_sleep, "00.00", R.color.homeSleep)
+            BedtimeStory("The Dream Weaver's Lullaby", "Enchanting journey with the Dream Weaver in a magical dreamscape.", R.drawable.bg_affirm, "04:32", R.color.xplrAffirm,"TheDreamWeaver'sLullaby"),
+            BedtimeStory("The Starlight Symphony", " Luna dances through galaxies in a celestial orchestra of stardust.", R.drawable.bg_sleep, "02:53", R.color.homeSleep,"TheStarlightSymphony")
         )
 
         val activityClasses = listOf(
-            DailyJournalActivity::class.java,
-            MoodJournalActivity::class.java
+            MusicActivity::class.java,
+            MusicActivity::class.java
             // Add more activity classes as needed
         )
 

@@ -3,6 +3,7 @@ package com.vyarth.ellipsify.firebase
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.AsyncTask
 import android.util.Log
 import androidx.fragment.app.FragmentActivity
@@ -10,6 +11,7 @@ import androidx.navigation.fragment.NavHostFragment
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
+import com.google.firebase.storage.FirebaseStorage
 import com.vyarth.ellipsify.R
 import com.vyarth.ellipsify.activities.AccountActivity
 import com.vyarth.ellipsify.activities.IntroActivity
@@ -518,6 +520,34 @@ class FirestoreClass {
             }
             .addOnFailureListener { e ->
                 onFailure(e)
+            }
+    }
+
+    // Sleep
+
+    // Function to download audio from Firestore Storage
+    interface AudioDownloadListener {
+        fun onAudioDownloaded(uri: Uri?)
+    }
+
+    fun downloadAudio(title: String, listener: AudioDownloadListener) {
+        val storage = FirebaseStorage.getInstance()
+        val audioRef = storage.reference.child("BedtimeStories/$title.mp3")
+
+        val localFile = createTempFile("temp", "mp3")
+        audioRef.getFile(localFile)
+            .addOnSuccessListener {
+                listener.onAudioDownloaded(Uri.fromFile(localFile))
+            }
+            .addOnProgressListener { taskSnapshot ->
+                // Get the progress percentage
+                val progress =
+                    ((100.0 * taskSnapshot.bytesTransferred) / taskSnapshot.totalByteCount).toInt()
+
+            }
+            .addOnFailureListener {
+                it.printStackTrace()
+                listener.onAudioDownloaded(null)
             }
     }
 

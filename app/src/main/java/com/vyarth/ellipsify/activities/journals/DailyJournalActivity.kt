@@ -53,8 +53,6 @@ class DailyJournalActivity : BaseActivity(), DatePickerAdapter.DatePickerClickLi
 
         // Find today's date in the list and set selectedPosition
         val today = currentDate.get(Calendar.DAY_OF_MONTH)
-        Log.e("yoo",today.toString())
-        Log.e("yoo",daysOfWeek[4].date.toString())
 
         val todayIndex = daysOfWeek.indexOfFirst { SimpleDateFormat("dd", Locale.getDefault()).format(it.date).toInt() == today }
         val defaultSelectedPosition = if (todayIndex != -1) todayIndex else -1  // If today is not found, default to the first item

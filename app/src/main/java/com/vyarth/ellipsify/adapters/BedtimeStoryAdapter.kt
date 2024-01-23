@@ -12,6 +12,7 @@ import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.vyarth.ellipsify.R
+import com.vyarth.ellipsify.firebase.FirestoreClass
 import com.vyarth.ellipsify.model.BedtimeStory
 import com.vyarth.ellipsify.model.Journal
 
@@ -71,7 +72,10 @@ class BedtimeStoryAdapter(private val story: List<BedtimeStory>,
 
         holder.itemView.setOnClickListener {
             val intent = Intent(holder.itemView.context, activityClass)
-            intent.putExtra("journal_title", data.title)
+            intent.putExtra("story_title", data.title)
+            intent.putExtra("story_refer",data.refer)
+            intent.putExtra("story_bg",data.backgroundColor)
+            intent.putExtra("story_image",data.timeColor)
             holder.itemView.context.startActivity(intent)
         }
     }

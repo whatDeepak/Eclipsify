@@ -30,7 +30,6 @@
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
-
         </androidx.appcompat.widget.Toolbar>
 
         <LinearLayout
@@ -43,11 +42,21 @@
             >
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/music_card"
                 android:layout_width="match_parent"
                 android:layout_height="350dp"
                 android:layout_margin="18dp"
                 app:cardCornerRadius="60dp"
-                />
+                >
+                <ImageView
+                    android:id="@+id/card_image"
+                    android:layout_width="200dp"
+                    android:layout_height="200dp"
+                    android:background="@drawable/home_sleep"
+                    android:layout_gravity="center"/>
+            </androidx.cardview.widget.CardView>
+
+
 
             <TextView
                 android:id="@+id/song_name"
@@ -58,7 +67,7 @@
                 android:paddingEnd="5dp"
                 android:layout_marginVertical="20dp"
                 android:layout_marginStart="20dp"
-                android:text="Abcd"
+                android:text=""
                 android:textColor="@color/primary_text_color"
                 android:textSize="22sp"
                 tools:ignore="MissingPrefix,RtlSymmetry" />
@@ -90,7 +99,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingStart="7dp"
-                    android:text="1:16"
+                    android:text=""
                     android:textColor="@color/primary_text_color"
                     android:textSize="12sp"
                     tools:ignore="RtlSymmetry" />
@@ -100,7 +109,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingEnd="5dp"
-                    android:text="2:54"
+                    android:text=""
                     android:layout_alignParentEnd="true"
                     android:textColor="@color/primary_text_color"
                     android:textSize="12sp"
@@ -130,9 +139,8 @@
                     android:id="@+id/player_center_icon"
                     android:layout_width="80dp"
                     android:layout_height="80dp"
-                    android:src="@drawable/play"
                     android:layout_centerInParent="true"
-                    />
+                    android:src="@drawable/play" />
 
                 <ImageView
                     android:id="@+id/next_song"
