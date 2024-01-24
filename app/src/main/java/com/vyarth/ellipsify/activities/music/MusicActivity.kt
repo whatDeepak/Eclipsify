@@ -3,6 +3,8 @@ package com.vyarth.ellipsify.activities.music
 import android.app.Dialog
 import android.content.res.ColorStateList
 import android.graphics.Typeface
+import android.graphics.drawable.ColorDrawable
+import android.graphics.Color
 import android.media.AudioAttributes
 import android.media.Image
 import android.media.MediaPlayer
@@ -12,6 +14,8 @@ import android.os.Handler
 import android.widget.ImageView
 import android.widget.SeekBar
 import android.widget.TextView
+import androidx.activity.OnBackPressedCallback
+import androidx.appcompat.widget.AppCompatButton
 import androidx.appcompat.widget.DialogTitle
 import androidx.appcompat.widget.Toolbar
 import androidx.cardview.widget.CardView
@@ -23,6 +27,7 @@ import java.util.concurrent.TimeUnit
 
 class MusicActivity : BaseActivity() {
 
+    private lateinit var exitDialog: Dialog
     private var mProgressDialog: Dialog? = null
     private lateinit var mediaPlayer: MediaPlayer
     private lateinit var seekBar: SeekBar
@@ -40,6 +45,15 @@ class MusicActivity : BaseActivity() {
         setContentView(R.layout.activity_music)
 
         setupActionBar()
+        setupExitDialog()
+
+        this.onBackPressedDispatcher
+            .addCallback(this, object: OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    exitDialog.show()
+                }
+            })
+
 
         title = intent.getStringExtra("story_title") ?: ""
         refer = intent.getStringExtra("story_refer") ?: ""
@@ -193,7 +207,38 @@ class MusicActivity : BaseActivity() {
             actionBar.setHomeAsUpIndicator(R.drawable.ic_black_color_back_24dp)
         }
 
-        toolbarSignInActivity.setNavigationOnClickListener { onBackPressed() }
+        toolbarSignInActivity.setNavigationOnClickListener {
+            // Show the custom exit dialog when the back button is clicked
+            exitDialog.show()
+        }
+    }
+
+    private fun setupExitDialog() {
+        exitDialog = Dialog(this)
+        exitDialog.setContentView(R.layout.dialog_exit)
+
+        // Set dialog background to transparent
+        exitDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+        // Get references to dialog components
+        val exitText = exitDialog.findViewById<TextView>(R.id.exit_text)
+        val yesButton = exitDialog.findViewById<AppCompatButton>(R.id.btn_yes)
+        val cancelButton = exitDialog.findViewById<AppCompatButton>(R.id.btn_cancel)
+
+        // Set the text for the exit message
+
+        // Set up the "Yes" button click listener
+        yesButton.setOnClickListener {
+            // Handle "Yes" button click
+            // For now, simply finish the activity
+            finish()
+        }
+
+        // Set up the "Cancel" button click listener
+        cancelButton.setOnClickListener {
+            // Dismiss the dialog when "Cancel" is clicked
+            exitDialog.dismiss()
+        }
     }
 
     override fun onDestroy() {
@@ -201,5 +246,12 @@ class MusicActivity : BaseActivity() {
         mediaPlayer.release()
         handler.removeCallbacks(updateTimeTask)
     }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        // Show the custom exit dialog when the back button is pressed
+        exitDialog.show()
+    }
+
 
 }
