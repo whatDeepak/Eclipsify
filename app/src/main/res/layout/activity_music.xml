@@ -41,22 +41,15 @@
             android:orientation="vertical"
             >
 
-            <androidx.cardview.widget.CardView
+            <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/music_card"
                 android:layout_width="match_parent"
                 android:layout_height="350dp"
                 android:layout_margin="18dp"
-                app:cardCornerRadius="60dp"
-                >
-                <ImageView
-                    android:id="@+id/card_image"
-                    android:layout_width="200dp"
-                    android:layout_height="200dp"
-                    android:background="@drawable/home_sleep"
-                    android:layout_gravity="center"/>
-            </androidx.cardview.widget.CardView>
-
-
+                android:scaleType="centerCrop"
+                android:clipToOutline="true"
+                app:shapeAppearanceOverlay="@style/curved"
+                android:background="@drawable/home_sleep"/>
 
             <TextView
                 android:id="@+id/song_name"

@@ -32,8 +32,7 @@ class MusicActivity : BaseActivity() {
     private lateinit var audioUri: String  // Store the audio URI obtained from FirestoreClass
     private lateinit var title: String
     private lateinit var refer: String
-    private var bgcolor: Int = 0
-    private var imagecolor: Int = 0
+    private var imagebg: Int = 0
 
     private val handler = Handler()
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,8 +43,8 @@ class MusicActivity : BaseActivity() {
 
         title = intent.getStringExtra("story_title") ?: ""
         refer = intent.getStringExtra("story_refer") ?: ""
-        bgcolor = intent.getIntExtra("story_bg",0)
-        imagecolor = intent.getIntExtra("story_image",0)
+        imagebg = intent.getIntExtra("story_bg",0)
+
 
         updateUIelements()
 
@@ -75,12 +74,10 @@ class MusicActivity : BaseActivity() {
 
     private fun updateUIelements() {
         val titleTV:TextView=findViewById(R.id.song_name)
-        val card:CardView=findViewById(R.id.music_card)
-        val image:ImageView=findViewById(R.id.card_image)
+        val image:ImageView=findViewById(R.id.music_card)
 
         titleTV.text=title
-        card.setBackgroundResource(bgcolor)
-        image.backgroundTintList = ColorStateList.valueOf(imagecolor)
+        image.setBackgroundResource(imagebg)
     }
 
     private fun initializeMediaPlayer() {

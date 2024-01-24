@@ -74,8 +74,7 @@ class BedtimeStoryAdapter(private val story: List<BedtimeStory>,
             val intent = Intent(holder.itemView.context, activityClass)
             intent.putExtra("story_title", data.title)
             intent.putExtra("story_refer",data.refer)
-            intent.putExtra("story_bg",data.backgroundColor)
-            intent.putExtra("story_image",data.timeColor)
+            intent.putExtra("story_bg",data.image)
             holder.itemView.context.startActivity(intent)
         }
     }

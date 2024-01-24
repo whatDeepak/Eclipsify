@@ -6,5 +6,6 @@ data class BedtimeStory (
     val backgroundColor: Int,
     val time: String,
     val timeColor: Int,
-    val refer: String
+    val refer: String,
+    val image: Int
 )

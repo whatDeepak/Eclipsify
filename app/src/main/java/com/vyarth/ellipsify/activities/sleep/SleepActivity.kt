@@ -26,8 +26,8 @@ class SleepActivity : BaseActivity() {
 
 
         val story = listOf(
-            BedtimeStory("The Dream Weaver's Lullaby", "Enchanting journey with the Dream Weaver in a magical dreamscape.", R.drawable.bg_affirm, "04:32", R.color.xplrAffirm,"TheDreamWeaver'sLullaby"),
-            BedtimeStory("The Starlight Symphony", " Luna dances through galaxies in a celestial orchestra of stardust.", R.drawable.bg_sleep, "02:53", R.color.homeSleep,"TheStarlightSymphony")
+            BedtimeStory("The Dream Weaver's Lullaby", "Enchanting journey with the Dream Weaver in a magical dreamscape.", R.drawable.bg_affirm, "04:32", R.color.xplrAffirm,"TheDreamWeaver'sLullaby",R.drawable.bedtime1),
+            BedtimeStory("The Starlight Symphony", " Luna dances through galaxies in a celestial orchestra of stardust.", R.drawable.bg_sleep, "02:53", R.color.homeSleep,"TheStarlightSymphony",R.drawable.bedtime2)
         )
 
         val activityClasses = listOf(
