@@ -532,7 +532,7 @@ class FirestoreClass {
 
     fun downloadAudio(title: String, listener: AudioDownloadListener) {
         val storage = FirebaseStorage.getInstance()
-        val audioRef = storage.reference.child("BedtimeStories/$title.mp3")
+        val audioRef = storage.reference.child("SleepMusic/$title.mp3")
 
         val localFile = createTempFile("temp", "mp3")
         audioRef.getFile(localFile)

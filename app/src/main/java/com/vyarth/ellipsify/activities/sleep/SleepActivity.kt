@@ -14,8 +14,10 @@ import com.vyarth.ellipsify.activities.journals.MoodJournalActivity
 import com.vyarth.ellipsify.activities.music.MusicActivity
 import com.vyarth.ellipsify.adapters.BedtimeStoryAdapter
 import com.vyarth.ellipsify.adapters.JournalAdapter
+import com.vyarth.ellipsify.adapters.SleepMusicAdapter
 import com.vyarth.ellipsify.model.BedtimeStory
 import com.vyarth.ellipsify.model.Journal
+import com.vyarth.ellipsify.model.SleepMusic
 
 class SleepActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,7 +32,7 @@ class SleepActivity : BaseActivity() {
             BedtimeStory("The Starlight Symphony", " Luna dances through galaxies in a celestial orchestra of stardust.", R.drawable.bg_sleep, "02:53", R.color.homeSleep,"TheStarlightSymphony",R.drawable.bedtime2)
         )
 
-        val activityClasses = listOf(
+        val storyActivityClasses = listOf(
             MusicActivity::class.java,
             MusicActivity::class.java
             // Add more activity classes as needed
@@ -42,7 +44,32 @@ class SleepActivity : BaseActivity() {
         // Set layout manager and adapter
         recyclerView.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-        recyclerView.adapter = BedtimeStoryAdapter(story, activityClasses)
+        recyclerView.adapter = BedtimeStoryAdapter(story, storyActivityClasses)
+
+        val music = listOf(
+            SleepMusic("In The Light", "A calm and therapeutic song.", "04:36","InTheLight",R.drawable.music1),
+            SleepMusic("Quiet Time", "Soothing relaxation music.", "02:25","QuietTime",R.drawable.music2),
+            SleepMusic("Relaxing Green Nature", "Relaxing feel of green nature.", "03:43","RelaxingGreenNature",R.drawable.music3),
+            SleepMusic("Serenity", "Soft ambient song for deep relaxation.", "03:06","Serenity",R.drawable.music4),
+            SleepMusic("Our Hopes And Dreams", "Emotional piano solo, with quiet, ambient strings.", "03:55","OurHopesAndDreams",R.drawable.music5),
+        )
+
+        val musicActivityClasses = listOf(
+            MusicActivity::class.java,
+            MusicActivity::class.java,
+            MusicActivity::class.java,
+            MusicActivity::class.java,
+            MusicActivity::class.java
+            // Add more activity classes as needed
+        )
+
+        // Get reference to the RecyclerView
+        val musicRecyclerView: RecyclerView = findViewById(R.id.sleepmusicRV)
+
+        // Set layout manager and adapter
+        musicRecyclerView.layoutManager =
+            LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        musicRecyclerView.adapter = SleepMusicAdapter(music, musicActivityClasses)
     }
 
 

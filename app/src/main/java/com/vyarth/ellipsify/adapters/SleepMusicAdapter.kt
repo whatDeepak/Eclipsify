@@ -1,5 +1,6 @@
 package com.vyarth.ellipsify.adapters
 
+
 import android.content.Intent
 import android.graphics.Typeface
 import android.view.LayoutInflater
@@ -11,34 +12,36 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.imageview.ShapeableImageView
 import com.vyarth.ellipsify.R
 import com.vyarth.ellipsify.firebase.FirestoreClass
 import com.vyarth.ellipsify.model.BedtimeStory
 import com.vyarth.ellipsify.model.Journal
+import com.vyarth.ellipsify.model.SleepMusic
 
-class BedtimeStoryAdapter(private val story: List<BedtimeStory>,
-                     private val activityClasses: List<Class<out AppCompatActivity>>):
-    RecyclerView.Adapter<BedtimeStoryAdapter.BedtimeStoryHolder>(){
+class SleepMusicAdapter(private val music: List<SleepMusic>,
+                        private val activityClasses: List<Class<out AppCompatActivity>>):
+    RecyclerView.Adapter<SleepMusicAdapter.SleepMusicHolder>(){
 
     // ViewHolder class
-    class BedtimeStoryHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val title: TextView = itemView.findViewById(R.id.cardTitle)
-        val cardView: CardView = itemView.findViewById(R.id.cardView) // Replace with the actual ID of your CardView
-        val desc: TextView = itemView.findViewById(R.id.cardDesc)
-        val time: TextView = itemView.findViewById(R.id.cardTime)
+    class SleepMusicHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val title: TextView = itemView.findViewById(R.id.musicTitle)
+        val desc: TextView = itemView.findViewById(R.id.musicDesc)
+        val time: TextView = itemView.findViewById(R.id.musicTime)
+        val image: ShapeableImageView = itemView.findViewById(R.id.musicImage)
     }
 
     // Create new ViewHolders (invoked by the layout manager)
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BedtimeStoryHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SleepMusicHolder {
         val itemView = LayoutInflater.from(parent.context)
-            .inflate(R.layout.bedtime_item, parent, false)
-        return BedtimeStoryHolder(itemView)
+            .inflate(R.layout.sleep_music_item, parent, false)
+        return SleepMusicHolder(itemView)
     }
 
 
     // Replace the contents of a ViewHolder (invoked by the layout manager)
-    override fun onBindViewHolder(holder: BedtimeStoryHolder, position: Int) {
-        val data = story[position]
+    override fun onBindViewHolder(holder: SleepMusicHolder, position: Int) {
+        val data = music[position]
         val activityClass = activityClasses[position]
 
 
@@ -46,13 +49,9 @@ class BedtimeStoryAdapter(private val story: List<BedtimeStory>,
         holder.desc.text=data.desc
 
         // Set background color
-        holder.cardView.setBackgroundResource(data.backgroundColor);
-
-        // Set image
+        holder.image.setBackgroundResource(data.image);
 
         holder.time.text = data.time
-
-        holder.time.setTextColor(ContextCompat.getColor(holder.itemView.context, data.timeColor))
 
         val fontCount = Typeface.createFromAsset(
             holder.itemView.context.assets,
@@ -83,6 +82,6 @@ class BedtimeStoryAdapter(private val story: List<BedtimeStory>,
 
     // Return the size of your dataset (invoked by the layout manager)
     override fun getItemCount(): Int {
-        return story.size
+        return music.size
     }
 }

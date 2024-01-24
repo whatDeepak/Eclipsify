@@ -49,7 +49,7 @@ class MusicActivity : BaseActivity() {
         updateUIelements()
 
         // Show ProgressDialog with text
-        showProgressDialog("Preparing Your Bedtime Story...")
+        showProgressDialog("Preparing...")
 
         FirestoreClass().downloadAudio(refer, object : FirestoreClass.AudioDownloadListener {
             override fun onAudioDownloaded(uri: Uri?) {
