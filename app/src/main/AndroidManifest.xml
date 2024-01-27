@@ -6,6 +6,8 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
 
+    <uses-permission android:name="android.permission.VIBRATE" />
+
     <application
         android:name=".Eclipsify"
         android:allowBackup="true"
@@ -17,6 +19,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Eclipsify"
         tools:targetApi="31">
+        <activity
+            android:name=".activities.music.ExerciseActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.explore.BreathingActivity"
+            android:exported="false" />
         <activity
             android:name=".activities.explore.MeditationActivity"
             android:exported="false" />
