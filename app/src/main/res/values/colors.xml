@@ -48,4 +48,10 @@
 
     <color name="selectedBorderColor">#4B3425</color>
 
+    <color name="med1">#FFC389</color>
+    <color name="med2">#66A986</color>
+    <color name="med3">#3F414E</color>
+    <color name="med4">#FEF9F3</color>
+    <color name="med5">#3F414E</color>
+    <color name="med6">#FFECCC</color>
 </resources>

@@ -10,6 +10,9 @@ import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.vyarth.ellipsify.R
+import com.vyarth.ellipsify.activities.explore.MeditationActivity
+import com.vyarth.ellipsify.activities.journals.DailyJournalActivity
+import com.vyarth.ellipsify.activities.journals.MoodJournalActivity
 import com.vyarth.ellipsify.adapters.ExploreAdapter
 import com.vyarth.ellipsify.databinding.FragmentExploreBinding
 import com.vyarth.ellipsify.model.Explore
@@ -42,19 +45,26 @@ class ExploreFragment : Fragment() {
 
         )
 
+        val activityClasses = listOf(
+            MeditationActivity::class.java,
+            MeditationActivity::class.java,
+            MeditationActivity::class.java,
+            MeditationActivity::class.java,
+            // Add more activity classes as needed
+        )
+
         // Get reference to the RecyclerView
         val recyclerView: RecyclerView = binding.exploreRecyclerView
 
         // Set layout manager and adapter
         recyclerView.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-        recyclerView.adapter = ExploreAdapter(explores)
+        recyclerView.adapter = ExploreAdapter(explores, activityClasses)
 
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
     }
 }

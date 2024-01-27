@@ -28,8 +28,6 @@ class JournalAdapter(private val journal: List<Journal>,
         val journalImageView: ImageView = itemView.findViewById(R.id.journalImageView) // Replace with the actual ID of your ImageView
         val journalDesc: TextView = itemView.findViewById(R.id.journalDesc)
         val journalCount: TextView = itemView.findViewById(R.id.journalCount)
-
-
     }
 
     // Create new ViewHolders (invoked by the layout manager)

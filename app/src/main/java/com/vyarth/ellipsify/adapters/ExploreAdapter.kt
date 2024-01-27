@@ -1,11 +1,13 @@
 package com.vyarth.ellipsify.adapters
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.graphics.Typeface
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
@@ -13,7 +15,8 @@ import com.vyarth.ellipsify.R
 import com.vyarth.ellipsify.model.Emotion
 import com.vyarth.ellipsify.model.Explore
 
-class ExploreAdapter(private val explore: List<Explore>):
+class ExploreAdapter(private val explore: List<Explore>,
+                     private val activityClasses: List<Class<out AppCompatActivity>>):
     RecyclerView.Adapter<ExploreAdapter.ExploreViewHolder>(){
 
     // ViewHolder class
@@ -39,6 +42,7 @@ class ExploreAdapter(private val explore: List<Explore>):
     // Replace the contents of a ViewHolder (invoked by the layout manager)
     override fun onBindViewHolder(holder: ExploreViewHolder, position: Int) {
         val xplr = explore[position]
+        val activityClass = activityClasses[position]
 
 
         holder.exploreTitle.text = xplr.title
@@ -75,8 +79,15 @@ class ExploreAdapter(private val explore: List<Explore>):
         holder.exploreTitle.typeface= fontTitle
         holder.exploreDesc.typeface= fontDesc
 
+        holder.itemView.setOnClickListener {
+            val intent = Intent(holder.itemView.context, activityClass)
+            intent.putExtra("explore_title", xplr.title)
+            holder.itemView.context.startActivity(intent)
+        }
 
     }
+
+    class ViewHolder(view: View) : RecyclerView.ViewHolder(view)
 
     // Return the size of your dataset (invoked by the layout manager)
     override fun getItemCount(): Int {
