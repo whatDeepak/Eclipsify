@@ -20,12 +20,12 @@ class MeditationActivity : BaseActivity() {
         setupActionBar()
 
         val itemList = listOf(
-            Meditation("Zen Meditation", R.drawable.bg_med1, "4:50", R.color.med1, "ZenMeditation",R.drawable.med1),
-            Meditation("Reduce Stress", R.drawable.bg_med2, "4:50", R.color.med2, "ReduceStress",R.drawable.med2),
-            Meditation("Relaxation", R.drawable.bg_med3, "4:50", R.color.med3, "Relaxation",R.drawable.med3),
-            Meditation("Increase Happiness", R.drawable.bg_med4, "4:50", R.color.med4, "IncreaseHappiness",R.drawable.med4),
-            Meditation("Reduce Anxiety",R.drawable.bg_med5, "4:50", R.color.med5, "ReduceAnxiety",R.drawable.med5),
-            Meditation("Personal Growth",R.drawable.bg_med6, "4:50", R.color.med6, "PersonalGrowth",R.drawable.med6)
+            Meditation("Zen Meditation", R.drawable.bg_med1, "2:20", R.color.med1, "ZenMeditation",R.drawable.med1),
+            Meditation("Reduce Stress", R.drawable.bg_med2, "2:50", R.color.med2, "ReduceStress",R.drawable.med2),
+            Meditation("Relaxation", R.drawable.bg_med3, "3:04", R.color.med3, "Relaxation",R.drawable.med3),
+            Meditation("Increase Happiness", R.drawable.bg_med4, "2:50", R.color.med4, "IncreaseHappiness",R.drawable.med4),
+            Meditation("Reduce Anxiety",R.drawable.bg_med5, "2:50", R.color.med5, "ReduceAnxiety",R.drawable.med5),
+            Meditation("Personal Growth",R.drawable.bg_med6, "2:50", R.color.med6, "PersonalGrowth",R.drawable.med6)
             // Add more items as needed
         )
 

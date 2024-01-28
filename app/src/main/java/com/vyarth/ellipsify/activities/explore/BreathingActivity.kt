@@ -24,18 +24,14 @@ class BreathingActivity : BaseActivity() {
         setupActionBar()
 
         val itemList = listOf(
-            Breathing("Zen Meditation", R.drawable.bg_med1, "4:50", R.color.med1, "ZenMeditation",R.drawable.med1),
-            Breathing("Reduce Stress", R.drawable.bg_med2, "4:50", R.color.med2, "ReduceStress",R.drawable.med2),
-            Breathing("Relaxation", R.drawable.bg_med3, "4:50", R.color.med3, "Relaxation",R.drawable.med3),
-            Breathing("Increase Happiness", R.drawable.bg_med4, "4:50", R.color.med4, "IncreaseHappiness",R.drawable.med4),
-            Breathing("Reduce Anxiety",R.drawable.bg_med5, "4:50", R.color.med5, "ReduceAnxiety",R.drawable.med5),
-            Breathing("Personal Growth",R.drawable.bg_med6, "4:50", R.color.med6, "PersonalGrowth",R.drawable.med6)
+            Breathing("Deep Breathing", R.drawable.bg_med1, "3:00", R.color.med1, "Breathing",R.drawable.breathe1),
+            Breathing("Relaxed Breathing", R.drawable.bg_med3, "3:00", R.color.med3, "Breathing",R.drawable.breathe2),
+            Breathing("Extended Exhale", R.drawable.bg_med4, "3:00", R.color.med4, "Breathing",R.drawable.breathe3),
+            Breathing("Triangle Breathing", R.drawable.bg_med2, "3:00", R.color.med2, "Breathing",R.drawable.breathe4)
             // Add more items as needed
         )
 
         val breathingActivityClasses = listOf(
-            ExerciseActivity::class.java,
-            ExerciseActivity::class.java,
             ExerciseActivity::class.java,
             ExerciseActivity::class.java,
             ExerciseActivity::class.java,

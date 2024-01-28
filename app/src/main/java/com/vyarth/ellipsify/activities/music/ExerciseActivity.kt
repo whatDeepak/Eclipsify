@@ -49,7 +49,12 @@ class ExerciseActivity() : BaseActivity() {
 
     // Define the pattern of vibrations (time in milliseconds)
     // Define the new vibration pattern
-    private val pattern = longArrayOf(0, 1000, 5000, 2000, 5000)// Vibrate for 4s, then pause for 2s, repeat
+    private val deepBreathingPattern = longArrayOf(0, 4000, 4000, 4000, 4000) // (inhale-hold-exhale-hold)
+    private val relaxedBreathingPattern = longArrayOf(0, 4000, 7000, 8000, 7000) // (inhale-hold-exhale-hold)
+    private val extendedExhalePattern = longArrayOf(0, 2000, 4000, 6000, 4000) // (inhale-hold-exhale-hold)
+    private val triangleBreathingPattern = longArrayOf(0, 3000, 6000, 9000, 6000) // (inhale-hold-exhale-hold)
+
+    private lateinit var selectedPattern: LongArray
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_exercise)
@@ -71,6 +76,14 @@ class ExerciseActivity() : BaseActivity() {
         refer = intent.getStringExtra("story_refer") ?: ""
         imagebg = intent.getIntExtra("story_bg",0)
 
+
+        selectedPattern = when (title) {
+            "Deep Breathing" -> deepBreathingPattern
+            "Relaxed Breathing" -> relaxedBreathingPattern
+            "Extended Exhale" -> extendedExhalePattern
+            "Triangle Breathing" -> triangleBreathingPattern
+            else -> longArrayOf(0) // Default pattern (you can adjust this as needed)
+        }
 
         updateUIelements()
 
@@ -103,9 +116,8 @@ class ExerciseActivity() : BaseActivity() {
         val image: ImageView =findViewById(R.id.music_card)
         // Initialize breathing state TextView
         breathingStateTextView = findViewById(R.id.breathingStateTextView)
-        val stateTV: TextView = findViewById(R.id.breathingStateTextView)
         val customTypeface = Typeface.createFromAsset(assets, "poppins_medium.ttf")
-        stateTV.typeface = customTypeface
+        breathingStateTextView.typeface = customTypeface
         breathingStateTextView.text = "Get Ready" // Initial state
 
         titleTV.text=title
@@ -171,10 +183,10 @@ class ExerciseActivity() : BaseActivity() {
             }
 
             // Increment pattern index and handle looping
-            patternIndex = (patternIndex + 1) % pattern.size
+            patternIndex = (patternIndex + 1) % selectedPattern.size
 
             // Schedule the next iteration
-            handler.postDelayed(this, pattern[patternIndex])
+            handler.postDelayed(this, selectedPattern[patternIndex])
         }
     }
 
@@ -318,11 +330,11 @@ class ExerciseActivity() : BaseActivity() {
     private fun runVibrationPattern() {
         // For devices with API level 26 and above, use VibrationEffect
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val effect = VibrationEffect.createWaveform(pattern, -1)
+            val effect = VibrationEffect.createWaveform(selectedPattern, -1)
             vibrator.vibrate(effect)
         } else {
             // For older devices, use deprecated method
-            vibrator.vibrate(pattern, -1)
+            vibrator.vibrate(selectedPattern, -1)
         }
 
         // Schedule the next iteration of the pattern
@@ -337,7 +349,7 @@ class ExerciseActivity() : BaseActivity() {
     // Calculate the total duration of the vibration pattern
     private fun getTotalPatternDuration(): Long {
         var totalDuration = 0L
-        for (duration in pattern) {
+        for (duration in selectedPattern) {
             totalDuration += duration
         }
         return totalDuration
