@@ -1,13 +1,9 @@
 package com.vyarth.ellipsify.fragments
 
 import android.app.Activity
-import android.app.Dialog
-import android.content.Context
 import android.content.Intent
 import android.graphics.Typeface
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
@@ -28,7 +24,6 @@ import com.vyarth.ellipsify.R
 import com.vyarth.ellipsify.activities.MainActivity
 import com.vyarth.ellipsify.activities.ProfileActivity
 import com.vyarth.ellipsify.activities.journals.DailyJournalActivity
-import com.vyarth.ellipsify.activities.journals.MoodJournalActivity
 import com.vyarth.ellipsify.activities.sleep.SleepActivity
 import com.vyarth.ellipsify.adapters.EmotionsAdapter
 import com.vyarth.ellipsify.adapters.HomeAdapter

@@ -1,7 +1,6 @@
 package com.vyarth.ellipsify.activities.sleep
 
 import android.graphics.Typeface
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
@@ -9,14 +8,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.vyarth.ellipsify.R
 import com.vyarth.ellipsify.activities.BaseActivity
-import com.vyarth.ellipsify.activities.journals.DailyJournalActivity
-import com.vyarth.ellipsify.activities.journals.MoodJournalActivity
 import com.vyarth.ellipsify.activities.music.MusicActivity
 import com.vyarth.ellipsify.adapters.BedtimeStoryAdapter
-import com.vyarth.ellipsify.adapters.JournalAdapter
 import com.vyarth.ellipsify.adapters.SleepMusicAdapter
 import com.vyarth.ellipsify.model.BedtimeStory
-import com.vyarth.ellipsify.model.Journal
 import com.vyarth.ellipsify.model.SleepMusic
 
 class SleepActivity : BaseActivity() {
