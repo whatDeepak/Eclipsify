@@ -523,6 +523,36 @@ class FirestoreClass {
             }
     }
 
+    //Affirmations
+    // Function to get affirmations for the current date
+    fun getAffirmationsForCurrentDate(date: String, callback: (List<String>) -> Unit) {
+        val affirmations = mutableListOf<String>()
+
+        val db = FirebaseFirestore.getInstance()
+        // Replace 'affirmations' with your collection name
+        val collectionRef = db.collection("affirmations")
+
+        // Query the database to get affirmations for the current date
+        collectionRef.whereEqualTo("date", date)
+            .get()
+            .addOnSuccessListener { result ->
+                for (document in result) {
+                    val affirmation = document.getString("affirmation")
+                    affirmation?.let {
+                        affirmations.add(it)
+                    }
+                    if (affirmation != null) {
+                        Log.e("user",affirmation)
+                    }
+                }
+                callback(affirmations)
+            }
+            .addOnFailureListener { exception ->
+                // Handle errors here
+                callback(emptyList())
+            }
+    }
+
     // Sleep
 
     // Function to download audio from Firestore Storage

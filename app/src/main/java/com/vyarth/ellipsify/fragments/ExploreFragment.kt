@@ -10,6 +10,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.vyarth.ellipsify.R
+import com.vyarth.ellipsify.activities.explore.AffirmationActivity
 import com.vyarth.ellipsify.activities.explore.BreathingActivity
 import com.vyarth.ellipsify.activities.explore.MeditationActivity
 import com.vyarth.ellipsify.activities.journals.DailyJournalActivity
@@ -49,7 +50,7 @@ class ExploreFragment : Fragment() {
         val activityClasses = listOf(
             MeditationActivity::class.java,
             BreathingActivity::class.java,
-            MeditationActivity::class.java,
+            AffirmationActivity::class.java,
             MeditationActivity::class.java,
             // Add more activity classes as needed
         )
