@@ -24,7 +24,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"
-                android:text="Breathing"
+                android:text="Daily Affirmations"
                 android:textColor="@color/primary_text_color"
                 android:textSize="20sp"
                 android:textStyle="bold" />
