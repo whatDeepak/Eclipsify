@@ -178,9 +178,9 @@ class SoundsActivity : BaseActivity() {
 
     private fun updatePlayPauseButton() {
         if (mediaPlayer.isPlaying) {
-            playPauseButton.setImageResource(R.drawable.pause)
+            playPauseButton.setImageResource(R.drawable.pause_sound)
         } else {
-            playPauseButton.setImageResource(R.drawable.play)
+            playPauseButton.setImageResource(R.drawable.play_sound)
         }
     }
 
