@@ -22,7 +22,6 @@ class MusicTherapyAdapter(private val data: List<MusicTherapy>,
     // ViewHolder class
     class MusicTherapyHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val title: TextView = itemView.findViewById(R.id.soundTextView)
-        val cardView: CardView = itemView.findViewById(R.id.soundCardView) // Replace with the actual ID of your CardView
         val soundImageView: ImageView = itemView.findViewById(R.id.soundImageView) // Replace with the actual ID of your ImageView
     }
 
@@ -42,8 +41,7 @@ class MusicTherapyAdapter(private val data: List<MusicTherapy>,
 
         holder.title.text = data.title
 
-        // Set background color
-        holder.cardView.setBackgroundResource(data.backgroundColor);
+
 
         // Set image
         holder.soundImageView.setImageResource(data.image)

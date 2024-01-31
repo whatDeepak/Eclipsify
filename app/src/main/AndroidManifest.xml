@@ -19,6 +19,9 @@
         android:theme="@style/Theme.Eclipsify"
         tools:targetApi="31">
         <activity
+            android:name=".activities.music.SoundsActivity"
+            android:exported="false" />
+        <activity
             android:name=".activities.explore.MusicTherapyActivity"
             android:exported="false" />
         <activity

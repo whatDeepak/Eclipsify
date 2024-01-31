@@ -6,31 +6,29 @@
     android:orientation="vertical"
     android:layout_marginStart="-10dp">
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/soundCardView"
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/soundImageView"
         android:layout_width="140dp"
         android:layout_height="140dp"
+        android:layout_gravity="center"
         android:layout_marginTop="16dp"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
-        app:cardCornerRadius="16dp">
+        android:scaleType="centerCrop"
+        android:clipToOutline="true"
+        app:shapeAppearanceOverlay="@style/curved"
+        android:background="@drawable/home_sleep"
+        />
 
-        <ImageView
-            android:id="@+id/soundImageView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scaleType="centerInside"
-            android:src="@drawable/ic_launcher_foreground" />
-
-        <!-- Your CardView content goes here, e.g., an ImageView or other views -->
-
-    </androidx.cardview.widget.CardView>
 
     <TextView
         android:id="@+id/soundTextView"
-        android:layout_width="wrap_content"
+        android:layout_width="120dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
+        android:gravity="center"
+        android:layout_marginTop="10dp"
         android:padding="5dp"
         android:textColor="#000000"
         android:textSize="15sp" />

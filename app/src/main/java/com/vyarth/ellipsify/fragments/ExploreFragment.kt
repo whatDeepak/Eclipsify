@@ -13,11 +13,13 @@ import com.vyarth.ellipsify.R
 import com.vyarth.ellipsify.activities.explore.AffirmationActivity
 import com.vyarth.ellipsify.activities.explore.BreathingActivity
 import com.vyarth.ellipsify.activities.explore.MeditationActivity
+import com.vyarth.ellipsify.activities.explore.MusicTherapyActivity
 import com.vyarth.ellipsify.activities.journals.DailyJournalActivity
 import com.vyarth.ellipsify.activities.journals.MoodJournalActivity
 import com.vyarth.ellipsify.adapters.ExploreAdapter
 import com.vyarth.ellipsify.databinding.FragmentExploreBinding
 import com.vyarth.ellipsify.model.Explore
+import com.vyarth.ellipsify.model.MusicTherapy
 
 
 class ExploreFragment : Fragment() {
@@ -51,7 +53,7 @@ class ExploreFragment : Fragment() {
             MeditationActivity::class.java,
             BreathingActivity::class.java,
             AffirmationActivity::class.java,
-            MeditationActivity::class.java,
+            MusicTherapyActivity::class.java,
             // Add more activity classes as needed
         )
 
