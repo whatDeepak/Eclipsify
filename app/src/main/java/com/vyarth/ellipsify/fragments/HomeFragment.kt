@@ -17,13 +17,16 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatButton
 import androidx.core.content.ContextCompat
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.vyarth.ellipsify.R
 import com.vyarth.ellipsify.activities.MainActivity
 import com.vyarth.ellipsify.activities.ProfileActivity
+import com.vyarth.ellipsify.activities.article.ArticlesActivity
 import com.vyarth.ellipsify.activities.journals.DailyJournalActivity
+import com.vyarth.ellipsify.activities.journals.DailyJournalEntryActivity
 import com.vyarth.ellipsify.activities.sleep.SleepActivity
 import com.vyarth.ellipsify.adapters.EmotionsAdapter
 import com.vyarth.ellipsify.adapters.HomeAdapter
@@ -81,6 +84,18 @@ class HomeFragment : Fragment() {
 
         checkDailyMoodEntry()
         setEmotionClickListener()
+
+        val btnJournal: AppCompatButton = binding.btnJournal
+        btnJournal.setOnClickListener {
+            val intent = Intent(requireContext(), DailyJournalEntryActivity::class.java)
+            startActivity(intent)
+        }
+
+        val btnArticles: AppCompatButton = binding.btnArticles
+        btnArticles.setOnClickListener {
+            val intent = Intent(requireContext(), ArticlesActivity::class.java)
+            startActivity(intent)
+        }
 
         val list = listOf(
             Home("1 on 1 Sessions", "Let’s open up to the things that matter the most ", R.drawable.bg_sessions, R.drawable.main_sessions,"Book Now",R.color.homeSessions,R.drawable.book_now),

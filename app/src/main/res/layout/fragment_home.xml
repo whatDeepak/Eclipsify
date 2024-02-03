@@ -138,7 +138,7 @@
                         android:background="@drawable/shape_button_rounded_white"
                         android:drawableStart="@drawable/main_journal"
                         android:drawablePadding="16dp"
-                        android:foreground="?attr/selectableItemBackground"
+                        android:foreground="@null"
                         android:gravity="center"
                         android:paddingHorizontal="16dp"
                         android:paddingTop="@dimen/btn_paddingTop"
@@ -147,7 +147,7 @@
                         android:text="Journal"
                         android:textAllCaps="false"
                         android:textColor="@android:color/black"
-                        android:textSize="18sp"></androidx.appcompat.widget.AppCompatButton>
+                        android:textSize="18sp" />
 
                     <androidx.appcompat.widget.AppCompatButton
                         android:id="@+id/btn_articles"
@@ -158,7 +158,7 @@
                         android:background="@drawable/shape_button_rounded_white"
                         android:drawableStart="@drawable/main_articles"
                         android:drawablePadding="16dp"
-                        android:foreground="?attr/selectableItemBackground"
+                        android:foreground="@null"
                         android:gravity="center"
                         android:paddingHorizontal="16dp"
                         android:paddingTop="@dimen/btn_paddingTop"
@@ -167,7 +167,7 @@
                         android:text="Articles"
                         android:textAllCaps="false"
                         android:textColor="@android:color/black"
-                        android:textSize="18sp"></androidx.appcompat.widget.AppCompatButton>
+                        android:textSize="18sp"/>
                 </LinearLayout>
             </LinearLayout>
 

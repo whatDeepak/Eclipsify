@@ -581,4 +581,26 @@ class FirestoreClass {
             }
     }
 
+    fun getArticleDescByTitle(title: String, callback: (String?) -> Unit) {
+        val db = FirebaseFirestore.getInstance()
+        val articlesCollection = db.collection("articles")
+
+        // Query the articles collection where the title matches
+        articlesCollection.whereEqualTo("title", title)
+            .get()
+            .addOnSuccessListener { documents ->
+                if (documents != null && !documents.isEmpty) {
+                    // Get the first document (assuming there's only one match)
+                    val desc = documents.documents[0].getString("desc")
+                    callback(desc)
+                } else {
+                    callback(null)
+                }
+            }
+            .addOnFailureListener { e ->
+                // Handle failure
+                callback(null)
+            }
+    }
+
 }

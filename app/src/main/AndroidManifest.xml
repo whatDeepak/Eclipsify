@@ -19,23 +19,35 @@
         android:theme="@style/Theme.Eclipsify"
         tools:targetApi="31">
         <activity
-            android:name=".activities.music.SoundsActivity"
+            android:name=".activities.article.ArticlesListActivity"
             android:exported="false" />
+        <activity
+            android:name=".activities.article.ArticlesActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.music.SoundsActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activities.explore.MusicTherapyActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activities.explore.AffirmationActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activities.music.ExerciseActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activities.explore.BreathingActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activities.explore.MeditationActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activities.music.MusicActivity"
             android:exported="false"
