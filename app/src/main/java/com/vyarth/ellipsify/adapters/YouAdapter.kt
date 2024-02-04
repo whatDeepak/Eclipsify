@@ -1,6 +1,7 @@
 package com.vyarth.ellipsify.adapters
 
 import android.graphics.Typeface
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -72,7 +73,7 @@ class YouAdapter(private val profiles: List<Profile>):
     }
 
     private fun setStreakCounter(holder: YouViewHolder, loginStatus: Map<String, Boolean>, isLastCard: Boolean) {
-        val daysOfWeek = listOf("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday")
+        val daysOfWeek = listOf("Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun")
 
         for (day in daysOfWeek) {
             val loginDayImageView = holder.itemView.findViewWithTag<ImageView>(day.lowercase())

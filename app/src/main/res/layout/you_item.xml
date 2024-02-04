@@ -72,72 +72,72 @@
                     android:orientation="horizontal">
 
                     <ImageView
-                        android:id="@+id/monday"
+                        android:id="@+id/mon"
                         android:layout_width="15dp"
                         android:layout_height="15dp"
                         android:layout_marginEnd="13dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        android:tag="monday"
+                        android:tag="mon"
                          />
 
                     <ImageView
-                        android:id="@+id/tuesday"
+                        android:id="@+id/tue"
                         android:layout_width="15dp"
                         android:layout_height="15dp"
                         android:layout_marginEnd="13dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        android:tag="tuesday"
+                        android:tag="tue"
                          />
 
                     <ImageView
-                        android:id="@+id/wednesday"
+                        android:id="@+id/wed"
                         android:layout_width="15dp"
                         android:layout_height="15dp"
                         android:layout_marginEnd="13dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        android:tag="wednesday"
+                        android:tag="wed"
                          />
 
                     <ImageView
-                        android:id="@+id/thursday"
+                        android:id="@+id/thu"
                         android:layout_width="15dp"
                         android:layout_height="15dp"
                         android:layout_marginEnd="10dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        android:tag="thursday"
+                        android:tag="thu"
                          />
 
                     <ImageView
-                        android:id="@+id/friday"
+                        android:id="@+id/fri"
                         android:layout_width="15dp"
                         android:layout_height="15dp"
                         android:layout_marginEnd="10dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        android:tag="friday" />
+                        android:tag="fri" />
 
                     <ImageView
-                        android:id="@+id/saturday"
+                        android:id="@+id/sat"
                         android:layout_width="15dp"
                         android:layout_height="15dp"
                         android:layout_marginEnd="10dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        android:tag="saturday"
+                        android:tag="sat"
                          />
 
                     <ImageView
-                        android:id="@+id/sunday"
+                        android:id="@+id/sun"
                         android:layout_width="15dp"
                         android:layout_height="15dp"
                         android:layout_marginEnd="13dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        android:tag="sunday"
+                        android:tag="sun"
                          />
 
                 </LinearLayout>

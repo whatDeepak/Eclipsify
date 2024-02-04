@@ -21,6 +21,8 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.google.android.play.core.integrity.e
+import com.google.firebase.firestore.FirebaseFirestore
 import com.vyarth.ellipsify.R
 import com.vyarth.ellipsify.activities.MainActivity
 import com.vyarth.ellipsify.activities.ProfileActivity
@@ -36,7 +38,10 @@ import com.vyarth.ellipsify.model.Emotion
 import com.vyarth.ellipsify.model.Home
 import com.vyarth.ellipsify.model.User
 import de.hdodenhof.circleimageview.CircleImageView
+import java.text.SimpleDateFormat
 import java.util.Calendar
+import java.util.Date
+import java.util.Locale
 
 class HomeFragment : Fragment() {
 
@@ -132,6 +137,48 @@ class HomeFragment : Fragment() {
 
         greetingMessage()
         getDailyQuote()
+
+
+        // Assuming you have a method to get the current user ID
+        val userId = FirestoreClass().getCurrentUserID()
+
+// Get a reference to the user's document in the login_history collection
+        val userDocumentRef = FirebaseFirestore.getInstance()
+            .collection("login_history")
+            .document(userId)
+
+// Get the current timestamps array (if it exists) or create a new one
+        userDocumentRef.get().addOnSuccessListener { documentSnapshot ->
+            val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+            val todayDate = dateFormat.format(Date())
+
+            val timestampsMap = if (documentSnapshot.exists()) {
+                documentSnapshot.get("timestamps") as? Map<String, Boolean> ?: mapOf()
+            } else {
+                mapOf()
+            }.toMutableMap()
+
+            // Check if there's already a timestamp for today
+            if (!timestampsMap.containsKey(todayDate)) {
+                // Add the timestamp for today
+                timestampsMap[todayDate] = true
+
+                // Update the timestamps map in the document
+                userDocumentRef.set(mapOf("timestamps" to timestampsMap))
+                    .addOnSuccessListener {
+                        // Successfully created the document with timestamps
+                        Log.e("Firestore", "Document created")
+                    }
+                    .addOnFailureListener { e ->
+                        // Handle failure
+                        Log.e("Firestore", "Error creating document", e)
+                    }
+            } else {
+                // Timestamp for today already exists
+                Log.e("Firestore", "Timestamp for today already exists")
+            }
+        }
+
 
         return binding.root;
 
