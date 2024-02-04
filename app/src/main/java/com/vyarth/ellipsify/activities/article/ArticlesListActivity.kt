@@ -30,7 +30,12 @@ class ArticlesListActivity : BaseActivity() {
         val imageView= findViewById<ImageView>(R.id.article_image)
 
         titleEditText.text=title
+        val titleCustomTypeface = Typeface.createFromAsset(assets, "epilogue_bold.ttf")
+        titleEditText.typeface = titleCustomTypeface
         textEditText.text = desc
+        val descCustomTypeface = Typeface.createFromAsset(assets, "poppins_regular.ttf")
+        titleEditText.typeface = descCustomTypeface
+
 
         cardView.setBackgroundResource(bgColor)
         imageView.setImageResource(image)

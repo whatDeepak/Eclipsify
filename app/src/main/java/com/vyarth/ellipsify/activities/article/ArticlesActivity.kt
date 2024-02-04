@@ -48,12 +48,13 @@ class ArticlesActivity : BaseActivity() {
         // Fetch article descriptions from Firestore and update the itemList
         for (title in titles) {
             FirestoreClass().getArticleDescByTitle(title) { desc ->
+                val formattedDesc = desc?.replace("/n", "\n") ?: ""
                 val color = titleColors[title]
                 val drawable = titleDrawables[title]
 
                 val article = color?.let {
                     if (drawable != null) {
-                        Articles(title, desc ?: "", it, drawable)
+                        Articles(title, formattedDesc ?: "", it, drawable)
                     } else {
                         null
                     }

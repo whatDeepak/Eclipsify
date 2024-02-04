@@ -10,6 +10,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.vyarth.ellipsify.R
+import com.vyarth.ellipsify.activities.article.ArticlesActivity
 import com.vyarth.ellipsify.activities.explore.AffirmationActivity
 import com.vyarth.ellipsify.activities.explore.BreathingActivity
 import com.vyarth.ellipsify.activities.explore.MeditationActivity
@@ -45,7 +46,9 @@ class ExploreFragment : Fragment() {
 
             Explore("Daily Affirmations", "Empower yourself with positive affirmations. ", R.drawable.bg_affirm, R.drawable.explore_affirm,"Destroy Negativity",R.color.xplrAffirm,R.drawable.explore_arrow),
 
-            Explore("Music Therapy", "Let Music heal your mind and soul.", R.drawable.bg_music, R.drawable.explore_music, "Play Music",R.color.xplrMusic,R.drawable.explore_arrow)
+            Explore("Music Therapy", "Let Music heal your mind and soul.", R.drawable.bg_music, R.drawable.explore_music, "Play Music",R.color.xplrMusic,R.drawable.explore_arrow),
+
+            Explore("Articles", "Expand your awareness and share Wisdom.", R.drawable.bg_article, R.drawable.explore_article, "Enhance Wisdom",R.color.xplrArticle,R.drawable.explore_arrow)
 
         )
 
@@ -54,6 +57,7 @@ class ExploreFragment : Fragment() {
             BreathingActivity::class.java,
             AffirmationActivity::class.java,
             MusicTherapyActivity::class.java,
+            ArticlesActivity::class.java
             // Add more activity classes as needed
         )
 
