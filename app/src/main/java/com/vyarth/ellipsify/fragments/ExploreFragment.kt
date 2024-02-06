@@ -34,6 +34,7 @@ class ExploreFragment : Fragment() {
     ): View? {
         _binding = FragmentExploreBinding.inflate(inflater, container, false)
 
+
         val tvTitle: TextView = binding.tvExploreTitle
         val customTypeface = Typeface.createFromAsset(requireContext().assets, "epilogue_semibold.ttf")
         tvTitle.typeface = customTypeface

@@ -71,6 +71,9 @@ class JournalFragment : Fragment() {
     }
 
     private fun updateUIWithJournals() {
+        if (!isAdded) {
+            return
+        }
         val journals = listOf(
             Journal("Daily Journal", "Express your daily thoughts , feelings and experiences.", R.drawable.bg_journal, R.drawable.journal_daily, dailyJournalCount, R.color.jrnlDaily),
             Journal("Mood Journal", "Write your emotions and keep track of mood patterns.", R.drawable.bg_moodjournal, R.drawable.journal_mood, moodJournalCount, R.color.jrnlMood)

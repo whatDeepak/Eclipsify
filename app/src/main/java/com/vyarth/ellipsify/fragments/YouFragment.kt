@@ -71,6 +71,8 @@ class YouFragment : Fragment() {
                 val calendar = Calendar.getInstance()
                 val weekLogin = LinkedHashMap<String, Boolean>()
                 var totalLogins = 0
+
+                calendar.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY)
                 for (i in Calendar.SUNDAY..Calendar.SATURDAY) {
                     val date = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(calendar.time)
                     val dayOfWeek = SimpleDateFormat("EEE", Locale.getDefault()).format(calendar.time)
@@ -79,7 +81,7 @@ class YouFragment : Fragment() {
                     totalLogins += if (isLogin) 1 else 0
                     calendar.add(Calendar.DAY_OF_WEEK, 1)   // Increment the day of the week
                 }
-
+                Log.e("taggggggggg",weekLogin.toString())
                 // Update the UI with the new data
                 val profiles = listOf(
                     Profile("Streak", "day\n" + "current streak", currentStreak, R.drawable.bg_streak, "Best streak $bestStreak days", emptyMap()),
