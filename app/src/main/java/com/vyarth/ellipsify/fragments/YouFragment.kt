@@ -67,25 +67,31 @@ class YouFragment : Fragment() {
                 // Update UI or store the streak information as needed
 
                 // Update the weekLogin HashMap
-                // Update the weekLogin HashMap
                 val calendar = Calendar.getInstance()
                 val weekLogin = LinkedHashMap<String, Boolean>()
                 var totalLogins = 0
 
-                calendar.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY)
+                calendar.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY)
+
                 for (i in Calendar.SUNDAY..Calendar.SATURDAY) {
                     val date = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(calendar.time)
                     val dayOfWeek = SimpleDateFormat("EEE", Locale.getDefault()).format(calendar.time)
+
+                    // Check if the timestamps map contains the current date
                     val isLogin = timestamps.containsKey(date) && timestamps[date] == true
                     weekLogin[dayOfWeek] = isLogin
+
+                    // Increment the total login count if there is a login for the current day
                     totalLogins += if (isLogin) 1 else 0
-                    calendar.add(Calendar.DAY_OF_WEEK, 1)   // Increment the day of the week
+
+                    // Move to the next day
+                    calendar.add(Calendar.DAY_OF_WEEK, 1)
                 }
                 Log.e("taggggggggg",weekLogin.toString())
                 // Update the UI with the new data
                 val profiles = listOf(
                     Profile("Streak", "day\n" + "current streak", currentStreak, R.drawable.bg_streak, "Best streak $bestStreak days", emptyMap()),
-                    Profile("Weekly status", "day\n" + "this week.", totalLogins.toString(), R.drawable.bg_weekstatus, "M   T   W   T   F   S   S", weekLogin)
+                    Profile("Weekly status", "day\n" + "this week.", totalLogins.toString(), R.drawable.bg_weekstatus, "S   M   T   W   T   F   S", weekLogin)
                 )
 
                 // Get reference to the RecyclerView
