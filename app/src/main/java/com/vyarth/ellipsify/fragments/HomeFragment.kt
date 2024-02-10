@@ -27,6 +27,7 @@ import com.vyarth.ellipsify.R
 import com.vyarth.ellipsify.activities.MainActivity
 import com.vyarth.ellipsify.activities.ProfileActivity
 import com.vyarth.ellipsify.activities.article.ArticlesActivity
+import com.vyarth.ellipsify.activities.bookings.SessionActivity
 import com.vyarth.ellipsify.activities.journals.DailyJournalActivity
 import com.vyarth.ellipsify.activities.journals.DailyJournalEntryActivity
 import com.vyarth.ellipsify.activities.sleep.SleepActivity
@@ -109,7 +110,7 @@ class HomeFragment : Fragment() {
         )
 
         val activityClasses = listOf(
-            DailyJournalActivity::class.java,
+            SessionActivity::class.java,
             SleepActivity::class.java
             // Add more activity classes as needed
         )

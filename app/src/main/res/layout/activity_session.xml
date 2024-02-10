@@ -55,6 +55,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="15dp"
+                    app:cardBackgroundColor="#F9DB8A"
                     app:cardCornerRadius="80px"
                     app:cardPreventCornerOverlap="true"
                     >
@@ -71,7 +72,7 @@
                             android:id="@+id/cardTitle"
                             android:layout_width="250dp"
                             android:layout_height="wrap_content"
-                            android:text=""
+                            android:text="Find Experts Near You"
                             android:textColor="#573926"
                             android:textSize="22sp"
                             android:textStyle="bold" />
@@ -82,7 +83,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
                             android:lineHeight="18dp"
-                            android:text=""
+                            android:text="Open up to the experts who can help you."
                             android:textColor="#573926"
                             android:textSize="14sp"
                             android:textStyle="normal" />
@@ -97,8 +98,8 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="10dp"
-                                android:text=""
-                                android:textColor="#F09A59"
+                                android:text="Fix a date"
+                                android:textColor="#906A00"
                                 android:textSize="18dp"
                                 android:textStyle="bold" />
                         </LinearLayout>
@@ -144,7 +145,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:paddingBottom="370dp"
+                android:layout_marginHorizontal="18dp"
+                android:paddingBottom="280dp"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 android:orientation="vertical" />
 
