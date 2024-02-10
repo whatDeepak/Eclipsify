@@ -116,7 +116,7 @@
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyAPdb7CMl76KVxbwy2PYP9gnR92CxjJFeA" />
+            android:value= "com.vyarth.ellipsify.BuildConfig.mapsApiKey" />
 
     </application>
 
