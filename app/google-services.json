@@ -14,11 +14,11 @@
       },
       "oauth_client": [
         {
-          "client_id": "54694666250-ugo5optjhpeujt85ttm85p6romaqpdjc.apps.googleusercontent.com",
+          "client_id": "54694666250-b4fpo7uut4nsh5s5q7ioummhu1iga3mn.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.vyarth.ellipsify",
-            "certificate_hash": "ae797d60b02ff8a4a363018ee9c9108281390d4f"
+            "certificate_hash": "56bf9b70b40022412c1a66baa80d678c466e9b72"
           }
         },
         {

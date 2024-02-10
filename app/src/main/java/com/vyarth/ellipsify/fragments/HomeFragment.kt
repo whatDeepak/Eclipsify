@@ -331,6 +331,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun updateSelectedMoodInDatabase(emotion: Emotion) {
+        selectedEmotion = emotion
         if (selectedEmotion != null) {
             // If a mood was previously selected, update the database
             storeDailyMood(emotion.mood)
@@ -342,11 +343,11 @@ class HomeFragment : Fragment() {
 
     private fun setEmotionClickListener() {
         val emotions = listOf(
-            Emotion("Happy", R.color.happyBg, R.drawable.mood_happy),
-            Emotion("Calm", R.color.calmBg, R.drawable.mood_calm),
-            Emotion("Manic", R.color.manicBg, R.drawable.mood_manic),
-            Emotion("Angry", R.color.angryBg, R.drawable.mood_angry),
-            Emotion("Sad", R.color.sadBg, R.drawable.mood_sad)
+            Emotion("Happy", R.color.happyBg, R.drawable.mood_happy, R.color.selected_happyBg,false),
+            Emotion("Calm", R.color.calmBg, R.drawable.mood_calm, R.color.selected_calmBg,false),
+            Emotion("Manic", R.color.manicBg, R.drawable.mood_manic, R.color.selected_manicBg,false),
+            Emotion("Angry", R.color.angryBg, R.drawable.mood_angry, R.color.selected_angryBg,false),
+            Emotion("Sad", R.color.sadBg, R.drawable.mood_sad, R.color.selected_sadBg,false)
         )
 
         // Get reference to the RecyclerView
@@ -359,15 +360,33 @@ class HomeFragment : Fragment() {
         val emotionsAdapter = EmotionsAdapter(emotions)
         emotionRecyclerView.adapter = emotionsAdapter
 
+        // Fetch selected emotion from database
+        val userId = FirestoreClass().getCurrentUserID()
+        val currentDate = FirestoreClass().getCurrentFormattedDate()
+        FirestoreClass().fetchSelectedEmotion(userId, currentDate,
+            onSuccess = { selectedEmotion ->
+                // Update the UI based on the fetched selected emotion
+                emotions.forEach { emotion ->
+                    emotion.isSelected = emotion.mood == selectedEmotion
+                }
+                emotionsAdapter.notifyDataSetChanged()
+            },
+            onFailure = { e ->
+                Log.e("HomeFragment", "Error fetching selected emotion", e)
+            }
+        )
+
+        // Set item click listener
         emotionsAdapter.setOnItemClickListener { emotion ->
             // Update the selected emotion
-            selectedEmotion = emotion
-            // Highlight the selected emotion in the adapter
-            emotionsAdapter.setSelectedEmotion(emotion)
+            emotions.forEach { it.isSelected = it == emotion }
+            // Update the UI
+            emotionsAdapter.notifyDataSetChanged()
             // Update the selected mood in the database
             updateSelectedMoodInDatabase(emotion)
         }
     }
+
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)

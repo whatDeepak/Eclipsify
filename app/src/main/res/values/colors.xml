@@ -26,6 +26,12 @@
     <color name="angryBg">#F09E54</color>
     <color name="sadBg">#AEAFF7</color>
 
+    <color name="selected_happyBg">#619D3C</color>
+    <color name="selected_calmBg">#509B9A</color>
+    <color name="selected_manicBg">#C10063</color>
+    <color name="selected_angryBg">#9E5C20</color>
+    <color name="selected_sadBg">#6263C2</color>
+
 
     <color name="user_background">#4B3425</color>
     <color name="gemini_background">#E8DDD9</color>

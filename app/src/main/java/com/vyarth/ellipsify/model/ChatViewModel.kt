@@ -30,7 +30,9 @@ class ChatViewModel @Inject constructor(
         message : String
     ){
         viewModelScope.launch {
-            _messageResponse.value = chat.sendMessage(message)
+            chat.sendMessage(message)?.let { response ->
+                _messageResponse.value = response
+            }
         }
     }
 }

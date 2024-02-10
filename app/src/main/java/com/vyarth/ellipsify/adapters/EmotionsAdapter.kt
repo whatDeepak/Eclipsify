@@ -40,7 +40,13 @@ class EmotionsAdapter(private val emotions: List<Emotion>) :
         holder.emotionTextView.text = emotion.mood
 
         // Set background color
-        holder.cardView.setCardBackgroundColor(ContextCompat.getColor(holder.itemView.context, emotion.backgroundColor))
+        // Set background color based on selection state
+        val bgColor = if (emotion.isSelected) {
+            ContextCompat.getColor(holder.itemView.context, emotion.selectedbgcolor)
+        } else {
+            ContextCompat.getColor(holder.itemView.context, emotion.backgroundColor)
+        }
+        holder.cardView.setCardBackgroundColor(bgColor)
 
         // Set image
         holder.emotionImageView.setImageResource(emotion.imageResId)
@@ -48,6 +54,9 @@ class EmotionsAdapter(private val emotions: List<Emotion>) :
 
         // Set click listener for the item view
         holder.itemView.setOnClickListener {
+            emotions.forEach { it.isSelected = false } // Deselect all emotions
+            emotion.isSelected = true // Select the clicked emotion
+            notifyDataSetChanged() // Notify adapter of changes
             itemClickListener?.invoke(emotion)
         }
     }

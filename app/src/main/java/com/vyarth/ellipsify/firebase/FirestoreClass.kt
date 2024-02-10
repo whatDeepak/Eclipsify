@@ -523,6 +523,33 @@ class FirestoreClass {
             }
     }
 
+    fun fetchSelectedEmotion(
+        userId: String,
+        currentDate: String,
+        onSuccess: (String?) -> Unit,
+        onFailure: (Exception) -> Unit
+    ) {
+        val db = FirebaseFirestore.getInstance()
+        val moodCollection = db.collection("daily_mood_check")
+        val query = moodCollection.whereEqualTo("userId", userId).whereEqualTo("date", currentDate)
+
+        query.get()
+            .addOnSuccessListener { querySnapshot ->
+                if (!querySnapshot.isEmpty) {
+                    // If document exists, fetch the emotion
+                    val emotion = querySnapshot.documents[0].getString("emotion")
+                    onSuccess.invoke(emotion)
+                } else {
+                    // No document exists
+                    onSuccess.invoke(null)
+                }
+            }
+            .addOnFailureListener { e ->
+                onFailure.invoke(e)
+            }
+    }
+
+
     //Affirmations
     // Function to get affirmations for the current date
     fun getAffirmationsForCurrentDate(date: String, callback: (List<String>) -> Unit) {
