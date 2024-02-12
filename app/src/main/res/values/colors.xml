@@ -63,4 +63,6 @@
     <color name="med6">#FFECCC</color>
 
     <color name="art1">#FDDB31</color>
+
+    <color name="bar_color">#66D8DFF2</color>
 </resources>

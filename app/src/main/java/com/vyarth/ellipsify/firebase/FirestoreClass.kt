@@ -532,13 +532,15 @@ class FirestoreClass {
         val db = FirebaseFirestore.getInstance()
         val moodCollection = db.collection("daily_mood_check")
         val query = moodCollection.whereEqualTo("userId", userId).whereEqualTo("date", currentDate)
+        Log.e("Fetch Emotion", "Fetched emotion: $currentDate")
 
         query.get()
             .addOnSuccessListener { querySnapshot ->
                 if (!querySnapshot.isEmpty) {
                     // If document exists, fetch the emotion
-                    val emotion = querySnapshot.documents[0].getString("emotion")
-                    onSuccess.invoke(emotion)
+                    val mood = querySnapshot.documents[0].getString("emotion")
+                    Log.d("Fetch Emotion", "Fetched emotion: $mood")
+                    onSuccess.invoke(mood)
                 } else {
                     // No document exists
                     onSuccess.invoke(null)

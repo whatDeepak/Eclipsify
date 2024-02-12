@@ -1,8 +1,11 @@
 package com.vyarth.ellipsify.fragments
 
 import android.app.Activity
+import android.app.Dialog
 import android.content.Intent
+import android.graphics.Color
 import android.graphics.Typeface
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.text.Spannable
 import android.text.SpannableString
@@ -48,6 +51,7 @@ class HomeFragment : Fragment() {
 
     // A global variable for User Name
     private lateinit var mUserName: String
+    private lateinit var exitDialog: Dialog
 
     private val firestoreClass = FirestoreClass()
     private var selectedEmotion: Emotion? = null
@@ -181,12 +185,48 @@ class HomeFragment : Fragment() {
         }
 
 
+        // Initialize and set up the exit dialog
+        setupExitDialog()
+
+        // Find the logout ImageView and set OnClickListener
+        val logoutImageView = binding.btnLogout
+        logoutImageView.setOnClickListener {
+            // Show the exit dialog when logoutImageView is clicked
+            exitDialog.show()
+        }
+
+
         return binding.root;
 
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+    }
+
+    private fun setupExitDialog() {
+        exitDialog = Dialog(requireContext())
+        exitDialog.setContentView(R.layout.dialog_exit)
+        exitDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+        // Get references to dialog components
+        val exitText = exitDialog.findViewById<TextView>(R.id.exit_text)
+        val yesButton = exitDialog.findViewById<AppCompatButton>(R.id.btn_yes)
+        val cancelButton = exitDialog.findViewById<AppCompatButton>(R.id.btn_cancel)
+
+        // Set up the "Yes" button click listener
+        yesButton.setOnClickListener {
+            // Perform logout action here
+            // For example, navigate to the login screen or finish the current activity
+            FirestoreClass().logoutUser(requireContext())
+            exitDialog.dismiss()
+        }
+
+        // Set up the "Cancel" button click listener
+        cancelButton.setOnClickListener {
+            // Dismiss the dialog when "Cancel" is clicked
+            exitDialog.dismiss()
+        }
     }
 
     private fun greetingMessage(){

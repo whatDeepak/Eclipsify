@@ -53,15 +53,16 @@
 
                 <!-- Arrow ImageView -->
                 <ImageView
-                    android:id="@+id/main_notify"
-                    android:layout_width="55dp"
-                    android:layout_height="55dp"
+                    android:id="@+id/btn_logout"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
                     android:layout_alignParentEnd="true"
-                    android:layout_marginStart="12dp"
-                    android:layout_marginEnd="12dp"
-                    android:src="@drawable/ic_notify_foreground"
+                    android:layout_marginEnd="18dp"
+                    android:src="@drawable/logout"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                     />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

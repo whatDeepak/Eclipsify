@@ -3,7 +3,9 @@ package com.vyarth.ellipsify.activities
 import android.app.Activity
 import android.app.Dialog
 import android.content.Intent
+import android.graphics.Color
 import android.graphics.Typeface
+import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.GradientDrawable
 import android.net.Uri
 import android.os.Build
@@ -17,6 +19,7 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.widget.AppCompatButton
 import androidx.appcompat.widget.Toolbar
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
@@ -33,6 +36,8 @@ class ProfileActivity : BaseActivity() {
     // A global variable for User Name
     private lateinit var mUserName: String
     private lateinit var feedbackDialog: Dialog
+
+    private lateinit var exitDialog: Dialog
 
     private lateinit var feedbackCommentEditText: EditText
 
@@ -72,16 +77,28 @@ class ProfileActivity : BaseActivity() {
             showFeedbackDialog()
         }
 
+        val btnRefer=findViewById<ConstraintLayout>(R.id.refer)
+        btnRefer.setOnClickListener {
+            val shareIntent = Intent(Intent.ACTION_SEND)
+            shareIntent.type = "text/plain"
+            shareIntent.putExtra(Intent.EXTRA_TEXT, "Check out our app : https://drive.google.com/file/d/19h_6RUBkFJ2G5WFJ9ldeO3q2uzA4oJlO/view?usp=sharing")
+            startActivity(Intent.createChooser(shareIntent, "Share via"))
+
+        }
+
         val contactUsButton: ConstraintLayout = findViewById(R.id.contact)
         contactUsButton.setOnClickListener {
             openEmailClient()
         }
 
+        // Initialize and set up the exit dialog
+        setupExitDialog()
+
         // Inside your HomeFragment or any other relevant class
         val logoutButton: Button = findViewById<Button>(R.id.btn_logout)
         logoutButton.setOnClickListener {
             // Call the logout function
-            FirestoreClass().logoutUser(this)
+            exitDialog.show()
         }
 
     }
@@ -99,6 +116,31 @@ class ProfileActivity : BaseActivity() {
         }
         setResult(Activity.RESULT_OK)
     }
+    private fun setupExitDialog() {
+        exitDialog = Dialog(this)
+        exitDialog.setContentView(R.layout.dialog_exit)
+        exitDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+        // Get references to dialog components
+        val exitText = exitDialog.findViewById<TextView>(R.id.exit_text)
+        val yesButton = exitDialog.findViewById<AppCompatButton>(R.id.btn_yes)
+        val cancelButton = exitDialog.findViewById<AppCompatButton>(R.id.btn_cancel)
+
+        // Set up the "Yes" button click listener
+        yesButton.setOnClickListener {
+            // Perform logout action here
+            // For example, navigate to the login screen or finish the current activity
+            FirestoreClass().logoutUser(this)
+            exitDialog.dismiss()
+        }
+
+        // Set up the "Cancel" button click listener
+        cancelButton.setOnClickListener {
+            // Dismiss the dialog when "Cancel" is clicked
+            exitDialog.dismiss()
+        }
+    }
+
 
     private fun setupActionBar() {
 

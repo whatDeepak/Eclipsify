@@ -21,6 +21,9 @@
         android:theme="@style/Theme.Eclipsify"
         tools:targetApi="31">
         <activity
+            android:name=".activities.music.Sounds2Activity"
+            android:exported="false" />
+        <activity
             android:name=".activities.bookings.SessionActivity"
             android:exported="false" />
         <activity
@@ -116,8 +119,7 @@
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value= "com.vyarth.ellipsify.BuildConfig.mapsApiKey" />
-
+            android:value="com.vyarth.ellipsify.BuildConfig.mapsApiKey" />
     </application>
 
 </manifest>

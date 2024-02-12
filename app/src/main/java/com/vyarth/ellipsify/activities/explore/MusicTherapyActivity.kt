@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.vyarth.ellipsify.R
 import com.vyarth.ellipsify.activities.BaseActivity
 import com.vyarth.ellipsify.activities.music.MusicActivity
+import com.vyarth.ellipsify.activities.music.Sounds2Activity
 import com.vyarth.ellipsify.activities.music.SoundsActivity
 import com.vyarth.ellipsify.adapters.BedtimeStoryAdapter
 import com.vyarth.ellipsify.adapters.SleepMusicAdapter
@@ -26,8 +27,8 @@ class MusicTherapyActivity : BaseActivity() {
         setupActionBar()
 
         val sounds= listOf(
-            MusicTherapy("The Dream Weaver's Lullaby", "TheDreamWeaver'sLullaby",R.drawable.bedtime1),
-            MusicTherapy("The Starlight Symphony", "TheStarlightSymphony" ,R.drawable.bedtime2)
+            MusicTherapy("Crown Chakra", "CrownChakra",R.drawable.healing_sound1),
+            MusicTherapy("40 Hz Binaural Beats", "40HzBinauralBeats" ,R.drawable.healing_sound2)
         )
 
         val soundsActivityClasses = listOf(
@@ -46,19 +47,18 @@ class MusicTherapyActivity : BaseActivity() {
 
 
         val music = listOf(
-            SleepMusic("In The Light", "A calm and therapeutic song.", "04:36","InTheLight",R.drawable.music1),
-            SleepMusic("Quiet Time", "Soothing relaxation music.", "02:25","QuietTime",R.drawable.music2),
-            SleepMusic("Relaxing Green Nature", "Relaxing feel of green nature.", "03:43","RelaxingGreenNature",R.drawable.music3),
-            SleepMusic("Serenity", "Soft ambient song for deep relaxation.", "03:06","Serenity",R.drawable.music4),
-            SleepMusic("Our Hopes And Dreams", "Emotional piano solo, with quiet, ambient strings.", "03:55","OurHopesAndDreams",R.drawable.music5),
+            SleepMusic("Calm Music", "A calm and therapeutic song.", "01:40","CalmMusic",R.drawable.music1),
+            SleepMusic("Birds Singing", "Sweet Music of Birds Singing.", "02:00","BirdsSinging",R.drawable.music2),
+            SleepMusic("Ocean Meditation", "Relaxing feel of ocean.", "02:00","OceanMeditation",R.drawable.music4),
+            SleepMusic("Waterfall Jungle Birds", "Soft ambient sound of Waterfall.", "02:09","WaterfallJungleBirds",R.drawable.music3)
         )
 
         val musicActivityClasses = listOf(
-            SoundsActivity::class.java,
-            SoundsActivity::class.java,
-            SoundsActivity::class.java,
-            SoundsActivity::class.java,
-            SoundsActivity::class.java
+            Sounds2Activity::class.java,
+            Sounds2Activity::class.java,
+            Sounds2Activity::class.java,
+            Sounds2Activity::class.java,
+            Sounds2Activity::class.java
             // Add more activity classes as needed
         )
 
