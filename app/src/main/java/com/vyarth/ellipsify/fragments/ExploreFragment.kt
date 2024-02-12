@@ -17,9 +17,11 @@ import com.vyarth.ellipsify.activities.explore.MeditationActivity
 import com.vyarth.ellipsify.activities.explore.MusicTherapyActivity
 import com.vyarth.ellipsify.activities.journals.DailyJournalActivity
 import com.vyarth.ellipsify.activities.journals.MoodJournalActivity
+import com.vyarth.ellipsify.activities.sleep.SleepActivity
 import com.vyarth.ellipsify.adapters.ExploreAdapter
 import com.vyarth.ellipsify.databinding.FragmentExploreBinding
 import com.vyarth.ellipsify.model.Explore
+import com.vyarth.ellipsify.model.Home
 import com.vyarth.ellipsify.model.MusicTherapy
 
 
@@ -49,7 +51,9 @@ class ExploreFragment : Fragment() {
 
             Explore("Music Therapy", "Let Music heal your mind and soul.", R.drawable.bg_music, R.drawable.explore_music, "Play Music",R.color.xplrMusic,R.drawable.explore_arrow),
 
-            Explore("Articles", "Expand your awareness and share Wisdom.", R.drawable.bg_article, R.drawable.explore_article, "Enhance Wisdom",R.color.xplrArticle,R.drawable.explore_arrow)
+            Explore("Articles", "Expand your awareness and share Wisdom.", R.drawable.bg_article, R.drawable.explore_article, "Enhance Wisdom",R.color.xplrArticle,R.drawable.explore_arrow),
+
+            Explore("Sleep Serenity", "Say goodbye to restless nights and awaken refreshed.", R.drawable.bg_sleep, R.drawable.home_sleep, "Relax Now",R.color.homeSleep,R.drawable.btn_sleep)
 
         )
 
@@ -58,7 +62,8 @@ class ExploreFragment : Fragment() {
             BreathingActivity::class.java,
             AffirmationActivity::class.java,
             MusicTherapyActivity::class.java,
-            ArticlesActivity::class.java
+            ArticlesActivity::class.java,
+            SleepActivity::class.java
             // Add more activity classes as needed
         )
 

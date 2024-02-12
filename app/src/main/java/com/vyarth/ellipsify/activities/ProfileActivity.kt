@@ -81,7 +81,7 @@ class ProfileActivity : BaseActivity() {
         btnRefer.setOnClickListener {
             val shareIntent = Intent(Intent.ACTION_SEND)
             shareIntent.type = "text/plain"
-            shareIntent.putExtra(Intent.EXTRA_TEXT, "Check out our app : https://drive.google.com/file/d/19h_6RUBkFJ2G5WFJ9ldeO3q2uzA4oJlO/view?usp=sharing")
+            shareIntent.putExtra(Intent.EXTRA_TEXT, "Check out our app 'Eclipsify' - made with ❤️ by vyarth : https://drive.google.com/drive/folders/1F9GEZQis1k8YOk4VVUDx1s-7vzkV79p3?usp=sharing")
             startActivity(Intent.createChooser(shareIntent, "Share via"))
 
         }
@@ -100,6 +100,10 @@ class ProfileActivity : BaseActivity() {
             // Call the logout function
             exitDialog.show()
         }
+
+        val footer: TextView = findViewById(R.id.footer)
+        val customTypeface = Typeface.createFromAsset(assets, "poppins_medium.ttf")
+        footer.typeface = customTypeface
 
     }
 

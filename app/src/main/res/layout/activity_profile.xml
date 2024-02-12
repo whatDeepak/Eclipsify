@@ -291,5 +291,17 @@ tools:context=".activities.ProfileActivity">
             />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/footer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="20dp"
+        android:gravity="center"
+        android:text="made with ❤️ by vyarth"
+        android:textSize="16sp"
+        android:textColor="@color/primary_text_color"
+        />
 </androidx.constraintlayout.widget.ConstraintLayout>
 </RelativeLayout>
