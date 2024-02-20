@@ -327,11 +327,22 @@ class HomeFragment : Fragment() {
 
     }
 
+    private val placeholderQuotes = listOf(
+        "Your mental health is a priority. Your happiness is an essential. Your self-care is a necessity.",
+        "Love yourself first, and everything else falls in line.",
+        "You are not a drop in the ocean. You are the entire ocean in a drop. - Rumi",
+        "Believe you can and you're halfway there. - Theodore Roosevelt",
+        "You are enough just as you are.",
+        "The only way to do great work is to love what you do. - Steve Jobs"
+    )
+
     private fun getDailyQuote() {
+        // Randomly select a placeholder quote
+        val randomIndex = (0 until placeholderQuotes.size).random()
+        binding.btnQuotes.text = placeholderQuotes[randomIndex]
         firestoreClass.getDailyQuote(
             onSuccess = { quote ->
                 binding.btnQuotes.text = quote
-
             },
             onFailure = { e ->
                 Log.e("HomeFragment", "Error getting daily quote", e)

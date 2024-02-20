@@ -38,7 +38,7 @@ object GeminiModule {
     @[Provides Singleton GeminiPro]
     fun provideGemini(): GenerativeModel {
         return GenerativeModel(
-            modelName = "gemini-pro",
+            modelName = "gemini-1.0-pro",
             apiKey = com.vyarth.ellipsify.BuildConfig.apiKey,
             safetySettings = listOf(
                 harassment, hateSpeech

@@ -298,6 +298,7 @@ class ExerciseActivity() : BaseActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
+        stopVibration()
         mediaPlayer.release()
         handler.removeCallbacks(updateTimeTask)
     }
