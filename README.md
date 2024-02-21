@@ -2,6 +2,10 @@
 
 Eclipsify is a mobile application designed to support individuals in their mental health journey. With a range of integrated features, users can track their progress, access resources, and connect with mental health professionals conveniently.
 
+# Download the App
+
+Check out our app 'Eclipsify' - made with ❤ by vyarth : https://drive.google.com/drive/folders/1F9GEZQis1k8YOk4VVUDx1s-7vzkV79p3?usp=sharing 
+
 ## Features
 
 - **Daily Mood Tracker:** Log your mood daily to monitor your emotional well-being over time.
