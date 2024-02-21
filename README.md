@@ -28,10 +28,11 @@ Check out our app 'Eclipsify' - made with ❤ by vyarth : https://drive.google.c
 ## How to Run
 
 1. Clone the repository to your local machine.
-2. Install necessary dependencies.
-3. Build and run the application on your preferred mobile device or emulator.
-4. Register or log in to access the app's features.
-5. Explore the various sections and features available to support your mental wellness journey.
+2. Ensure you have Kotlin and Android Studio installed on your development environment.
+3. Open the project in Android Studio.
+4. Build and run the application on your preferred mobile device or emulator.
+5. Register or log in to access the app's features.
+6. Explore the various sections and features available to support your mental wellness journey.
 
 ## Contributors
 
