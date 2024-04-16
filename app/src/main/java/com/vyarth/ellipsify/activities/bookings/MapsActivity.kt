@@ -34,7 +34,6 @@ class MapsActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_maps)
 
-
         // Initialize the Places API with your API key
         Places.initialize(applicationContext, com.vyarth.ellipsify.BuildConfig.placesApiKey)
 
@@ -107,32 +106,18 @@ class MapsActivity : BaseActivity() {
     }
 
     // Function to search for nearby therapists and add markers on the map
-    // Function to search for nearby therapists based on a query and add markers on the map
     private fun searchForNearbyTherapists(currentLatLng: LatLng) {
-        // Define the search radius in meters (e.g., 10 km)
-        val searchRadius = 10000 // 10,000 meters (10 km)
-
         // Define the requested fields for places
         val placeFields = listOf(
             Place.Field.NAME,
-            Place.Field.LAT_LNG
+            Place.Field.LAT_LNG,
+            Place.Field.TYPES
         )
 
-        // Create a FindCurrentPlaceRequest using the specified fields
+        // Create a request for the current place
         val request = FindCurrentPlaceRequest.newInstance(placeFields)
 
-        // Define the list of keywords to search for
-        val searchKeywords = listOf(
-            "therapist",
-            "therapy",
-            "counsellor",
-            "counselling",
-            "counsel",
-            "psychologist",
-            "mental wellness"
-        )
-
-        // Perform the nearby search using the Places API
+        // Perform the request for nearby places
         if (ActivityCompat.checkSelfPermission(
                 this,
                 Manifest.permission.ACCESS_FINE_LOCATION
@@ -140,54 +125,27 @@ class MapsActivity : BaseActivity() {
         ) {
             placesClient.findCurrentPlace(request)
                 .addOnSuccessListener { response ->
-                    // Iterate through the place likelihoods
+                    // Handle the nearby places (therapists or counselors)
                     response.placeLikelihoods.forEach { placeLikelihood ->
                         val place = placeLikelihood.place
                         val placeLatLng = place.latLng
 
-                        // Check if the place's name contains any of the search keywords
-                        val name = place.name.toLowerCase()
-                        val isMatch = searchKeywords.any { keyword ->
-                            name.contains(keyword.toLowerCase())
-                        }
-
-                        // If the place matches any of the keywords and the location is not null
-                        if (isMatch && placeLatLng != null) {
-                            // Calculate the distance from the current location to the place
-                            val distance = FloatArray(1)
-                            android.location.Location.distanceBetween(
-                                currentLatLng.latitude,
-                                currentLatLng.longitude,
-                                placeLatLng.latitude,
-                                placeLatLng.longitude,
-                                distance
+                        // Check if the place is a therapist (you can adjust this based on your criteria)
+                        if (place.types.contains(Place.Type.DOCTOR) || place.types.contains(Place.Type.HEALTH)) {
+                            // Add a marker for each therapist or counselor on the map
+                            googleMap.addMarker(
+                                MarkerOptions()
+                                    .position(placeLatLng)
+                                    .title(place.name)
                             )
-
-                            // If the place is within the search radius, add a marker
-                            if (distance[0] <= searchRadius) {
-                                googleMap.addMarker(
-                                    MarkerOptions()
-                                        .position(placeLatLng)
-                                        .title(place.name)
-                                )
-                            }
                         }
                     }
                 }
                 .addOnFailureListener { exception ->
-                    // Handle any errors
                     Toast.makeText(this, "Error: ${exception.message}", Toast.LENGTH_SHORT).show()
                 }
-        } else {
-            // Request permissions if they are not granted
-            ActivityCompat.requestPermissions(
-                this,
-                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
-                LOCATION_PERMISSION_REQUEST_CODE
-            )
         }
     }
-
 
     override fun onRequestPermissionsResult(
         requestCode: Int,
