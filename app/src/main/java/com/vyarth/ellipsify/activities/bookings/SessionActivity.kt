@@ -69,14 +69,16 @@ class SessionActivity : BaseActivity() {
 
         // Set click listener to the CardView
         cardView.setOnClickListener {
-            // Check if location permission is granted
-            if (isLocationPermissionGranted()) {
-                // Location permission granted, initiate nearby search
-                initiateNearbySearch()
-            } else {
-                // Location permission not granted, request it
-                requestLocationPermission()
-            }
+//            // Check if location permission is granted
+//            if (isLocationPermissionGranted()) {
+//                // Location permission granted, initiate nearby search
+//                initiateNearbySearch()
+//            } else {
+//                // Location permission not granted, request it
+//                requestLocationPermission()
+//            }
+            val intent = Intent(this, MapsActivity::class.java)
+            startActivity(intent)
         }
     }
 
