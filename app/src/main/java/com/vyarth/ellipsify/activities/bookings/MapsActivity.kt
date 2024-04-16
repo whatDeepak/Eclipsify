@@ -109,20 +109,30 @@ class MapsActivity : BaseActivity() {
     // Function to search for nearby therapists and add markers on the map
     // Function to search for nearby therapists based on a query and add markers on the map
     private fun searchForNearbyTherapists(currentLatLng: LatLng) {
+        // Define the search radius in meters (e.g., 10 km)
+        val searchRadius = 10000 // 10,000 meters (10 km)
+
         // Define the requested fields for places
         val placeFields = listOf(
             Place.Field.NAME,
-            Place.Field.LAT_LNG,
-            Place.Field.TYPES
+            Place.Field.LAT_LNG
         )
 
-        // Define the query for searching places (in this case, "therapist")
-        val query = "therapist"
-
-        // Perform the nearby search for the specified query using the Places API
+        // Create a FindCurrentPlaceRequest using the specified fields
         val request = FindCurrentPlaceRequest.newInstance(placeFields)
 
-        // Check for location permission
+        // Define the list of keywords to search for
+        val searchKeywords = listOf(
+            "therapist",
+            "therapy",
+            "counsellor",
+            "counselling",
+            "counsel",
+            "psychologist",
+            "mental wellness"
+        )
+
+        // Perform the nearby search using the Places API
         if (ActivityCompat.checkSelfPermission(
                 this,
                 Manifest.permission.ACCESS_FINE_LOCATION
@@ -135,13 +145,29 @@ class MapsActivity : BaseActivity() {
                         val place = placeLikelihood.place
                         val placeLatLng = place.latLng
 
-                        // Check if the place's name or types match the query ("therapist")
-                        if (place.name.contains(query, ignoreCase = true)) {
-                            // Add a marker on the map for each matching place
-                            placeLatLng?.let {
+                        // Check if the place's name contains any of the search keywords
+                        val name = place.name.toLowerCase()
+                        val isMatch = searchKeywords.any { keyword ->
+                            name.contains(keyword.toLowerCase())
+                        }
+
+                        // If the place matches any of the keywords and the location is not null
+                        if (isMatch && placeLatLng != null) {
+                            // Calculate the distance from the current location to the place
+                            val distance = FloatArray(1)
+                            android.location.Location.distanceBetween(
+                                currentLatLng.latitude,
+                                currentLatLng.longitude,
+                                placeLatLng.latitude,
+                                placeLatLng.longitude,
+                                distance
+                            )
+
+                            // If the place is within the search radius, add a marker
+                            if (distance[0] <= searchRadius) {
                                 googleMap.addMarker(
                                     MarkerOptions()
-                                        .position(it)
+                                        .position(placeLatLng)
                                         .title(place.name)
                                 )
                             }
@@ -152,8 +178,16 @@ class MapsActivity : BaseActivity() {
                     // Handle any errors
                     Toast.makeText(this, "Error: ${exception.message}", Toast.LENGTH_SHORT).show()
                 }
+        } else {
+            // Request permissions if they are not granted
+            ActivityCompat.requestPermissions(
+                this,
+                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+                LOCATION_PERMISSION_REQUEST_CODE
+            )
         }
     }
+
 
     override fun onRequestPermissionsResult(
         requestCode: Int,
