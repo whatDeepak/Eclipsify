@@ -23,6 +23,7 @@ import com.vyarth.ellipsify.activities.SignUpActivity
 import com.vyarth.ellipsify.activities.SplashActivity
 import com.vyarth.ellipsify.fragments.HomeFragment
 import com.vyarth.ellipsify.model.JournalList
+import com.vyarth.ellipsify.model.Post
 import com.vyarth.ellipsify.utils.Constants
 import org.json.JSONException
 import org.json.JSONObject
@@ -631,5 +632,31 @@ class FirestoreClass {
                 callback(null)
             }
     }
+
+    // POSTS
+
+    fun savePost(post: Post, onSuccess: (Any?) -> Unit, onFailure: (Exception) -> Unit) {
+        // Save the post to Firestore
+        mFireStore.collection("posts")
+            .add(post)
+            .addOnSuccessListener { documentReference ->
+                // Post saved successfully
+                val postId = documentReference.id
+                val updatedPost = post.copy(id = postId)
+
+                // Optionally, you can perform additional logic or UI updates here
+
+                // Notify the caller of success
+                onSuccess.invoke(updatedPost)
+            }
+            .addOnFailureListener { e ->
+                // Handle the error
+                Log.e("Firestore", "Error saving journal entry", e)
+
+                // Notify the caller of failure
+                onFailure.invoke(e)
+            }
+    }
+
 
 }
