@@ -635,28 +635,27 @@ class FirestoreClass {
 
     // POSTS
 
-    fun savePost(post: Post, onSuccess: (Any?) -> Unit, onFailure: (Exception) -> Unit) {
+    fun savePost(post: Post, onSuccess: (Post) -> Unit, onFailure: (Exception) -> Unit) {
+        // Generate a unique ID for the post
+        val postId = mFireStore.collection("posts").document().id
+
+        // Update the id field in the post object
+        val updatedPost = post.copy(id = postId)
+
         // Save the post to Firestore
         mFireStore.collection("posts")
-            .add(post)
-            .addOnSuccessListener { documentReference ->
+            .document(postId) // Use the generated ID as the document ID
+            .set(updatedPost)
+            .addOnSuccessListener {
                 // Post saved successfully
-                val postId = documentReference.id
-                val updatedPost = post.copy(id = postId)
-
-                // Optionally, you can perform additional logic or UI updates here
-
-                // Notify the caller of success
                 onSuccess.invoke(updatedPost)
             }
             .addOnFailureListener { e ->
                 // Handle the error
-                Log.e("Firestore", "Error saving journal entry", e)
-
-                // Notify the caller of failure
                 onFailure.invoke(e)
             }
     }
+
 
 
 }

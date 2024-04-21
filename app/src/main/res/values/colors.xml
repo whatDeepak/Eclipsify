@@ -65,4 +65,6 @@
     <color name="art1">#FDDB31</color>
 
     <color name="bar_color">#66D8DFF2</color>
+
+    <color name="divider">#CDCBC9</color>
 </resources>

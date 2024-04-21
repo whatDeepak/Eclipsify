@@ -32,15 +32,19 @@ class CreatePostActivity : BaseActivity() {
 
     private fun saveToFirebase() {
         val content = findViewById<AppCompatEditText>(R.id.create_text).text.toString().trim()
+        val pseudoName = findViewById<AppCompatEditText>(R.id.pseudo_name).text.toString().trim() // Get the pseudo name
         val timestamp = Date().time
 
         // Check if title and text are not empty
         if (content.isNotEmpty()) {
             FirestoreClass().getUserData(
                 onSuccess = { user ->
+                    val userId = user.id
                     val post = Post(
                         id = "",
-                        author = user.name,
+                        authorId = userId,
+                        author = user.name, // Use authorName here
+                        pseudoName = if (pseudoName.isNotEmpty()) pseudoName else "", // Store the pseudo name
                         content = content,
                         timestamp = timestamp,
                         likes = 0,

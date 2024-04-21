@@ -31,29 +31,35 @@
                 android:textStyle="bold" />
         </androidx.appcompat.widget.Toolbar>
 
-        <TextView
-            android:id="@+id/create_date"
-            android:layout_width="wrap_content"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/pseudoname_box"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="18dp"
-            android:textColor="@color/primary_text_color"
-            android:textSize="13sp"
-            android:textStyle="normal"
+            android:paddingHorizontal="18dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/toolbar_profile">
-        </TextView>
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/pseudo_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Add a PseudoName"
+                android:textSize="16sp" />
+
+        </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
             android:id="@+id/create_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="20sp"
+            android:textSize="18sp"
             android:layout_marginHorizontal="18dp"
-            android:text="Let's give this a Title"
+            android:text="Write your heart out!"
+            android:textStyle="bold"
             android:textColor="@color/primary_text_color"
             android:layout_marginTop="10dp"
             android:background="@android:color/transparent"
-            app:layout_constraintTop_toBottomOf="@id/create_date"
+            app:layout_constraintTop_toBottomOf="@id/pseudoname_box"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent">
         </TextView>

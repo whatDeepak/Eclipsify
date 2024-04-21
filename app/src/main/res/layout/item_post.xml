@@ -5,14 +5,50 @@
     android:orientation="vertical"
     android:padding="16dp">
 
-    <TextView
-        android:id="@+id/textViewAuthor"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Author"
-        android:textStyle="bold"
-        android:textSize="16sp"
-        android:textColor="@color/black" />
+        android:orientation="horizontal">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/user_avatar"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:layout_marginEnd="12dp"
+            android:contentDescription="image"
+            android:src="@drawable/ic_user_place_holder"
+            civ_border_color="@android:color/white"
+            civ_border_width="1dp"
+            />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textViewAuthor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Author"
+                android:layout_marginTop="5dp"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/textViewTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="x time ago"
+                android:layout_marginTop="5dp"
+                android:textSize="12sp"
+                android:textColor="@color/black" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
 
     <TextView
         android:id="@+id/textViewContent"
@@ -21,7 +57,7 @@
         android:text="Post Content"
         android:textSize="14sp"
         android:textColor="@color/black"
-        android:layout_marginTop="8dp" />
+        android:layout_marginVertical="8dp" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -29,21 +65,27 @@
         android:orientation="horizontal"
         android:layout_marginTop="8dp">
 
-        <Button
+        <ImageView
             android:id="@+id/buttonLike"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Like"
-            android:background="@drawable/button_bg"
-            android:textColor="@color/white"
-            android:layout_marginEnd="8dp" />
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginEnd="18dp"
+            android:src="@drawable/likebutton"
+            />
 
-        <Button
+        <ImageView
             android:id="@+id/buttonComment"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Comment"
-            android:background="@drawable/button_bg"
-            android:textColor="@color/white" />
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginEnd="18dp"
+            android:src="@drawable/commentbutton"
+            />
+
     </LinearLayout>
+    <View
+        android:id="@+id/feedback_divider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/divider" />
 </LinearLayout>
