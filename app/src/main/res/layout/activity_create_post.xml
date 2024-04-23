@@ -5,6 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/communitybg"
     tools:context=".activities.community.CreatePostActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -31,19 +32,35 @@
                 android:textStyle="bold" />
         </androidx.appcompat.widget.Toolbar>
 
+        <TextView
+            android:id="@+id/pseudo_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:layout_marginHorizontal="18dp"
+            android:text="Enter a pseudo name for anonymous posting."
+            android:textStyle="normal"
+            android:textColor="@color/primary_text_color"
+            android:background="@android:color/transparent"
+            app:layout_constraintTop_toBottomOf="@id/toolbar_profile"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+        </TextView>
+
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/pseudoname_box"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
             android:paddingHorizontal="18dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/toolbar_profile">
+            app:layout_constraintTop_toBottomOf="@id/pseudo_text">
 
             <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/pseudo_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Add a PseudoName"
+                android:hint="PseudoName"
                 android:textSize="16sp" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -67,11 +84,11 @@
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="10dp"
             app:layout_constraintTop_toBottomOf="@id/create_title"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/post_create"
             app:layout_constraintStart_toStartOf="parent"
-            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
             android:fillViewport="true">
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -80,21 +97,18 @@
                 android:paddingStart="18dp"
                 android:paddingEnd="18dp">
 
-
                 <androidx.appcompat.widget.AppCompatEditText
                     android:id="@+id/create_text"
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:paddingBottom="80dp"
                     android:textSize="16sp"
                     android:hint="Start writing..."
                     android:inputType="textMultiLine"
                     android:background="@android:color/transparent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    >
+                    app:layout_constraintEnd_toEndOf="parent">
                 </androidx.appcompat.widget.AppCompatEditText>
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>
@@ -106,7 +120,7 @@
             android:layout_gravity="end|bottom"
             android:src="@drawable/save_journal"
             android:backgroundTint="#FFCC66"
-            android:contentDescription="Save Daily Journal"
+            android:contentDescription="Save Post"
             android:layout_margin="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"

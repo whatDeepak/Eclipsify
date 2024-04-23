@@ -22,6 +22,7 @@ import com.vyarth.ellipsify.model.User
 import com.vyarth.ellipsify.activities.SignUpActivity
 import com.vyarth.ellipsify.activities.SplashActivity
 import com.vyarth.ellipsify.fragments.HomeFragment
+import com.vyarth.ellipsify.model.Comment
 import com.vyarth.ellipsify.model.JournalList
 import com.vyarth.ellipsify.model.Post
 import com.vyarth.ellipsify.utils.Constants
@@ -656,6 +657,52 @@ class FirestoreClass {
             }
     }
 
+    fun deletePost(postId: String, onSuccess: () -> Unit, onFailure: (Exception) -> Unit) {
+        // Get the reference to the post document
+        val postRef = mFireStore.collection("posts").document(postId)
 
+        // Delete the post document
+        postRef.delete()
+            .addOnSuccessListener {
+                // Post deleted successfully
+                onSuccess.invoke()
+            }
+            .addOnFailureListener { e ->
+                // Handle the error
+                onFailure.invoke(e)
+            }
+    }
 
+    fun postComment(comment: Comment, onSuccess: () -> Unit, onFailure: (Throwable?) -> Unit, onCommentsUpdated: (List<Comment>) -> Unit) {
+        // Get a reference to the "posts" collection
+        val postsCollection = mFireStore.collection("posts")
+
+        // Get a reference to the specific post document
+        val postDocument = postsCollection.document(comment.postId)
+
+        val commentId = mFireStore.collection("comments").document().id
+
+        // Update the comments field of the post document
+        postDocument.get().addOnSuccessListener { documentSnapshot ->
+            val post = documentSnapshot.toObject(Post::class.java)
+            if (post != null) {
+                val updatedComments = post.comments.toMutableList()
+                // Assign generated ID to the comment
+                val commentWithId = comment.copy(id = commentId)
+                updatedComments.add(commentWithId)
+                postDocument.update("comments", updatedComments)
+                    .addOnSuccessListener {
+                        onSuccess()
+                        onCommentsUpdated(updatedComments)
+                    }
+                    .addOnFailureListener { e ->
+                        onFailure(e)
+                    }
+            } else {
+                onFailure(Throwable("Post not found"))
+            }
+        }.addOnFailureListener { e ->
+            onFailure(e)
+        }
+    }
 }

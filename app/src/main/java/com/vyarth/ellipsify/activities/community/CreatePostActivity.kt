@@ -48,6 +48,7 @@ class CreatePostActivity : BaseActivity() {
                         content = content,
                         timestamp = timestamp,
                         likes = 0,
+                        likedBy = listOf(),
                         comments = listOf()
                     )
 

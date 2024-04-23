@@ -31,7 +31,7 @@ class CommunityActivity : BaseActivity() {
         recyclerView = findViewById(R.id.recyclerViewPosts)
         recyclerView.layoutManager = LinearLayoutManager(this)
         // Initialize the adapter with an empty list
-        postsAdapter = PostsAdapter(ArrayList())
+        postsAdapter = PostsAdapter(this,ArrayList())
         recyclerView.adapter = postsAdapter
 
         // Load posts from Firestore
@@ -94,5 +94,10 @@ class CommunityActivity : BaseActivity() {
 
     companion object {
         private const val REQUEST_CODE_ENTRY_ACTIVITY = 1001 // You can use any unique value
+    }
+
+    override fun onResume() {
+        super.onResume()
+        loadPosts()
     }
 }
