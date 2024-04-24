@@ -7,10 +7,12 @@ data class Comment(
     val id: String = "",
     val postId: String = "",
     val author: String = "",
+    val authorId: String = "",
     val content: String = "",
     val timestamp: Long = 0
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
+        parcel.readString() ?: "",
         parcel.readString() ?: "",
         parcel.readString() ?: "",
         parcel.readString() ?: "",
@@ -22,6 +24,7 @@ data class Comment(
         parcel.writeString(id)
         parcel.writeString(postId)
         parcel.writeString(author)
+        parcel.writeString(authorId)
         parcel.writeString(content)
         parcel.writeLong(timestamp)
     }

@@ -9,6 +9,7 @@ import android.util.Log
 import androidx.fragment.app.FragmentActivity
 import androidx.navigation.fragment.NavHostFragment
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
 import com.google.firebase.storage.FirebaseStorage
@@ -705,4 +706,63 @@ class FirestoreClass {
             onFailure(e)
         }
     }
+
+    fun deleteComment(commentId: String, postId: String, onSuccess: () -> Unit, onFailure: (Exception) -> Unit) {
+        // Get a reference to the "posts" collection
+        val postsCollection = mFireStore.collection("posts")
+
+        // Get a reference to the specific post document
+        val postDocument = postsCollection.document(postId)
+
+        // Remove the comment from the comments array in the post document
+        postDocument.get().addOnSuccessListener { documentSnapshot ->
+            val post = documentSnapshot.toObject(Post::class.java)
+            if (post != null) {
+                val updatedComments = post.comments.filterNot { it.id == commentId }
+                postDocument.update("comments", updatedComments)
+                    .addOnSuccessListener {
+                        // Comment removed from the post successfully
+                        // Now, delete the comment document itself
+                        val commentRef = mFireStore.collection("comments").document(commentId)
+                        commentRef.delete()
+                            .addOnSuccessListener {
+                                // Comment document deleted successfully
+                                onSuccess.invoke()
+                            }
+                            .addOnFailureListener { e ->
+                                // Handle the error
+                                onFailure.invoke(e)
+                            }
+                    }
+                    .addOnFailureListener { e ->
+                        // Handle the error
+                        onFailure.invoke(e)
+                    }
+            } else {
+                onFailure.invoke(PostNotFoundException("Post not found"))
+            }
+        }.addOnFailureListener { e ->
+            onFailure.invoke(e)
+        }
+    }
+
+    class PostNotFoundException(message: String) : Exception(message)
+
+    fun getUserDataAvatar(userId: String, onSuccess: (User) -> Unit, onFailure: () -> Unit) {
+        mFireStore.collection(Constants.USERS)
+            .document(userId)
+            .get()
+            .addOnSuccessListener { document ->
+                val user = document.toObject(User::class.java)
+                if (user != null) {
+                    onSuccess(user)
+                } else {
+                    onFailure()
+                }
+            }
+            .addOnFailureListener {
+                onFailure()
+            }
+    }
+
 }

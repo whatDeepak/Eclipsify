@@ -10,9 +10,10 @@ data class Post(
     val pseudoName: String = "",
     val content: String = "",
     val timestamp: Long = 0,
-    val likes: Int = 0,
+    var likes: Int = 0,
     var likedBy: List<String> = listOf(),
-    val comments: List<Comment> = listOf()
+    val comments: List<Comment> = listOf(),
+    val categories: List<String>? = null // Added field for categories
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readString() ?: "",
@@ -25,7 +26,8 @@ data class Post(
         parcel.createStringArrayList() ?: listOf(),
         mutableListOf<Comment>().apply {
             parcel.readList(this, Comment::class.java.classLoader)
-        }
+        },
+        parcel.createStringArrayList() // Read categories from parcel
     )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
@@ -38,6 +40,7 @@ data class Post(
         parcel.writeInt(likes)
         parcel.writeStringList(likedBy)
         parcel.writeList(comments)
+        parcel.writeStringList(categories) // Write categories to parcel
     }
 
     override fun describeContents(): Int {

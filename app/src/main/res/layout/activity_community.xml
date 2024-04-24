@@ -23,12 +23,23 @@
             android:textStyle="bold" />
     </androidx.appcompat.widget.Toolbar>
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewCategories"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/toolbar_profile"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        android:orientation="horizontal" />
+
     <!-- Adjusted RecyclerView below the Toolbar -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewPosts"
         android:layout_width="match_parent"
+        android:layout_marginTop="16dp"
         android:layout_height="match_parent"
-        android:layout_below="@id/toolbar_profile" />
+        android:layout_below="@id/recyclerViewCategories" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_create"
@@ -42,4 +53,6 @@
         app:layout_anchor="@id/recyclerViewPosts"
         app:layout_anchorGravity="bottom|end"
         android:contentDescription="Create Daily Journal" />
+
+
 </RelativeLayout>

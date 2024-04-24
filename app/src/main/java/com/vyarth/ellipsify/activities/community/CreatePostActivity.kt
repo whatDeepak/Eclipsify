@@ -1,6 +1,7 @@
 package com.vyarth.ellipsify.activities.community
 
 import android.app.Activity
+import android.app.AlertDialog
 import android.content.Intent
 import android.graphics.Typeface
 import android.os.Bundle
@@ -17,6 +18,7 @@ import com.vyarth.ellipsify.model.Post
 import java.util.Date
 
 class CreatePostActivity : BaseActivity() {
+    private val selectedCategories = mutableListOf<String>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_post)
@@ -26,8 +28,35 @@ class CreatePostActivity : BaseActivity() {
 
         val fabCreate: FloatingActionButton =findViewById(R.id.post_create)
         fabCreate.setOnClickListener{
-            saveToFirebase()
+            showCategoryDialog()
         }
+    }
+
+    private fun showCategoryDialog() {
+        val categories = arrayOf(
+            "Love", "Heartbreak", "Study", "Relationship",
+            "Career", "Friends", "Family", "Mental Health", "Self Development"
+        )
+
+        val checkedItems = BooleanArray(categories.size) { false }
+
+        AlertDialog.Builder(this)
+            .setTitle("Select Categories")
+            .setMultiChoiceItems(categories, checkedItems) { _, index, isChecked ->
+                if (isChecked) {
+                    selectedCategories.add(categories[index])
+                } else {
+                    selectedCategories.remove(categories[index])
+                }
+            }
+            .setPositiveButton("OK") { dialog, _ ->
+                saveToFirebase()
+                dialog.dismiss()
+            }
+            .setNegativeButton("Cancel") { dialog, _ ->
+                dialog.dismiss()
+            }
+            .show()
     }
 
     private fun saveToFirebase() {
@@ -49,7 +78,8 @@ class CreatePostActivity : BaseActivity() {
                         timestamp = timestamp,
                         likes = 0,
                         likedBy = listOf(),
-                        comments = listOf()
+                        comments = listOf(),
+                        categories = selectedCategories.toList()
                     )
 
                     // Save the post

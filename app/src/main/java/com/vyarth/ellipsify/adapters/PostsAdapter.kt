@@ -31,6 +31,8 @@ class PostsAdapter(
         val textViewTime: TextView = itemView.findViewById(R.id.textViewTime)
         val buttonLike: ImageView = itemView.findViewById(R.id.buttonLike)
         val buttonComment: ImageView = itemView.findViewById(R.id.buttonComment)
+        val textViewLikes: TextView = itemView.findViewById(R.id.textViewLikes)
+        val textViewComments: TextView = itemView.findViewById(R.id.textViewComments)
         val userAvatar: CircleImageView = itemView.findViewById(R.id.user_avatar)
         val deleteButton: ImageView = itemView.findViewById(R.id.deleteButton)
     }
@@ -47,6 +49,8 @@ class PostsAdapter(
         holder.textViewAuthor.text = displayName
         holder.textViewContent.text = post.content
         holder.textViewTime.text = getTimeAgo(post.timestamp)
+        holder.textViewLikes.text = "${post.likedBy.size}"
+        holder.textViewComments.text = "${post.comments.size}"
 
         val currentUserID = FirestoreClass().getCurrentUserID()
         if (post.likedBy.contains(currentUserID)) {
@@ -55,10 +59,18 @@ class PostsAdapter(
             holder.buttonLike.setImageResource(R.drawable.likebutton) // Change to default like icon
         }
 
+        val currentUserCommented = post.comments.any { it.authorId == currentUserID }
+        if (currentUserCommented) {
+            holder.buttonComment.setImageResource(R.drawable.commentedbutton)
+        } else {
+            holder.buttonComment.setImageResource(R.drawable.commentbutton)
+        }
+
         holder.deleteButton.visibility = if (currentUserID == post.authorId) View.VISIBLE else View.GONE
 
         if (post.pseudoName.isNullOrEmpty()) {
-            FirestoreClass().getUserData(
+            FirestoreClass().getUserDataAvatar(
+                userId = post.authorId,
                 onSuccess = { user ->
                     Glide.with(holder.itemView)
                         .load(user.image) // Use the user's image URL
@@ -80,10 +92,13 @@ class PostsAdapter(
                 // User already liked the post, so remove the like
                 post.likedBy = post.likedBy.filter { it != currentUserID }
                 holder.buttonLike.setImageResource(R.drawable.likebutton) // Change to default like icon
+                holder.textViewLikes.text = "${post.likedBy.size}"
+
             } else {
                 // User hasn't liked the post, so add the like
                 post.likedBy = post.likedBy + currentUserID
                 holder.buttonLike.setImageResource(R.drawable.likedbutton) // Change to liked icon
+                holder.textViewLikes.text = "${post.likedBy.size}"
             }
 
             // Update the like count in Firestore
