@@ -50,6 +50,18 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
+                <ImageView
+                    android:id="@+id/btn_community"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginRight="18dp"
+                    android:src="@drawable/community"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintRight_toLeftOf="@id/btn_logout"
+                    app:layout_constraintTop_toTopOf="parent"
+                    />
+
 
                 <!-- Arrow ImageView -->
                 <ImageView

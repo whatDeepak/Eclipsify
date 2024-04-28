@@ -234,19 +234,36 @@ class YouFragment : Fragment() {
     private fun calculateBestStreak(timestamps: Map<String, Boolean>): Int {
         var bestStreak = 0
         var currentStreak = 0
+        var previousDate: String? = null
 
         // Iterate over the timestamps to find the best streak
-        for ((date, login) in timestamps) {
+        for ((date, login) in timestamps.entries.sortedBy { it.key }) {
             if (login) {
+                // Check if there's a gap between timestamps
+                if (previousDate != null && !isConsecutive(previousDate, date)) {
+                    currentStreak = 0 // Reset current streak if there's a gap
+                }
                 currentStreak++
                 bestStreak = maxOf(bestStreak, currentStreak)
             } else {
                 currentStreak = 0
             }
+            previousDate = date
         }
 
         return bestStreak
     }
+
+    private fun isConsecutive(date1: String, date2: String): Boolean {
+        val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+        val currentDate1 = dateFormat.parse(date1)
+        val currentDate2 = dateFormat.parse(date2)
+        val diff = currentDate2.time - currentDate1.time
+        val dayDifference = diff / (1000 * 60 * 60 * 24)
+        return dayDifference == 1L
+    }
+
+
 
     private fun getPreviousDate(date: String): String {
         val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())

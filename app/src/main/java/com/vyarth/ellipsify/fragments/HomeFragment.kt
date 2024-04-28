@@ -17,6 +17,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatButton
 import androidx.core.content.ContextCompat
@@ -31,6 +32,7 @@ import com.vyarth.ellipsify.activities.MainActivity
 import com.vyarth.ellipsify.activities.ProfileActivity
 import com.vyarth.ellipsify.activities.article.ArticlesActivity
 import com.vyarth.ellipsify.activities.bookings.SessionActivity
+import com.vyarth.ellipsify.activities.community.CommunityActivity
 import com.vyarth.ellipsify.activities.journals.DailyJournalActivity
 import com.vyarth.ellipsify.activities.journals.DailyJournalEntryActivity
 import com.vyarth.ellipsify.activities.sleep.SleepActivity
@@ -94,6 +96,12 @@ class HomeFragment : Fragment() {
 
         checkDailyMoodEntry()
         setEmotionClickListener()
+
+        val btnCommunity: ImageView = binding.btnCommunity
+        btnCommunity.setOnClickListener {
+            val intent = Intent(requireContext(), CommunityActivity::class.java)
+            startActivity(intent)
+        }
 
         val btnJournal: AppCompatButton = binding.btnJournal
         btnJournal.setOnClickListener {

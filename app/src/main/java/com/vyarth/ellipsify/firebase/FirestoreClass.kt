@@ -9,6 +9,7 @@ import android.util.Log
 import androidx.fragment.app.FragmentActivity
 import androidx.navigation.fragment.NavHostFragment
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
 import com.google.firebase.storage.FirebaseStorage
@@ -22,7 +23,9 @@ import com.vyarth.ellipsify.model.User
 import com.vyarth.ellipsify.activities.SignUpActivity
 import com.vyarth.ellipsify.activities.SplashActivity
 import com.vyarth.ellipsify.fragments.HomeFragment
+import com.vyarth.ellipsify.model.Comment
 import com.vyarth.ellipsify.model.JournalList
+import com.vyarth.ellipsify.model.Post
 import com.vyarth.ellipsify.utils.Constants
 import org.json.JSONException
 import org.json.JSONObject
@@ -629,6 +632,136 @@ class FirestoreClass {
             .addOnFailureListener { e ->
                 // Handle failure
                 callback(null)
+            }
+    }
+
+    // POSTS
+
+    fun savePost(post: Post, onSuccess: (Post) -> Unit, onFailure: (Exception) -> Unit) {
+        // Generate a unique ID for the post
+        val postId = mFireStore.collection("posts").document().id
+
+        // Update the id field in the post object
+        val updatedPost = post.copy(id = postId)
+
+        // Save the post to Firestore
+        mFireStore.collection("posts")
+            .document(postId) // Use the generated ID as the document ID
+            .set(updatedPost)
+            .addOnSuccessListener {
+                // Post saved successfully
+                onSuccess.invoke(updatedPost)
+            }
+            .addOnFailureListener { e ->
+                // Handle the error
+                onFailure.invoke(e)
+            }
+    }
+
+    fun deletePost(postId: String, onSuccess: () -> Unit, onFailure: (Exception) -> Unit) {
+        // Get the reference to the post document
+        val postRef = mFireStore.collection("posts").document(postId)
+
+        // Delete the post document
+        postRef.delete()
+            .addOnSuccessListener {
+                // Post deleted successfully
+                onSuccess.invoke()
+            }
+            .addOnFailureListener { e ->
+                // Handle the error
+                onFailure.invoke(e)
+            }
+    }
+
+    fun postComment(comment: Comment, onSuccess: () -> Unit, onFailure: (Throwable?) -> Unit, onCommentsUpdated: (List<Comment>) -> Unit) {
+        // Get a reference to the "posts" collection
+        val postsCollection = mFireStore.collection("posts")
+
+        // Get a reference to the specific post document
+        val postDocument = postsCollection.document(comment.postId)
+
+        val commentId = mFireStore.collection("comments").document().id
+
+        // Update the comments field of the post document
+        postDocument.get().addOnSuccessListener { documentSnapshot ->
+            val post = documentSnapshot.toObject(Post::class.java)
+            if (post != null) {
+                val updatedComments = post.comments.toMutableList()
+                // Assign generated ID to the comment
+                val commentWithId = comment.copy(id = commentId)
+                updatedComments.add(commentWithId)
+                postDocument.update("comments", updatedComments)
+                    .addOnSuccessListener {
+                        onSuccess()
+                        onCommentsUpdated(updatedComments)
+                    }
+                    .addOnFailureListener { e ->
+                        onFailure(e)
+                    }
+            } else {
+                onFailure(Throwable("Post not found"))
+            }
+        }.addOnFailureListener { e ->
+            onFailure(e)
+        }
+    }
+
+    fun deleteComment(commentId: String, postId: String, onSuccess: () -> Unit, onFailure: (Exception) -> Unit) {
+        // Get a reference to the "posts" collection
+        val postsCollection = mFireStore.collection("posts")
+
+        // Get a reference to the specific post document
+        val postDocument = postsCollection.document(postId)
+
+        // Remove the comment from the comments array in the post document
+        postDocument.get().addOnSuccessListener { documentSnapshot ->
+            val post = documentSnapshot.toObject(Post::class.java)
+            if (post != null) {
+                val updatedComments = post.comments.filterNot { it.id == commentId }
+                postDocument.update("comments", updatedComments)
+                    .addOnSuccessListener {
+                        // Comment removed from the post successfully
+                        // Now, delete the comment document itself
+                        val commentRef = mFireStore.collection("comments").document(commentId)
+                        commentRef.delete()
+                            .addOnSuccessListener {
+                                // Comment document deleted successfully
+                                onSuccess.invoke()
+                            }
+                            .addOnFailureListener { e ->
+                                // Handle the error
+                                onFailure.invoke(e)
+                            }
+                    }
+                    .addOnFailureListener { e ->
+                        // Handle the error
+                        onFailure.invoke(e)
+                    }
+            } else {
+                onFailure.invoke(PostNotFoundException("Post not found"))
+            }
+        }.addOnFailureListener { e ->
+            onFailure.invoke(e)
+        }
+    }
+
+    class PostNotFoundException(message: String) : Exception(message)
+
+    fun getUserDataAvatar(userId: String, onSuccess: (User) -> Unit, onFailure: () -> Unit) {
+        mFireStore.collection(Constants.USERS)
+            .document(userId)
+            .get()
+            .addOnSuccessListener { document ->
+                val user = document.toObject(User::class.java)
+                if (user != null) {
+                    onSuccess(user)
+                } else {
+                    onFailure()
+                }
+            }
+            .addOnFailureListener {
+                onFailure()
             }
     }
 
