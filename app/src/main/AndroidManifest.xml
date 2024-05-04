@@ -20,15 +20,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Eclipsify"
         tools:targetApi="31">
-        <activity
-            android:name=".activities.community.PostDetailsActivity"
-            android:exported="false" />
-        <activity
-            android:name=".activities.community.CommunityActivity"
-            android:exported="false" />
-        <activity
-            android:name=".activities.community.CreatePostActivity"
-            android:exported="false" />
+
         <!--
              TODO: Before you run your application, you need a Google Maps API key.
 
@@ -44,6 +36,15 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyDxOATiZXZMRAZRXseJ1wOZD6uYbjLRF0c" />
 
+        <activity
+            android:name=".activities.community.PostDetailsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.community.CommunityActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.community.CreatePostActivity"
+            android:exported="false" />
         <activity
             android:name=".activities.bookings.MapsActivity"
             android:exported="false" />
