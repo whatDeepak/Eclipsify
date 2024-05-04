@@ -4,7 +4,11 @@ Eclipsify is a mobile application designed to support individuals in their menta
 
 # Download the App
 
-Check out our app 'Eclipsify' - made with ❤ by vyarth : https://drive.google.com/drive/folders/1F9GEZQis1k8YOk4VVUDx1s-7vzkV79p3?usp=sharing 
+Check out our app 'Eclipsify' - made with ❤ by vyarth : https://drive.google.com/file/d/1-unQ5RzGlF2QlU5A7nweNzdLDkyoleRU/view 
+
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/Hl4lUfwXDMQ?si=Z6edHTtwKG0DfQDG" frameborder="0" allowfullscreen></iframe>
+
 
 ## Features
 
@@ -24,6 +28,8 @@ Check out our app 'Eclipsify' - made with ❤ by vyarth : https://drive.google.c
   - **Mood Journal:** Track mood fluctuations over time for self-awareness and well-being.
 - **Personal Mental Health Assistant:** Chatbot powered by Google AI for personalized support and guidance.
 - **Discover Experts:** Find local mental health professionals nearby, facilitated by Google Maps integration.
+- **Community Section:** Engage with like-minded individuals, share thoughts, and provide support.
+
 
 ## How to Run
 
