@@ -4,7 +4,7 @@ Eclipsify is a mobile application designed to support individuals in their menta
 
 # Download the App
 
-Check out our app 'Eclipsify' - made with ❤ by vyarth : https://drive.google.com/file/d/1-unQ5RzGlF2QlU5A7nweNzdLDkyoleRU/view 
+Check out our app 'Eclipsify' - made with ❤ by vyarth : https://drive.google.com/file/d/1l_PPgqQVWHcm0G52gpSGgH2znzGN8Iv6/view?usp=sharing
 
 
 [![Eclipsify Demo Video](https://img.youtube.com/vi/Hl4lUfwXDMQ/0.jpg)](https://www.youtube.com/watch?v=Hl4lUfwXDMQ)
