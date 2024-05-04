@@ -35,9 +35,13 @@ Check out our app 'Eclipsify' - made with ❤ by vyarth : https://drive.google.c
 ## How to Run
 
 1. Clone the repository to your local machine.
+   ```properties
+   git clone https://github.com/whatDeepak/Eclipsify.git
+   
 2. Ensure you have Kotlin and Android Studio installed on your development environment.
 3. Open the project in Android Studio.
 4. Add your API keys to `local.properties` as follows:
+   
    ```properties
    geminiApiKey=your_gemini_api_key_here
    mapsApiKey=your_maps_api_key_here
@@ -46,6 +50,7 @@ Check out our app 'Eclipsify' - made with ❤ by vyarth : https://drive.google.c
 Feel free to replace `your_gemini_api_key_here`, `your_maps_api_key_here`, and `your_places_api_key_here` with your actual API keys.
 
 5. Add the following <meta-data> tag inside the <application> element of your AndroidManifest.xml:
+   
    ```properties
    <application>
     ...
