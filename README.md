@@ -37,9 +37,27 @@ Check out our app 'Eclipsify' - made with ❤ by vyarth : https://drive.google.c
 1. Clone the repository to your local machine.
 2. Ensure you have Kotlin and Android Studio installed on your development environment.
 3. Open the project in Android Studio.
-4. Build and run the application on your preferred mobile device or emulator.
-5. Register or log in to access the app's features.
-6. Explore the various sections and features available to support your mental wellness journey.
+4. Add your API keys to `local.properties` as follows:
+   ```properties
+   geminiApiKey=your_gemini_api_key_here
+   mapsApiKey=your_maps_api_key_here
+   placesApiKey=your_places_api_key_here
+
+Feel free to replace `your_gemini_api_key_here`, `your_maps_api_key_here`, and `your_places_api_key_here` with your actual API keys.
+
+5. Add the following <meta-data> tag inside the <application> element of your AndroidManifest.xml:
+   ```properties
+   <application>
+    ...
+    <meta-data
+        android:name="com.google.android.geo.API_KEY"
+        android:value="${mapsApiKey}" />
+    ...
+    </application>
+
+6. Sync the project. Build and run the application on your preferred mobile device or emulator.
+7. Register or log in to access the app's features.
+8. Explore the various sections and features available to support your mental wellness journey.
 
 ## Contributors
 
@@ -48,3 +66,4 @@ Check out our app 'Eclipsify' - made with ❤ by vyarth : https://drive.google.c
 ## License
 
 This project is licensed under the [MIT License](LICENSE).
+
