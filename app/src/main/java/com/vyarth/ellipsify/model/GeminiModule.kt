@@ -39,7 +39,7 @@ object GeminiModule {
     fun provideGemini(): GenerativeModel {
         return GenerativeModel(
             modelName = "gemini-1.0-pro",
-            apiKey = com.vyarth.ellipsify.BuildConfig.apiKey,
+            apiKey = com.vyarth.ellipsify.BuildConfig.geminiApiKey,
             safetySettings = listOf(
                 harassment, hateSpeech
             ),
